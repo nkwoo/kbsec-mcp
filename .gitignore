@@ -1,0 +1,11 @@
+.env
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+.idea/
+*.iml
+docs/superpowers/specs/
+docs/superpowers/plans/
+.superpowers/
