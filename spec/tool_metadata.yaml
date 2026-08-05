@@ -1,0 +1,171 @@
+# API 코드 -> MCP tool 이름/소속 파일 매핑
+# scripts/generate_tools.py가 이 파일과 spec/kbsec_api_spec.json을 합쳐 tools/<file>.py를 생성한다.
+domestic_quote:
+  - code: IVU10070
+    tool_name: quote_kr_get_orderbook
+  - code: IVU10080
+    tool_name: quote_kr_get_time_trades
+  - code: IVU10140
+    tool_name: quote_kr_get_price
+  - code: IVU10420
+    tool_name: quote_kr_get_broker_trend
+  - code: IVU10430
+    tool_name: quote_kr_get_investor_trend
+  - code: IVU10450
+    tool_name: quote_kr_get_program_trading
+  - code: SIQM4900
+    tool_name: quote_kr_get_stock_info
+  - code: SZQM0771
+    tool_name: quote_kr_get_market_status
+  - code: IVM10050
+    tool_name: quote_kr_get_company_overview
+  - code: IVS11560
+    tool_name: quote_kr_get_chart
+
+domestic_ranking:
+  - code: IVU10210
+    tool_name: ranking_kr_get_top_trading_value
+  - code: IVU10240
+    tool_name: ranking_kr_get_top_change_rate
+  - code: IVU10270
+    tool_name: ranking_kr_get_top_price_surge_drop
+  - code: IVU10280
+    tool_name: ranking_kr_get_top_volume
+  - code: IVU10550
+    tool_name: ranking_kr_get_new_high_low
+  - code: IVS10910
+    tool_name: ranking_kr_get_top_open_price_change
+  - code: IVS10920
+    tool_name: ranking_kr_get_top_market_cap
+  - code: IVS11190
+    tool_name: ranking_kr_get_top_after_hours_change
+  - code: IVU10020
+    tool_name: ranking_kr_get_top_foreign_institution_trading
+
+domestic_order:
+  - code: SSAM0831
+    tool_name: order_kr_place_reserve_order
+  - code: SSAM1801
+    tool_name: order_kr_place_sell_order
+  - code: SSAM1802
+    tool_name: order_kr_place_buy_order
+  - code: SSAM1805
+    tool_name: order_kr_amend_order
+  - code: SSAM1806
+    tool_name: order_kr_cancel_order
+  - code: SSAM5762
+    tool_name: order_kr_place_fractional_sell_order
+  - code: SSAM5763
+    tool_name: order_kr_place_fractional_buy_order
+  - code: SSAM5764
+    tool_name: order_kr_cancel_fractional_order
+  - code: SSQM1802
+    tool_name: order_kr_get_buyable_amount
+
+domestic_account:
+  - code: SSQM0004
+    tool_name: account_kr_get_deposit_details
+  - code: SSQM1801
+    tool_name: account_kr_get_holdings
+  - code: SSQM2121
+    tool_name: account_kr_get_settlement_status
+  - code: SSQM2392
+    tool_name: account_kr_get_trading_profit_loss
+  - code: SSQM2442
+    tool_name: account_kr_get_realized_profit_loss
+  - code: SSQM2932
+    tool_name: account_kr_get_balance_settlement_basis
+  - code: SSQM2952
+    tool_name: account_kr_get_balance_trade_basis
+  - code: SWQA2301
+    tool_name: account_kr_get_transaction_history
+  - code: SWQM2412
+    tool_name: account_kr_get_transaction_history_detail
+  - code: SWQN2302
+    tool_name: account_kr_get_withdrawable_amount
+
+domestic_order_history:
+  - code: SSQM0831
+    tool_name: orderhist_kr_get_reserve_order_result
+  - code: SSQM0834
+    tool_name: orderhist_kr_get_reserve_order_list
+  - code: SSQM2341
+    tool_name: orderhist_kr_get_order_execution_status
+  - code: SSQM5765
+    tool_name: orderhist_kr_get_fractional_trade_history
+
+domestic_market:
+  - code: IVA10370
+    tool_name: market_kr_get_market_liquidity_trend
+  - code: IVA60140
+    tool_name: market_kr_get_world_indices
+  - code: IVA60190
+    tool_name: market_kr_get_exchange_rates
+  - code: IVM30010
+    tool_name: market_kr_get_sector_ranking
+  - code: IVSA0070
+    tool_name: market_kr_get_market_summary
+
+overseas_quote:
+  - code: SIAM4983
+    tool_name: quote_os_get_stock_info
+  - code: GSS10030
+    tool_name: quote_os_get_price
+  - code: GSS10040
+    tool_name: quote_os_get_orderbook
+  - code: GSA10020
+    tool_name: quote_os_get_time_trades
+  - code: GSC10060
+    tool_name: quote_os_get_chart
+
+overseas_account:
+  - code: SPQM2205
+    tool_name: account_os_get_settlement_status
+  - code: SPQM2206
+    tool_name: account_os_get_daily_profit_loss
+  - code: SPQM2207
+    tool_name: account_os_get_period_profit_loss
+  - code: SPQM3390
+    tool_name: account_os_get_margin
+  - code: SPQM2226
+    tool_name: account_os_get_balance
+  - code: SRQM3051
+    tool_name: account_os_get_corporate_actions
+
+overseas_order:
+  - code: SKQM2106
+    tool_name: order_os_get_buyable_amount
+  - code: SKQM3350
+    tool_name: order_os_get_buyable_amount_status
+  - code: SKAM2101
+    tool_name: order_os_place_order
+  - code: SKAM2102
+    tool_name: order_os_amend_cancel_order
+  - code: SPQN5472
+    tool_name: order_os_get_fractional_buyable_amount
+  - code: SKAM2201
+    tool_name: order_os_place_fractional_order
+  - code: SKAM2202
+    tool_name: order_os_cancel_fractional_order
+  - code: SPAO2104
+    tool_name: order_os_place_us_reserve_order
+  - code: SPAO2106
+    tool_name: order_os_cancel_us_reserve_order
+
+overseas_order_history:
+  - code: SPQM2103
+    tool_name: orderhist_os_get_execution_history
+  - code: SPQM2204
+    tool_name: orderhist_os_get_execution_status
+  - code: SPQO2105
+    tool_name: orderhist_os_get_reserve_order_list
+
+overseas_ranking:
+  - code: GSA10600
+    tool_name: ranking_os_get_market_analysis
+  - code: GSA10150
+    tool_name: ranking_os_get_top_volume
+  - code: GSA10170
+    tool_name: ranking_os_get_top_market_cap
+  - code: GSS10180
+    tool_name: ranking_os_get_new_high_low
