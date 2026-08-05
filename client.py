@@ -17,6 +17,7 @@ logger = logging.getLogger(__name__)
 
 _MAX_RETRIES = 3
 _MASKED_BODY_KEYS = {"appkey", "appsecret", "access_token", "token"}
+_MAX_RETRY_DELAY_SECONDS = 60
 
 
 def _detect_local_ip() -> str:
@@ -116,7 +117,13 @@ class KBApiClient:
                 if attempt >= _MAX_RETRIES:
                     raise KBApiError(429, "Rate limited by KB증권 API")
                 retry_after = response.headers.get("Retry-After")
-                delay = float(retry_after) if retry_after else 2 ** (attempt - 1)
+                delay = 2 ** (attempt - 1)
+                if retry_after:
+                    try:
+                        delay = float(retry_after)
+                    except ValueError:
+                        pass
+                delay = min(delay, _MAX_RETRY_DELAY_SECONDS)
                 await asyncio.sleep(delay)
                 continue
 

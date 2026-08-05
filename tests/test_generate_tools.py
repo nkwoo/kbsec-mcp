@@ -1,8 +1,10 @@
 import ast
+import re
 
 from scripts.generate_tools import (
     TOOLS_DIR,
     _build_signature,
+    _name_based_description,
     _param_decl,
     load_metadata,
     render_function,
@@ -64,3 +66,25 @@ def test_generated_files_define_exactly_their_metadata_functions():
         defined = {node.name for node in ast.walk(tree) if isinstance(node, ast.AsyncFunctionDef)}
         expected = {entry["tool_name"] for entry in entries}
         assert defined == expected
+
+
+def test_name_based_description_strips_code_prefix():
+    api = {"code": "SSAM1806", "name": "SSAM1806_취소주문"}
+    assert _name_based_description(api) == "취소주문"
+
+
+def test_name_based_description_handles_missing_name():
+    api = {"code": "SSAM1806", "name": ""}
+    assert _name_based_description(api) == ""
+
+
+def test_no_generated_docstring_uses_bare_code_fallback():
+    """Regression test: an empty excel desc must fall back to the sheet-name
+    based description, never the useless "{CODE} API 호출" placeholder.
+    """
+    bare_fallback_pattern = re.compile(r'"""[A-Z]+\d+ API 호출')
+    for path in sorted(TOOLS_DIR.glob("*.py")):
+        source = path.read_text(encoding="utf-8")
+        assert not bare_fallback_pattern.search(source), (
+            f"{path} contains a bare '{{CODE}} API 호출' placeholder docstring"
+        )

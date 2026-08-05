@@ -60,8 +60,25 @@ def _describe_param(inp: dict) -> str:
     return f"{inp['field']}: {inp['kor']} ({required}).{suffix}"
 
 
+def _name_based_description(api: dict) -> str:
+    """Derive a fallback description from the excel 요약 sheet's API명 column.
+
+    e.g. name="SSAM1806_취소주문", code="SSAM1806" -> "취소주문"
+    """
+    name = _collapse_whitespace(str(api.get("name") or ""))
+    code = api.get("code") or ""
+    prefix = f"{code}_"
+    if name.startswith(prefix):
+        return name[len(prefix):]
+    return name
+
+
 def _build_docstring(api: dict) -> str:
-    desc = _collapse_whitespace(api["desc"]) or f"{api['code']} API 호출"
+    desc = (
+        _collapse_whitespace(api["desc"])
+        or _name_based_description(api)
+        or f"{api['code']} API 호출"
+    )
     lines = [desc, "", f"KB증권 API: {api['code']} (POST {api['path']})"]
     if api["inputs"]:
         lines += ["", "Args:"]

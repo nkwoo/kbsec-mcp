@@ -125,7 +125,7 @@ async def order_kr_amend_order(mkt_tm_clsf: str, is_cd: str, ordr_q: str, ordr_u
 
 @mcp.tool()
 async def order_kr_cancel_order(is_cd: str, crct_clsf: str, orgn_ordr_no: str, ordr_q: str | None = None) -> dict:
-    """SSAM1806 API 호출
+    """취소주문
     
     KB증권 API: SSAM1806 (POST /api/v1/ssam1806)
     
@@ -173,7 +173,7 @@ async def order_kr_place_fractional_sell_order(is_cd: str, ordr_amt: str, dcml_o
 
 @mcp.tool()
 async def order_kr_place_fractional_buy_order(is_cd: str, ordr_amt: str, dcml_ordr_std_ccd: str, ordr_q_p6: str | None = None) -> dict:
-    """SSAM5763 API 호출
+    """소수점 매수주문
     
     KB증권 API: SSAM5763 (POST /api/v1/ssam5763)
     
@@ -196,7 +196,7 @@ async def order_kr_place_fractional_buy_order(is_cd: str, ordr_amt: str, dcml_or
 
 @mcp.tool()
 async def order_kr_cancel_fractional_order(dmstc_stk_dcml_trd_jb_ccd: str, ordr_sqc: str, ordr_dt: str, bnf_is_cd: str, trd_dl_ccd: str, dmstc_stk_dcml_ordr_sq: str) -> dict:
-    """SSAM5764 API 호출
+    """소수점 주문취소
     
     KB증권 API: SSAM5764 (POST /api/v1/ssam5764)
     

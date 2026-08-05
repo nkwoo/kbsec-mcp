@@ -9,7 +9,7 @@ from client import call
 
 @mcp.tool()
 async def account_kr_get_deposit_details(is_no: str | None = None) -> dict:
-    """SSQM0004 API 호출
+    """예수금내역
     
     KB증권 API: SSQM0004 (POST /api/v1/ssqm0004)
     
@@ -49,7 +49,7 @@ async def account_kr_get_holdings(inq_clsf: str, mkt_tm_ccd: str, is_no: str | N
 
 @mcp.tool()
 async def account_kr_get_settlement_status(trd_dt: str, clsf: str, stmt_dt: str | None = None, nxt_key: str | None = None) -> dict:
-    """SSQM2121 API 호출
+    """매매정산현황
     
     KB증권 API: SSQM2121 (POST /api/v1/ssqm2121)
     
@@ -179,7 +179,7 @@ async def account_kr_get_transaction_history(strt_dt: str, end_dt: str, is_no: s
 
 @mcp.tool()
 async def account_kr_get_transaction_history_detail(inq_dt: str, dl_sq: str | None = None, nxt_key: str | None = None) -> dict:
-    """SWQM2412 API 호출
+    """거래내역 조회 상세
     
     KB증권 API: SWQM2412 (POST /api/v1/swqm2412)
     

@@ -131,6 +131,57 @@ async def test_call_retries_429_then_succeeds(monkeypatch):
     await client.aclose()
 
 
+async def test_call_429_with_non_numeric_retry_after_falls_back_to_backoff(monkeypatch):
+    sleeps = []
+
+    async def _record_sleep(seconds: float) -> None:
+        sleeps.append(seconds)
+
+    monkeypatch.setattr("client.asyncio.sleep", _record_sleep)
+    attempts = {"count": 0}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path == "/oauth2/token":
+            return token_response()
+        attempts["count"] += 1
+        if attempts["count"] < 2:
+            return httpx.Response(429, headers={"Retry-After": "Wed, 21 Oct 2015 07:28:00 GMT"})
+        return httpx.Response(200, json={"ok": True})
+
+    client = make_client(handler)
+    result = await client.call("/api/v1/ivu10140", {})
+    assert result == {"ok": True}
+    assert attempts["count"] == 2
+    # Non-numeric Retry-After must not crash; falls back to exponential backoff (2 ** (1-1) == 1).
+    assert sleeps == [1]
+    await client.aclose()
+
+
+async def test_call_429_with_large_retry_after_is_clamped(monkeypatch):
+    sleeps = []
+
+    async def _record_sleep(seconds: float) -> None:
+        sleeps.append(seconds)
+
+    monkeypatch.setattr("client.asyncio.sleep", _record_sleep)
+    attempts = {"count": 0}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path == "/oauth2/token":
+            return token_response()
+        attempts["count"] += 1
+        if attempts["count"] < 2:
+            return httpx.Response(429, headers={"Retry-After": "3600"})
+        return httpx.Response(200, json={"ok": True})
+
+    client = make_client(handler)
+    result = await client.call("/api/v1/ivu10140", {})
+    assert result == {"ok": True}
+    assert attempts["count"] == 2
+    assert sleeps == [60]
+    await client.aclose()
+
+
 def test_mask_body_redacts_secret_fields():
     body = {"appKey": "abcdefgh1234", "appSecret": "s3cr3t", "shrt_cd": "005930"}
     masked = mask_body(body)

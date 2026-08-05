@@ -9,7 +9,7 @@ from client import call
 
 @mcp.tool()
 async def market_kr_get_market_liquidity_trend() -> dict:
-    """IVA10370 API 호출
+    """증시주변자금동향
     
     KB증권 API: IVA10370 (POST /api/v1/iva10370)
     """
@@ -36,7 +36,7 @@ async def market_kr_get_world_indices(lnd_clsf: str) -> dict:
 
 @mcp.tool()
 async def market_kr_get_exchange_rates() -> dict:
-    """IVA60190 API 호출
+    """환율종합
     
     KB증권 API: IVA60190 (POST /api/v1/iva60190)
     """

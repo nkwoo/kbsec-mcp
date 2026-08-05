@@ -89,7 +89,7 @@ async def quote_kr_get_broker_trend(is_cd: str, excg_clsf: str | None = None) ->
 
 @mcp.tool()
 async def quote_kr_get_investor_trend(excg_clsf: str | None = None, is_cd: str | None = None, strt_dt: str | None = None, end_dt: str | None = None, amt_q_clsf: str | None = None, trd_clsf: str | None = None, acml_clsf: str | None = None) -> dict:
-    """IVU10430 API 호출
+    """투자자
     
     KB증권 API: IVU10430 (POST /api/v1/ivu10430)
     
@@ -118,7 +118,7 @@ async def quote_kr_get_investor_trend(excg_clsf: str | None = None, is_cd: str |
 
 @mcp.tool()
 async def quote_kr_get_program_trading(excg_clsf: str | None = None, is_cd: str | None = None, amt_q_clsf: str | None = None, prd_clsf: str | None = None, inq_cnt: str | None = None) -> dict:
-    """IVU10450 API 호출
+    """프로그램
     
     KB증권 API: IVU10450 (POST /api/v1/ivu10450)
     
@@ -160,7 +160,7 @@ async def quote_kr_get_stock_info(stnd_is_cd: str) -> dict:
 
 @mcp.tool()
 async def quote_kr_get_market_status() -> dict:
-    """SZQM0771 API 호출
+    """장운영상태
     
     KB증권 API: SZQM0771 (POST /api/v1/szqm0771)
     """
