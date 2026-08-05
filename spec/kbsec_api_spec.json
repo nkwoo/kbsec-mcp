@@ -1,0 +1,2547 @@
+[
+  {
+    "code": "IVU10070",
+    "category": "국내주식-기본시세",
+    "path": "/api/v1/ivu10070",
+    "desc": "특정 종목의 조회 시점 호가 정보 조회 하는 API",
+    "inputs": [
+      {
+        "field": "is_cd",
+        "kor": "종목코드",
+        "length": "String(9)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "ovtm_mkt_clsf",
+        "kor": "시간외장구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "0:정규장, 1:시간외"
+      }
+    ]
+  },
+  {
+    "code": "IVU10080",
+    "category": "국내주식-기본시세",
+    "path": "/api/v1/ivu10080",
+    "desc": "주식시간대별추이",
+    "inputs": [
+      {
+        "field": "excg_clsf",
+        "kor": "거래소구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "0:통합, 1:KRX, 2:NXT"
+      },
+      {
+        "field": "is_cd",
+        "kor": "종목코드",
+        "length": "String(9)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "ovtm_mkt_clsf",
+        "kor": "시간외장구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "0:정규장, 1:시간외"
+      },
+      {
+        "field": "inq_cnt",
+        "kor": "조회건수",
+        "length": "String(4)",
+        "required": "N",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "IVU10140",
+    "category": "국내주식-기본시세",
+    "path": "/api/v1/ivu10140",
+    "desc": "조회 시점의 주식 현재가를 조회 하는 API",
+    "inputs": [
+      {
+        "field": "excg_clsf",
+        "kor": "거래소구분",
+        "length": "String(1)",
+        "required": "Y",
+        "note": "0:통합, 1:KRX, 2:NXT"
+      },
+      {
+        "field": "shrt_cd",
+        "kor": "단축코드",
+        "length": "String(6)",
+        "required": "Y",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "IVU10210",
+    "category": "국내주식-시세분석",
+    "path": "/api/v1/ivu10210",
+    "desc": "ATS통합-거래대금상위",
+    "inputs": [
+      {
+        "field": "excg_clsf",
+        "kor": "거래소구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "0:통합, 1:KRX, 2:NXT"
+      },
+      {
+        "field": "mkt_clsf",
+        "kor": "시장구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "1:전체, 2:KOSPI, 3:KOSDAQ"
+      },
+      {
+        "field": "thdy_bdy_clsf",
+        "kor": "당일전일구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "1:당일, 2:전일"
+      },
+      {
+        "field": "inq_cnt",
+        "kor": "조회건수",
+        "length": "String(4)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "srt_clsf",
+        "kor": "정렬구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "1:상위, 2:하위"
+      }
+    ]
+  },
+  {
+    "code": "IVU10240",
+    "category": "국내주식-시세분석",
+    "path": "/api/v1/ivu10240",
+    "desc": "ATS통합-전일대비등락율상위",
+    "inputs": [
+      {
+        "field": "excg_clsf",
+        "kor": "거래소구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "0:통합, 1:KRX, 2:NXT"
+      },
+      {
+        "field": "mkt_clsf",
+        "kor": "시장구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "1:전체, 2:KOSPI, 3:KOSDAQ, 4:KOSPI200, 5:KOSDAQ150"
+      },
+      {
+        "field": "inq_cnt",
+        "kor": "조회건수",
+        "length": "String(4)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "srt_clsf",
+        "kor": "정렬구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "1:상승율, 2:하락율, 3:상승폭, 4:하락폭"
+      }
+    ]
+  },
+  {
+    "code": "IVU10270",
+    "category": "국내주식-시세분석",
+    "path": "/api/v1/ivu10270",
+    "desc": "ATS통합-가격급등/급락종목",
+    "inputs": [
+      {
+        "field": "excg_clsf",
+        "kor": "거래소구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "0:통합, 1:KRX, 2:NXT"
+      },
+      {
+        "field": "mkt_clsf",
+        "kor": "시장구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "1:전체, 2:KOSPI, 3:KOSDAQ"
+      },
+      {
+        "field": "inq_cnt",
+        "kor": "조회건수",
+        "length": "String(4)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "up_dwn_ccd",
+        "kor": "등락구분코드",
+        "length": "String(1)",
+        "required": "N",
+        "note": "1:급등, 2:급락"
+      },
+      {
+        "field": "minute_dy_ccd",
+        "kor": "MINUTE일구분코드",
+        "length": "String(1)",
+        "required": "N",
+        "note": "1:분전, 2:일전"
+      },
+      {
+        "field": "minute_dy_unt",
+        "kor": "MINUTE일단위",
+        "length": "String(4)",
+        "required": "N",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "IVU10280",
+    "category": "국내주식-시세분석",
+    "path": "/api/v1/ivu10280",
+    "desc": "ATS통합-당일거래량상위",
+    "inputs": [
+      {
+        "field": "excg_clsf",
+        "kor": "거래소구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "0:통합, 1:KRX, 2:NXT"
+      },
+      {
+        "field": "mkt_clsf",
+        "kor": "시장구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "시장구분 : 1:전체, 2:KOSPI, 3:KOSDAQ"
+      }
+    ]
+  },
+  {
+    "code": "IVU10420",
+    "category": "국내주식-기본시세",
+    "path": "/api/v1/ivu10420",
+    "desc": "당일주요외국계거래원",
+    "inputs": [
+      {
+        "field": "excg_clsf",
+        "kor": "거래소구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "0:통합, 1:KRX, 2:NXT"
+      },
+      {
+        "field": "is_cd",
+        "kor": "종목코드",
+        "length": "String(6)",
+        "required": "Y",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "IVU10430",
+    "category": "국내주식-기본시세",
+    "path": "/api/v1/ivu10430",
+    "desc": "",
+    "inputs": [
+      {
+        "field": "excg_clsf",
+        "kor": "거래소구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "0:통합, 1:KRX, 2:NXT"
+      },
+      {
+        "field": "is_cd",
+        "kor": "종목코드",
+        "length": "String(6)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "strt_dt",
+        "kor": "시작일자",
+        "length": "String(8)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "end_dt",
+        "kor": "종료일자",
+        "length": "String(8)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "amt_q_clsf",
+        "kor": "금액수량구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "1:금액, 2:수량"
+      },
+      {
+        "field": "trd_clsf",
+        "kor": "매매구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "1:순매수, 2:매수, 3:매도"
+      },
+      {
+        "field": "acml_clsf",
+        "kor": "누적구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "0:누적안함, 1:누적"
+      }
+    ]
+  },
+  {
+    "code": "IVU10450",
+    "category": "국내주식-기본시세",
+    "path": "/api/v1/ivu10450",
+    "desc": "",
+    "inputs": [
+      {
+        "field": "excg_clsf",
+        "kor": "거래소구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "0:통합, 1:KRX, 2:NXT"
+      },
+      {
+        "field": "is_cd",
+        "kor": "종목코드",
+        "length": "String(6)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "amt_q_clsf",
+        "kor": "금액수량구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "금액수량구분 : 1:금액, 2:수량"
+      },
+      {
+        "field": "prd_clsf",
+        "kor": "기간구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "기간구분 : 1:시간별, 2:일별"
+      },
+      {
+        "field": "inq_cnt",
+        "kor": "조회건수",
+        "length": "String(4)",
+        "required": "N",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "IVU10550",
+    "category": "국내주식-시세분석",
+    "path": "/api/v1/ivu10550",
+    "desc": "신고가/신저가(IVU10550)",
+    "inputs": [
+      {
+        "field": "excg_clsf",
+        "kor": "거래소구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "0:통합, 1:KRX, 2:NXT"
+      },
+      {
+        "field": "mkt_clsf",
+        "kor": "시장구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "1:전체, 2:KOSPI, 3:KOSDAQ"
+      },
+      {
+        "field": "inq_cnt",
+        "kor": "조회건수",
+        "length": "String(4)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "nw_stk_lw_ccd",
+        "kor": "신고저구분코드",
+        "length": "String(1)",
+        "required": "N",
+        "note": ": 1:신고가, 2:신저가"
+      },
+      {
+        "field": "std_clsf",
+        "kor": "기준구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "1:고저기준, 2:종가기준"
+      },
+      {
+        "field": "prd_clsf",
+        "kor": "기간구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "1:전일 2:5일 3:10일 4:20일 5:60일 6:250일 7:120일"
+      },
+      {
+        "field": "excd_clsf",
+        "kor": "돌파구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "1:일시돌파, 2:돌파유지"
+      }
+    ]
+  },
+  {
+    "code": "SIQM4900",
+    "category": "국내주식-기본시세",
+    "path": "/api/v1/siqm4900",
+    "desc": "종목 기본 정보 조회 하는 APIinput 의 종목코드에 대한 정보를 단건 조회",
+    "inputs": [
+      {
+        "field": "stnd_is_cd",
+        "kor": "표준종목코드",
+        "length": "String(12)",
+        "required": "Y",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "SSAM0831",
+    "category": "국내주식-주식주문",
+    "path": "/api/v1/ssam0831",
+    "desc": "국내주식 예약 주문을 현금 및 신용 통합으로 접수합니다.정규 거래 시간 외에 다음 거래일에 실행될 주식 매수·매도 예약 주문을 사전에 등록할 수 있습니다.",
+    "inputs": [
+      {
+        "field": "ordr_jb_clsf",
+        "kor": "주문업무구분",
+        "length": "String(1)",
+        "required": "Y",
+        "note": "1:매도,2:매수"
+      },
+      {
+        "field": "is_cd",
+        "kor": "종목코드",
+        "length": "String(7)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "ordr_uprc",
+        "kor": "주문단가",
+        "length": "String(9)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "ordr_q",
+        "kor": "주문수량",
+        "length": "String(9)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "ordr_ccd",
+        "kor": "주문구분코드",
+        "length": "String(2)",
+        "required": "Y",
+        "note": "00:지정가,03:시장가,12:최유리지정가,13:최우선지정가"
+      },
+      {
+        "field": "strt_dt",
+        "kor": "시작일자",
+        "length": "String(8)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "end_dt",
+        "kor": "종료일자",
+        "length": "String(8)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "mkt_tm_ccd",
+        "kor": "시장시간구분코드",
+        "length": "String(1)",
+        "required": "N",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "SSAM1801",
+    "category": "국내주식-주식주문",
+    "path": "/api/v1/ssam1801",
+    "desc": "국내주식 현금 매도 주문을 접수합니다.시장가, 지정가 등 다양한 주문 유형을 지원하며, 보유 주식의 전부 또는 일부를 매도할 수 있습니다.",
+    "inputs": [
+      {
+        "field": "mkt_tm_clsf",
+        "kor": "시장시간구분",
+        "length": "String(1)",
+        "required": "Y",
+        "note": "1:정규장,2:장개시전시간외종가,3:장종료후시간외종가,4:장종료후시간외단일가"
+      },
+      {
+        "field": "is_cd",
+        "kor": "종목코드",
+        "length": "String(12)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "ordr_q",
+        "kor": "주문수량",
+        "length": "String(10)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "ordr_uprc",
+        "kor": "주문단가",
+        "length": "String(9)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "ordr_ccd",
+        "kor": "주문구분코드",
+        "length": "String(2)",
+        "required": "Y",
+        "note": "00:지정가,03:시장가,12:최유리지정가,13:최우선지정가,M3:중간가"
+      },
+      {
+        "field": "sor_ordr_ccd",
+        "kor": "SOR주문구분코드",
+        "length": "String(1)",
+        "required": "N",
+        "note": "K:KRX,N:NXT,S:SOR"
+      }
+    ]
+  },
+  {
+    "code": "SSAM1802",
+    "category": "국내주식-주식주문",
+    "path": "/api/v1/ssam1802",
+    "desc": "국내주식 현금 매수 주문을 접수합니다.시장가, 지정가 등 다양한 주문 유형을 지원합니다. 스톱지정가 주문 시 ordr_ccd 값을 확인하세요.",
+    "inputs": [
+      {
+        "field": "mkt_tm_clsf",
+        "kor": "시장시간구분",
+        "length": "String(1)",
+        "required": "Y",
+        "note": "1:정규장,2:장개시전시간외종가,3:장종료후시간외종가,4:장종료후시간외단일가"
+      },
+      {
+        "field": "is_cd",
+        "kor": "종목코드",
+        "length": "String(12)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "ordr_q",
+        "kor": "주문수량",
+        "length": "String(10)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "ordr_uprc",
+        "kor": "주문단가",
+        "length": "String(9)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "ordr_ccd",
+        "kor": "주문구분코드",
+        "length": "String(2)",
+        "required": "Y",
+        "note": "00:지정가,03:시장가,12:최유리지정가,13:최우선지정가, M3:중간가"
+      },
+      {
+        "field": "sor_ordr_ccd",
+        "kor": "SOR주문구분코드",
+        "length": "String(1)",
+        "required": "N",
+        "note": "K:KRX,N:NXT,S:SOR"
+      }
+    ]
+  },
+  {
+    "code": "SSAM1805",
+    "category": "국내주식-주식주문",
+    "path": "/api/v1/ssam1805",
+    "desc": "미체결 상태의 국내주식 주문을 정정합니다.원주문번호와 정정할 수량·가격을 입력하여 미체결 주문의 내용을 변경할 수 있습니다.",
+    "inputs": [
+      {
+        "field": "mkt_tm_clsf",
+        "kor": "시장시간구분",
+        "length": "String(1)",
+        "required": "Y",
+        "note": "1:정규장,2:장개시전시간외종가,3:장종료후시간외종가,4:장종료후시간외단일가"
+      },
+      {
+        "field": "is_cd",
+        "kor": "종목코드",
+        "length": "String(12)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "ordr_q",
+        "kor": "주문수량",
+        "length": "String(10)",
+        "required": "Y",
+        "note": "*일부정정시 입력"
+      },
+      {
+        "field": "ordr_uprc",
+        "kor": "주문단가",
+        "length": "String(9)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "ordr_ccd",
+        "kor": "주문구분코드",
+        "length": "String(2)",
+        "required": "Y",
+        "note": "00:지정가,03:시장가,05:조건부지정가,12:최유리지정가,13:최우선지정가"
+      },
+      {
+        "field": "crct_clsf",
+        "kor": "정정구분",
+        "length": "String(1)",
+        "required": "Y",
+        "note": "1:일부정정,2:전부정정"
+      },
+      {
+        "field": "orgn_ordr_no",
+        "kor": "원주문번호",
+        "length": "String(10)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "sor_ordr_ccd",
+        "kor": "SOR주문구분코드",
+        "length": "String(1)",
+        "required": "N",
+        "note": "K:KRX,N:NXT,S:SOR"
+      }
+    ]
+  },
+  {
+    "code": "SSAM1806",
+    "category": "국내주식-주식주문",
+    "path": "/api/v1/ssam1806",
+    "desc": "",
+    "inputs": [
+      {
+        "field": "is_cd",
+        "kor": "종목코드",
+        "length": "String(12)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "ordr_q",
+        "kor": "주문수량",
+        "length": "String(10)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "crct_clsf",
+        "kor": "정정구분",
+        "length": "String(1)",
+        "required": "Y",
+        "note": "1:일부정정,2:전부정정"
+      },
+      {
+        "field": "orgn_ordr_no",
+        "kor": "원주문번호",
+        "length": "String(10)",
+        "required": "Y",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "SSAM5762",
+    "category": "국내주식-주식주문",
+    "path": "/api/v1/ssam5762",
+    "desc": "국내주식 소수점 단위 매도 주문을 접수합니다.1주 미만의 소수점 단위로 보유한 주식을 매도할 수 있습니다.",
+    "inputs": [
+      {
+        "field": "is_cd",
+        "kor": "종목코드",
+        "length": "String(12)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "ordr_q_p6",
+        "kor": "주문수량P6",
+        "length": "String(15)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "ordr_amt",
+        "kor": "주문금액",
+        "length": "String(18)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "dcml_ordr_std_ccd",
+        "kor": "소수점주문기준구분코드",
+        "length": "String(1)",
+        "required": "Y",
+        "note": "1:금액, 2:수량 (전량일때 2번으로)"
+      },
+      {
+        "field": "tv_s_est_f",
+        "kor": "전량매도설정여부",
+        "length": "String(1)",
+        "required": "Y",
+        "note": "0:일부매도, 1:전량매도"
+      }
+    ]
+  },
+  {
+    "code": "SSAM5763",
+    "category": "국내주식-주식주문",
+    "path": "/api/v1/ssam5763",
+    "desc": "",
+    "inputs": [
+      {
+        "field": "is_cd",
+        "kor": "종목코드",
+        "length": "String(12)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "ordr_q_p6",
+        "kor": "주문수량P6",
+        "length": "String(15)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "ordr_amt",
+        "kor": "주문금액",
+        "length": "String(18)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "dcml_ordr_std_ccd",
+        "kor": "소수점주문기준구분코드",
+        "length": "String(1)",
+        "required": "Y",
+        "note": "1:금액,2:수량"
+      }
+    ]
+  },
+  {
+    "code": "SSAM5764",
+    "category": "국내주식-주식주문",
+    "path": "/api/v1/ssam5764",
+    "desc": "",
+    "inputs": [
+      {
+        "field": "dmstc_stk_dcml_trd_jb_ccd",
+        "kor": "국내주식소수점매매업무구분코드",
+        "length": "String(2)",
+        "required": "Y",
+        "note": "01:일반,02:자기,03:정기매수,04:비상장분할 일괄청산,05:정리매매 일괄청산"
+      },
+      {
+        "field": "ordr_sqc",
+        "kor": "주문회차",
+        "length": "String(10)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "ordr_dt",
+        "kor": "주문일자",
+        "length": "String(8)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "bnf_is_cd",
+        "kor": "수익증권종목코드",
+        "length": "String(12)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "trd_dl_ccd",
+        "kor": "매매거래구분코드",
+        "length": "String(2)",
+        "required": "Y",
+        "note": "01:매도, 02:매수"
+      },
+      {
+        "field": "dmstc_stk_dcml_ordr_sq",
+        "kor": "국내주식소수점주문일련번호",
+        "length": "String(18)",
+        "required": "Y",
+        "note": "SSQM5765 api 의 acpt_no 값 "
+      }
+    ]
+  },
+  {
+    "code": "SSQM0004",
+    "category": "국내주식-계좌잔고",
+    "path": "/api/v1/ssqm0004",
+    "desc": "",
+    "inputs": [
+      {
+        "field": "is_no",
+        "kor": "종목번호",
+        "length": "String(12)",
+        "required": "N",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "SSQM0831",
+    "category": "국내주식-주문내역",
+    "path": "/api/v1/ssqm0831",
+    "desc": "사전에 접수된 예약 주문의 처리 결과를 조회합니다.예약 주문 접수 후 실제 시장 개장 시 처리된 체결 여부와 결과를 확인할 수 있습니다.",
+    "inputs": [
+      {
+        "field": "ordr_dt",
+        "kor": "주문일자",
+        "length": "String(8)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "nxt_key",
+        "kor": "다음키",
+        "length": "String(18)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "trd_clsf",
+        "kor": "매매구분",
+        "length": "String(1)",
+        "required": "Y",
+        "note": "0:전체,1:매도,2:매수"
+      },
+      {
+        "field": "hndl_clsf",
+        "kor": "처리구분",
+        "length": "String(1)",
+        "required": "Y",
+        "note": "0:전체,S:완료,R:접수,E:거부"
+      },
+      {
+        "field": "tv_rv_ccd",
+        "kor": "전량잔량구분코드",
+        "length": "String(1)",
+        "required": "Y",
+        "note": "0:전체,N:일반,T:기간"
+      },
+      {
+        "field": "end_dt",
+        "kor": "종료일자",
+        "length": "String(8)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "is_cd",
+        "kor": "종목코드",
+        "length": "String(12)",
+        "required": "N",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "SSQM0834",
+    "category": "국내주식-주문내역",
+    "path": "/api/v1/ssqm0834",
+    "desc": "접수된 예약 주문 내역을 조회합니다.정규 시장 시간 외에 접수한 예약 주문의 종목, 수량, 단가 등 상세 내역을 확인할 수 있습니다.",
+    "inputs": [
+      {
+        "field": "nxt_key",
+        "kor": "다음키",
+        "length": "String(19)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "strt_dt",
+        "kor": "시작일자",
+        "length": "String(8)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "end_dt",
+        "kor": "종료일자",
+        "length": "String(8)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "is_cd",
+        "kor": "종목코드",
+        "length": "String(12)",
+        "required": "N",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "SSQM1801",
+    "category": "국내주식-계좌잔고",
+    "path": "/api/v1/ssqm1801",
+    "desc": "계좌에서 보유 중인 주식 목록과 상세 정보를 조회합니다.종목별 보유 수량, 평균 매입 단가, 현재 평가금액, 손익 등을 확인할 수 있습니다.",
+    "inputs": [
+      {
+        "field": "inq_clsf",
+        "kor": "조회구분",
+        "length": "String(1)",
+        "required": "Y",
+        "note": "0:현금주식매도,1:현금주식예약,2:현금주식일괄매도,3:ELW+현금,4:장외단주매도,5:ELW 전용,6:현금주식매도+코넥스+ETN,7:코넥스전용,8:ETN 전용,9:ELW+현금+ETN"
+      },
+      {
+        "field": "is_no",
+        "kor": "종목번호",
+        "length": "String(12)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "mkt_tm_ccd",
+        "kor": "시장시간구분코드",
+        "length": "String(1)",
+        "required": "Y",
+        "note": "1:정규시장,2:장개시전시간외,3:장종료후시간외,4:시간외단일가"
+      },
+      {
+        "field": "nxt_key",
+        "kor": "다음키",
+        "length": "String(12)",
+        "required": "N",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "SSQM1802",
+    "category": "국내주식-주식주문",
+    "path": "/api/v1/ssqm1802",
+    "desc": "특정 종목에 대해 현재 계좌에서 매수 가능한 금액과 수량을 조회합니다.\n주문 전 희망 매수 단가를 입력하면 해당 단가 기준의 최대 매수 가능 수량을 미리 확인할 수 있습니다.",
+    "inputs": [
+      {
+        "field": "is_no",
+        "kor": "종목번호",
+        "length": "String(12)",
+        "required": "N",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "SSQM2121",
+    "category": "국내주식-계좌잔고",
+    "path": "/api/v1/ssqm2121",
+    "desc": "",
+    "inputs": [
+      {
+        "field": "trd_dt",
+        "kor": "매매일자",
+        "length": "String(8)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "clsf",
+        "kor": "구분",
+        "length": "String(1)",
+        "required": "Y",
+        "note": "1: 단가별, 2: 종목별"
+      },
+      {
+        "field": "stmt_dt",
+        "kor": "결제일자",
+        "length": "String(8)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "nxt_key",
+        "kor": "다음키",
+        "length": "String(50)",
+        "required": "N",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "SSQM2341",
+    "category": "국내주식-주문내역",
+    "path": "/api/v1/ssqm2341",
+    "desc": "계좌별 주문 체결 내역을 조회합니다.지정된 기간 내 체결된 주문의 종목, 매매 구분, 체결 수량, 단가, 수수료 등을 확인할 수 있습니다.",
+    "inputs": [
+      {
+        "field": "ccls_clsf",
+        "kor": "체결구분",
+        "length": "String(1)",
+        "required": "Y",
+        "note": "0:전체, 1:체결, 2:미체결"
+      },
+      {
+        "field": "ordr_dt",
+        "kor": "주문일자",
+        "length": "String(8)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "nxt_key",
+        "kor": "다음키",
+        "length": "String(40)",
+        "required": "N",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "SSQM2392",
+    "category": "국내주식-계좌잔고",
+    "path": "/api/v1/ssqm2392",
+    "desc": "지정된 기간 동안 계좌의 매매 손익 현황을 조회합니다.종목코드를 지정하면 특정 종목의 손익을, 미입력 시 전체 종목의 손익 합계를 조회합니다.",
+    "inputs": [
+      {
+        "field": "is_no",
+        "kor": "종목번호",
+        "length": "String(12)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "ordr_dt_from",
+        "kor": "주문일자FROM",
+        "length": "String(8)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "ordr_dt_to",
+        "kor": "주문일자TO",
+        "length": "String(8)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "nxt_key",
+        "kor": "다음키",
+        "length": "String(30)",
+        "required": "N",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "SSQM2442",
+    "category": "국내주식-계좌잔고",
+    "path": "/api/v1/ssqm2442",
+    "desc": "일자별 실현 손익 내역을 상세하게 조회합니다.매매일, 종목명, 체결 수량·단가, 수수료, 제세금, 실현 손익 및 수익률을 날짜 범위별로 확인할 수 있습니다.",
+    "inputs": [
+      {
+        "field": "is_cd",
+        "kor": "종목코드",
+        "length": "String(12)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "inq_strt_dt",
+        "kor": "조회시작일자",
+        "length": "String(8)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "inq_end_dt",
+        "kor": "조회종료일자",
+        "length": "String(8)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "nxt_key",
+        "kor": "다음키",
+        "length": "String(24)",
+        "required": "N",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "SSQM2932",
+    "category": "국내주식-계좌잔고",
+    "path": "/api/v1/ssqm2932",
+    "desc": "종합위탁계좌 및 신연금저축계좌의 잔고 현황을 조회합니다.계좌 유형별 보유 자산 및 평가 금액을 한눈에 확인할 수 있습니다.",
+    "inputs": [
+      {
+        "field": "inq_clsf",
+        "kor": "조회구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "1:계좌별, 2:상품유형별 (자문/일임)"
+      },
+      {
+        "field": "excg_mktpr_ccd",
+        "kor": "거래소시세구분코드",
+        "length": "String(1)",
+        "required": "N",
+        "note": "A:통합시세,K:KRX시세,N:NXT시세"
+      }
+    ]
+  },
+  {
+    "code": "SSQM2952",
+    "category": "국내주식-계좌잔고",
+    "path": "/api/v1/ssqm2952",
+    "desc": "계좌에 연결된 전체 자산의 현재 평가 금액을 조회합니다.주식, 금융상품, 예수금을 포함한 총 자산 평가를 제공하며, 전일 대비 손익도 함께 확인할 수 있습니다.",
+    "inputs": [
+      {
+        "field": "excg_mktpr_ccd",
+        "kor": "거래소시세구분코드",
+        "length": "String(1)",
+        "required": "N",
+        "note": "A:통합시세, K:KRX시세, N:NXT시세"
+      }
+    ]
+  },
+  {
+    "code": "SSQM5765",
+    "category": "국내주식-주문내역",
+    "path": "/api/v1/ssqm5765",
+    "desc": "국내주식 소수점 매매 전체 내역을 조회합니다.소수점 단위로 매수·매도한 거래 내역, 수량, 금액, 손익을 기간별로 확인할 수 있습니다.",
+    "inputs": [
+      {
+        "field": "trd_clsf",
+        "kor": "매매구분",
+        "length": "String(1)",
+        "required": "Y",
+        "note": "0: 전체, 1:매도, 2:매수"
+      },
+      {
+        "field": "trd_strt_dt",
+        "kor": "매매시작일자",
+        "length": "String(8)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "trd_end_dt",
+        "kor": "매매종료일자",
+        "length": "String(8)",
+        "required": "N",
+        "note": "* 당일자 조회시에는 빈값"
+      },
+      {
+        "field": "is_cd",
+        "kor": "종목코드",
+        "length": "String(12)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "nxt_key",
+        "kor": "다음키",
+        "length": "String(74)",
+        "required": "N",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "SWQA2301",
+    "category": "국내주식-계좌잔고",
+    "path": "/api/v1/swqa2301",
+    "desc": "위탁, 금융상품, 저축 계좌의 거래 내역을 기간별로 조회합니다.입출금, 매매, 배당 등 계좌 원장 상의 모든 거래 기록을 확인할 수 있습니다.",
+    "inputs": [
+      {
+        "field": "strt_dt",
+        "kor": "시작일자",
+        "length": "String(8)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "end_dt",
+        "kor": "종료일자",
+        "length": "String(8)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "is_no",
+        "kor": "종목번호",
+        "length": "String(12)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "nxt_key",
+        "kor": "다음키",
+        "length": "String(100)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "srt_clsf",
+        "kor": "정렬구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "1: 과거거래내역순, 2: 최근거래내역순"
+      }
+    ]
+  },
+  {
+    "code": "SWQM2412",
+    "category": "국내주식-계좌잔고",
+    "path": "/api/v1/swqm2412",
+    "desc": "",
+    "inputs": [
+      {
+        "field": "inq_dt",
+        "kor": "조회일자",
+        "length": "String(8)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "dl_sq",
+        "kor": "거래일련번호",
+        "length": "String(10)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "nxt_key",
+        "kor": "다음키",
+        "length": "String(10)",
+        "required": "N",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "SWQN2302",
+    "category": "국내주식-계좌잔고",
+    "path": "/api/v1/swqn2302",
+    "desc": "D+1(익일), D+2(익익일) 출금 가능 금액을 조회합니다.\n주식 매도 후 결제 일정에 따른 향후 출금 가능 금액을 미리 확인할 수 있습니다.",
+    "inputs": [
+      {
+        "field": "ccd",
+        "kor": "구분코드",
+        "length": "String(1)",
+        "required": "N",
+        "note": "1:익일예수금/익익일예수금 포함"
+      }
+    ]
+  },
+  {
+    "code": "SZQM0771",
+    "category": "국내주식-기본시세",
+    "path": "/api/v1/szqm0771",
+    "desc": "",
+    "inputs": []
+  },
+  {
+    "code": "IVA10370",
+    "category": "국내주식-투자정보",
+    "path": "/api/v1/iva10370",
+    "desc": "",
+    "inputs": []
+  },
+  {
+    "code": "IVA60140",
+    "category": "국내주식-투자정보",
+    "path": "/api/v1/iva60140",
+    "desc": "세계지수",
+    "inputs": [
+      {
+        "field": "lnd_clsf",
+        "kor": "대륙구분",
+        "length": "String(1)",
+        "required": "Y",
+        "note": "S: 아시아, C: 아메라키, E: 유럽"
+      }
+    ]
+  },
+  {
+    "code": "IVA60190",
+    "category": "국내주식-투자정보",
+    "path": "/api/v1/iva60190",
+    "desc": "",
+    "inputs": []
+  },
+  {
+    "code": "IVM10050",
+    "category": "국내주식-기본시세",
+    "path": "/api/v1/ivm10050",
+    "desc": "종목의 간략한 기업 정보를 조회하는 API",
+    "inputs": [
+      {
+        "field": "is_cd",
+        "kor": "종목코드",
+        "length": "String(6)",
+        "required": "Y",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "IVM30010",
+    "category": "국내주식-투자정보",
+    "path": "/api/v1/ivm30010",
+    "desc": "업종랭킹(MTS)(IVM30010)",
+    "inputs": [
+      {
+        "field": "mkt_clsf",
+        "kor": "시장구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "1:코스피 2:코스닥"
+      }
+    ]
+  },
+  {
+    "code": "IVS10910",
+    "category": "국내주식-시세분석",
+    "path": "/api/v1/ivs10910",
+    "desc": "시가대비등락율상위(IVS10910)",
+    "inputs": [
+      {
+        "field": "mkt_clsf",
+        "kor": "시장구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "1:전체, 2:KOSPI, 3:KOSDAQ, 4:KOSPI200, 5:KOSDAQ150"
+      },
+      {
+        "field": "inq_cnt",
+        "kor": "조회건수",
+        "length": "String(4)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "srt_clsf",
+        "kor": "정렬구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "1:상승, 2:하락"
+      }
+    ]
+  },
+  {
+    "code": "IVS10920",
+    "category": "국내주식-시세분석",
+    "path": "/api/v1/ivs10920",
+    "desc": "시가총액상위",
+    "inputs": [
+      {
+        "field": "inq_cnt",
+        "kor": "조회건수",
+        "length": "String(4)",
+        "required": "N",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "IVS11190",
+    "category": "국내주식-시세분석",
+    "path": "/api/v1/ivs11190",
+    "desc": "시간외단일가등락율순위(IVS11190)",
+    "inputs": [
+      {
+        "field": "mkt_clsf",
+        "kor": "시장구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "1:전체, 2:거래소, 3:코스닥"
+      },
+      {
+        "field": "srt_clsf",
+        "kor": "정렬구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "1:상승율, 2:하락율"
+      },
+      {
+        "field": "thdy_bdy_clsf",
+        "kor": "당일전일구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "1:당일, 2:전일"
+      },
+      {
+        "field": "inq_cnt",
+        "kor": "조회건수",
+        "length": "String(4)",
+        "required": "N",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "IVS11560",
+    "category": "국내주식-기본시세",
+    "path": "/api/v1/ivs11560",
+    "desc": "통합차트",
+    "inputs": [
+      {
+        "field": "info_ccd",
+        "kor": "정보구분코드",
+        "length": "String(1)",
+        "required": "Y",
+        "note": "1:원주가 2:수정주가(KOSPI, KOSDAQ 종목만)"
+      },
+      {
+        "field": "mkt_clsf",
+        "kor": "시장구분",
+        "length": "String(1)",
+        "required": "Y",
+        "note": "0:KOSPI 1:KOSDAQ"
+      },
+      {
+        "field": "chrt_clsf",
+        "kor": "차트구분",
+        "length": "String(1)",
+        "required": "Y",
+        "note": "D:일별 W:주별 M:월별 Y:년별(주식) B:분봉 T:틱"
+      },
+      {
+        "field": "minute_tck_indx",
+        "kor": "MINUTE틱지수",
+        "length": "String(4)",
+        "required": "N",
+        "note": "분, 틱, 일 선택시 조회 주기 표시"
+      },
+      {
+        "field": "is_cd",
+        "kor": "종목코드",
+        "length": "String(12)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "inq_clsf",
+        "kor": "조회구분",
+        "length": "String(1)",
+        "required": "Y",
+        "note": "1:날짜로 조회 2:데이터수로 조회"
+      },
+      {
+        "field": "strt_dy",
+        "kor": "시작일",
+        "length": "String(8)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "inq_cnt",
+        "kor": "조회건수",
+        "length": "String(4)",
+        "required": "N",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "IVSA0070",
+    "category": "국내주식-투자정보",
+    "path": "/api/v1/ivsa0070",
+    "desc": "시장종합(IVSA0070)",
+    "inputs": []
+  },
+  {
+    "code": "IVU10020",
+    "category": "국내주식-시세분석",
+    "path": "/api/v1/ivu10020",
+    "desc": "외국인기관매매상위",
+    "inputs": [
+      {
+        "field": "excg_clsf",
+        "kor": "거래소구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "0:통합, 1:KRX, 2:NXT"
+      },
+      {
+        "field": "mkt_clsf",
+        "kor": "시장구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "0:거래소, 1:코스닥, 2:전체"
+      },
+      {
+        "field": "invstr_ccd",
+        "kor": "투자자구분코드",
+        "length": "String(1)",
+        "required": "N",
+        "note": "0:외국인 1:기관 2:외국인+기관 3:증권 4:보험 5:투신 6:사모펀드 7:은행 8:종금 9:기금 A:기타 B:국가지자체 C:개인 D:기타외국인"
+      },
+      {
+        "field": "prd_clsf",
+        "kor": "기간구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "0:전일 1:1주 2:1달 3:3달 4:6달 5:1년 6:연초"
+      },
+      {
+        "field": "rnk_clsf",
+        "kor": "순위구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "0:순매수 1:순매도 2:지분증가 3:지분감소 4:연속순매수 5:연속순매도"
+      }
+    ]
+  },
+  {
+    "code": "SIAM4983",
+    "category": "해외주식-기본시세",
+    "path": "/api/v1/siam4983",
+    "desc": "해외주식 종목 정보를 조회할 수 있는 API 입니다.",
+    "inputs": [
+      {
+        "field": "Record1",
+        "kor": "Record1",
+        "length": "Object array(10)",
+        "required": "N",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "GSS10030",
+    "category": "해외주식-기본시세",
+    "path": "/api/v1/gss10030",
+    "desc": "현재가",
+    "inputs": [
+      {
+        "field": "krx_cd",
+        "kor": "거래소코드",
+        "length": "String(3)",
+        "required": "Y",
+        "note": "NAS: 나스닥, NYS: 뉴욕거래소, AMX: 아멕스"
+      },
+      {
+        "field": "is_cd",
+        "kor": "종목코드",
+        "length": "String(16)",
+        "required": "Y",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "GSS10040",
+    "category": "해외주식-기본시세",
+    "path": "/api/v1/gss10040",
+    "desc": "호가",
+    "inputs": [
+      {
+        "field": "krx_cd",
+        "kor": "거래소코드",
+        "length": "String(3)",
+        "required": "Y",
+        "note": "NAS: 나스닥, NYS: 뉴욕거래소, AMX: 아멕스"
+      },
+      {
+        "field": "is_cd",
+        "kor": "종목코드",
+        "length": "String(16)",
+        "required": "Y",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "GSA10020",
+    "category": "해외주식-기본시세",
+    "path": "/api/v1/gsa10020",
+    "desc": "시간대별체결",
+    "inputs": [
+      {
+        "field": "krx_cd",
+        "kor": "거래소코드 KRX_CD",
+        "length": "String(3)",
+        "required": "Y",
+        "note": "NAS: 나스닥, NYS: 뉴욕거래소, AMX: 아멕스"
+      },
+      {
+        "field": "is_cd",
+        "kor": "종목코드 IS_CD",
+        "length": "String(16)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "rcrd_c",
+        "kor": "레코드수 RCRD_C",
+        "length": "String(3)",
+        "required": "N",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "GSC10060",
+    "category": "해외주식-기본시세",
+    "path": "/api/v1/gsc10060",
+    "desc": "차트",
+    "inputs": [
+      {
+        "field": "krx_cd",
+        "kor": "거래소코드 KRX_CD",
+        "length": "String(3)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "is_cd",
+        "kor": "종목코드 IS_CD",
+        "length": "String(16)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "chrt_clsf",
+        "kor": "차트구분 CHRT_CLSF",
+        "length": "String(1)",
+        "required": "Y",
+        "note": "1:틱 2:분 3:일 4:주 5:월 6:년"
+      },
+      {
+        "field": "bndl",
+        "kor": "묶음 BNDL",
+        "length": "String(4)",
+        "required": "N",
+        "note": "묶음틱 개수"
+      },
+      {
+        "field": "mdfy_stk_prc_use_f",
+        "kor": "수정주가사용여부 MDFY_STK_PRC_USE_F",
+        "length": "String(1)",
+        "required": "N",
+        "note": "0:수정주가 미사용 1:수정주가사용"
+      },
+      {
+        "field": "rcrd_c",
+        "kor": "레코드수 RCRD_C",
+        "length": "String(4)",
+        "required": "N",
+        "note": "최대요청개수:5000"
+      },
+      {
+        "field": "srch_strt_dy",
+        "kor": "검색시작일 SRCH_STRT_DY",
+        "length": "String(8)",
+        "required": "N",
+        "note": "과거일자 검색용"
+      },
+      {
+        "field": "clsf",
+        "kor": "구분 CLSF",
+        "length": "String(1)",
+        "required": "N",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "SPQM2205",
+    "category": "해외주식-계좌잔고",
+    "path": "/api/v1/spqm2205",
+    "desc": "해외주식 매매가 정산 현황을 조회합니다.체결된 해외주식 거래의 매매 단가 기준 정산 금액과 외화·원화 환산 내역을 확인할 수 있습니다.",
+    "inputs": [
+      {
+        "field": "strt_ordr_dt",
+        "kor": "시작주문일자",
+        "length": "String(8)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "end_ordr_dt",
+        "kor": "종료주문일자",
+        "length": "String(8)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "trd_clsf",
+        "kor": "매매구분",
+        "length": "String(2)",
+        "required": "Y",
+        "note": "99:전체, 01:매도, 02:매수"
+      },
+      {
+        "field": "stnd_is_cd",
+        "kor": "표준종목코드",
+        "length": "String(12)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "krw_unty_mgn_rqst_f",
+        "kor": "원화통합증거금신청여부",
+        "length": "String(1)",
+        "required": "N",
+        "note": "0: 외화기준, 1: 원화기준"
+      },
+      {
+        "field": "dl_clsf",
+        "kor": "거래구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "0:전체, 1:일반거래, 2:소수점거래"
+      },
+      {
+        "field": "nxt_key",
+        "kor": "다음키",
+        "length": "String(100)",
+        "required": "N",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "SPQM2206",
+    "category": "해외주식-계좌잔고",
+    "path": "/api/v1/spqm2206",
+    "desc": "당일 해외주식 매매 손익을 조회합니다.오늘 체결된 해외주식 거래에 대한 실현 손익, 수수료, 제세금을 통화별로 확인할 수 있습니다.",
+    "inputs": [
+      {
+        "field": "ordr_dt",
+        "kor": "주문일자",
+        "length": "String(8)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "stnd_is_cd",
+        "kor": "표준종목코드",
+        "length": "String(12)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "std_crncy_f",
+        "kor": "기준통화여부",
+        "length": "String(1)",
+        "required": "N",
+        "note": "1:외화기준,2:원화기준"
+      },
+      {
+        "field": "exch_r_aplc_f",
+        "kor": "환율적용여부",
+        "length": "String(1)",
+        "required": "N",
+        "note": "1:환전시매도환율, 2:매매기준율"
+      },
+      {
+        "field": "frgn_stk_mgn_ccd",
+        "kor": "해외주식증거금구분코드",
+        "length": "String(1)",
+        "required": "N",
+        "note": "1:원화, 2:외화"
+      },
+      {
+        "field": "dl_clsf",
+        "kor": "거래구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "0:전체,1:일반거래,2:소수점거래"
+      },
+      {
+        "field": "nxt_key",
+        "kor": "다음키",
+        "length": "String(50)",
+        "required": "N",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "SPQM2207",
+    "category": "해외주식-계좌잔고",
+    "path": "/api/v1/spqm2207",
+    "desc": "지정된 기간 동안의 해외주식 매매 손익을 조회합니다.기간 내 해외주식 거래의 실현 손익, 수수료, 세금을 종목별·통화별로 확인할 수 있습니다.",
+    "inputs": [
+      {
+        "field": "strt_ordr_dt",
+        "kor": "시작주문일자",
+        "length": "String(8)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "end_ordr_dt",
+        "kor": "종료주문일자",
+        "length": "String(8)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "stnd_is_cd",
+        "kor": "표준종목코드",
+        "length": "String(12)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "std_crncy_f",
+        "kor": "기준통화여부",
+        "length": "String(1)",
+        "required": "N",
+        "note": "1:외화기준,2:원화기준"
+      },
+      {
+        "field": "exch_r_aplc_f",
+        "kor": "환율적용여부",
+        "length": "String(1)",
+        "required": "N",
+        "note": "1:환전시매도환율, 2:매매기준율"
+      },
+      {
+        "field": "frgn_stk_mgn_ccd",
+        "kor": "해외주식증거금구분코드",
+        "length": "String(1)",
+        "required": "N",
+        "note": "1:원화, 2:외화"
+      },
+      {
+        "field": "dl_clsf",
+        "kor": "거래구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "nxt_key",
+        "kor": "다음키",
+        "length": "String(50)",
+        "required": "N",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "SPQM3390",
+    "category": "해외주식-계좌잔고",
+    "path": "/api/v1/spqm3390",
+    "desc": "글로벌원마켓(통합증거금) 서비스에 가입된 계좌의 증거금 사용 현황을 조회합니다.\n국내·해외주식 통합 증거금 기준의 사용 가능 증거금과 현재 사용 중인 증거금을 확인할 수 있습니다.",
+    "inputs": []
+  },
+  {
+    "code": "SPQM2226",
+    "category": "해외주식-계좌잔고",
+    "path": "/api/v1/spqm2226",
+    "desc": "해외주식 계좌 잔고 평가를 조회합니다.보유 중인 해외주식의 종목별 수량, 평균 단가, 현재가, 평가금액 및 손익을 확인할 수 있습니다.",
+    "inputs": [
+      {
+        "field": "std_crncy_f",
+        "kor": "기준통화여부",
+        "length": "String(1)",
+        "required": "Y",
+        "note": "1: 외화기준, 2: 원화기준"
+      },
+      {
+        "field": "exch_r_aplc_f",
+        "kor": "환율적용여부",
+        "length": "String(1)",
+        "required": "N",
+        "note": "1:환전시매도환율, 2: 매매기준환율(원화)"
+      },
+      {
+        "field": "fee_clsf",
+        "kor": "수수료구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "0: 포함, 1: 미포함"
+      },
+      {
+        "field": "cn_f",
+        "kor": "연속여부",
+        "length": "String(1)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "nxt_key",
+        "kor": "다음키",
+        "length": "String(100)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "mktpr_aplc_clsf",
+        "kor": "시세적용구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "SRQM3051",
+    "category": "해외주식-계좌잔고",
+    "path": "/api/v1/srqm3051",
+    "desc": "계좌에서 발생한 권리 내역을 조회합니다.배당금 지급, 주식 배당, 무상증자 등 보유 종목에서 발생한 권리 행사 내역을 확인할 수 있습니다.",
+    "inputs": [
+      {
+        "field": "strt_dt",
+        "kor": "시작일자",
+        "length": "String(8)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "rgt_clsf",
+        "kor": "권리구분",
+        "length": "String(1)",
+        "required": "Y",
+        "note": "0:전체, 1:배당, 2:유상증자/BW권리행사, 3:무상증자, 4:매수청구, 5:감자, 6:액면분할/액면병합, 7:피흡수합병"
+      },
+      {
+        "field": "is_cd",
+        "kor": "종목코드",
+        "length": "String(12)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "nxt_key",
+        "kor": "다음키",
+        "length": "String(35)",
+        "required": "N",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "SKQM2106",
+    "category": "해외주식-주식주문",
+    "path": "/api/v1/skqm2106",
+    "desc": "해외주식 글로벌원마켓 서비스에서 통화별 주문 가능 금액을 조회합니다.해외주식 매수 주문 전 통화별로 사용 가능한 주문 가능 금액을 확인할 수 있습니다.",
+    "inputs": [
+      {
+        "field": "stnd_is_cd",
+        "kor": "표준종목코드",
+        "length": "String(12)",
+        "required": "Y",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "SKQM3350",
+    "category": "해외주식-주식주문",
+    "path": "/api/v1/skqm3350",
+    "desc": "해외주식 글로벌원마켓 서비스에서 통화별 주문 가능 예수금 현황을 조회합니다.\n미국 달러, 홍콩 달러 등 통화별로 보유 중인 외화 예수금 및 주문 가능 금액 현황을 확인할 수 있습니다.",
+    "inputs": []
+  },
+  {
+    "code": "SKAM2101",
+    "category": "해외주식-주식주문",
+    "path": "/api/v1/skam2101",
+    "desc": "해외주식 매도 또는 매수 주문을 접수합니다.미국, 홍콩, 일본 등 글로벌원마켓 지원 거래소의 주식을 시장가 또는 지정가로 주문할 수 있습니다.",
+    "inputs": [
+      {
+        "field": "trd_dl_ccd",
+        "kor": "매매거래구분코드",
+        "length": "String(2)",
+        "required": "Y",
+        "note": "01:매도, 02:매수"
+      },
+      {
+        "field": "is_cd",
+        "kor": "종목코드",
+        "length": "String(12)",
+        "required": "Y",
+        "note": "ex)TSLA"
+      },
+      {
+        "field": "frgn_ordr_typ_cd",
+        "kor": "해외주문유형코드",
+        "length": "String(1)",
+        "required": "Y",
+        "note": "1:시장가, 2:지정가, 3:VWAP시장가, 4:TWAP시장가"
+      },
+      {
+        "field": "frgn_ordr_q",
+        "kor": "해외주문수량",
+        "length": "String(18)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "frgn_ordr_prc_p4",
+        "kor": "해외주문가격P4",
+        "length": "String(15)",
+        "required": "Y",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "SKAM2102",
+    "category": "해외주식-주식주문",
+    "path": "/api/v1/skam2102",
+    "desc": "접수된 해외주식 주문을 정정하거나 취소합니다.미체결 상태의 해외주식 주문에 대해 수량·가격 정정 또는 주문 취소를 요청할 수 있습니다.",
+    "inputs": [
+      {
+        "field": "crct_cncl_clsf",
+        "kor": "정정취소구분",
+        "length": "String(1)",
+        "required": "Y",
+        "note": "1:정정, 2:취소"
+      },
+      {
+        "field": "is_cd",
+        "kor": "종목코드",
+        "length": "String(12)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "orgn_ordr_no",
+        "kor": "원주문번호",
+        "length": "String(10)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "frgn_ordr_prc_p4",
+        "kor": "해외주문가격P4",
+        "length": "String(15)",
+        "required": "Y",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "SPQN5472",
+    "category": "해외주식-주식주문",
+    "path": "/api/v1/spqn5472",
+    "desc": "해외주식 소수점 매매 시 주문 가능 금액을 조회합니다.소수점 단위로 매수하려는 해외주식 종목과 금액을 입력하면 주문 가능 여부를 확인할 수 있습니다.",
+    "inputs": []
+  },
+  {
+    "code": "SKAM2201",
+    "category": "해외주식-주식주문",
+    "path": "/api/v1/skam2201",
+    "desc": "해외주식 소수점 단위 매도 또는 매수 주문을 접수합니다.1주 미만의 소수점 단위로 해외주식을 거래할 수 있어 소액으로도 해외 우량주에 투자할 수 있습니다.",
+    "inputs": [
+      {
+        "field": "trd_dl_ccd",
+        "kor": "매매거래구분코드",
+        "length": "String(2)",
+        "required": "Y",
+        "note": "01-매도, 02-매수"
+      },
+      {
+        "field": "is_cd",
+        "kor": "종목코드",
+        "length": "String(12)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "amt_q_clsf",
+        "kor": "금액수량구분",
+        "length": "String(1)",
+        "required": "Y",
+        "note": "0-금액, 1-수량"
+      },
+      {
+        "field": "tv_s_est_f",
+        "kor": "전량매도설정여부",
+        "length": "String(1)",
+        "required": "N",
+        "note": "0-일부매도, 1-전량매도"
+      },
+      {
+        "field": "frgn_ordr_typ_cd",
+        "kor": "해외주문유형코드",
+        "length": "String(1)",
+        "required": "Y",
+        "note": "2-지정가, E-유사시장가"
+      },
+      {
+        "field": "crncy_ccd",
+        "kor": "통화구분코드",
+        "length": "String(1)",
+        "required": "N",
+        "note": "0-원화, 1-외화(USD)"
+      },
+      {
+        "field": "ordr_amt",
+        "kor": "주문금액",
+        "length": "String(18)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "dcml_ordr_q_p6",
+        "kor": "소수점주문수량P6",
+        "length": "String(16)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "frgn_ordr_prc_p4",
+        "kor": "해외주문가격P4",
+        "length": "String(15)",
+        "required": "N",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "SKAM2202",
+    "category": "해외주식-주식주문",
+    "path": "/api/v1/skam2202",
+    "desc": "접수된 해외주식 소수점 주문을 취소합니다.미체결 상태의 해외주식 소수점 매수·매도 주문의 수량·가격을 변경하거나 취소할 수 있습니다.",
+    "inputs": [
+      {
+        "field": "orgn_ordr_no",
+        "kor": "원주문번호",
+        "length": "String(10)",
+        "required": "Y",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "SPAO2104",
+    "category": "해외주식-주식주문",
+    "path": "/api/v1/spao2104",
+    "desc": "미국 주식에 대한 예약 주문을 접수합니다.정규 거래 시간 외에도 다음 거래일 시장 개장 시 자동으로 실행될 미국 주식 주문을 사전 접수합니다.",
+    "inputs": [
+      {
+        "field": "is_cd",
+        "kor": "종목코드",
+        "length": "String(12)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "trd_dl_ccd",
+        "kor": "매매거래구분코드",
+        "length": "String(2)",
+        "required": "Y",
+        "note": "01:매도,02:매수"
+      },
+      {
+        "field": "ordr_typ_cd",
+        "kor": "주문유형코드",
+        "length": "String(1)",
+        "required": "Y",
+        "note": "1:시장가, 2:지정가, 3:VWAP시장가, 4:TWAP시장가"
+      },
+      {
+        "field": "ordr_q",
+        "kor": "주문수량",
+        "length": "String(9)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "frgn_ordr_prc_p4",
+        "kor": "해외주문가격P4",
+        "length": "String(15)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "strt_tm",
+        "kor": "시작시간",
+        "length": "String(6)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "end_tm",
+        "kor": "종료시간",
+        "length": "String(6)",
+        "required": "N",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "SPAO2106",
+    "category": "해외주식-주식주문",
+    "path": "/api/v1/spao2106",
+    "desc": "접수된 미국 주식 예약 주문을 취소합니다.아직 처리되지 않은 미국 주식 예약 주문을 취소 처리합니다.",
+    "inputs": [
+      {
+        "field": "is_cd",
+        "kor": "종목코드",
+        "length": "String(12)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "trd_clsf",
+        "kor": "매매구분",
+        "length": "String(4)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "ordr_typ",
+        "kor": "주문유형",
+        "length": "String(6)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "ordr_q",
+        "kor": "주문수량",
+        "length": "String(9)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "frgn_ordr_prc_p4",
+        "kor": "해외주문가격P4",
+        "length": "String(15)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "cncl_ordr_no",
+        "kor": "취소주문번호",
+        "length": "String(10)",
+        "required": "Y",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "SPQM2103",
+    "category": "해외주식-주문내역",
+    "path": "/api/v1/spqm2103",
+    "desc": "해외주식 주문 체결 내역을 조회합니다.지정된 기간 내 체결된 해외주식 주문의 종목, 매매 구분, 수량, 단가, 수수료 등을 확인할 수 있습니다.",
+    "inputs": [
+      {
+        "field": "ccls_clsf",
+        "kor": "체결구분",
+        "length": "String(1)",
+        "required": "Y",
+        "note": "1:전체,2:체결,3:미체결"
+      },
+      {
+        "field": "ordr_dt",
+        "kor": "주문일자",
+        "length": "String(8)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "dl_clsf",
+        "kor": "거래구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "0.전체 1.일반 2.소수점"
+      },
+      {
+        "field": "nxt_key",
+        "kor": "다음키",
+        "length": "String(50)",
+        "required": "N",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "SPQM2204",
+    "category": "해외주식-주문내역",
+    "path": "/api/v1/spqm2204",
+    "desc": "해외주식 주문 체결 현황을 조회합니다.당일 접수한 해외주식 주문의 체결 수량, 미체결 수량, 체결 단가 등 처리 상태를 확인할 수 있습니다.",
+    "inputs": [
+      {
+        "field": "strt_ordr_dt",
+        "kor": "시작주문일자",
+        "length": "String(8)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "end_ordr_dt",
+        "kor": "종료주문일자",
+        "length": "String(8)",
+        "required": "Y",
+        "note": ""
+      },
+      {
+        "field": "ccls_clsf",
+        "kor": "체결구분",
+        "length": "String(1)",
+        "required": "Y",
+        "note": "0: 전체, 1: 체결, 2: 미체결"
+      },
+      {
+        "field": "trd_clsf",
+        "kor": "매매구분",
+        "length": "String(2)",
+        "required": "Y",
+        "note": "99: 전체, 01: 매도, 02: 매수"
+      },
+      {
+        "field": "stnd_is_cd",
+        "kor": "표준종목코드",
+        "length": "String(12)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "dl_clsf",
+        "kor": "거래구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "0:전체 ,1:일반거래,2:소수점거래"
+      },
+      {
+        "field": "nxt_key",
+        "kor": "다음키",
+        "length": "String(50)",
+        "required": "N",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "SPQO2105",
+    "category": "해외주식-주문내역",
+    "path": "/api/v1/spqo2105",
+    "desc": "해외주식 예약주문조회",
+    "inputs": [
+      {
+        "field": "rsrv_dt",
+        "kor": "예약일자",
+        "length": "String(8)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "stnd_is_cd",
+        "kor": "표준종목코드",
+        "length": "String(12)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "trd_clsf",
+        "kor": "매매구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "1:시장가,3:지정가"
+      },
+      {
+        "field": "krw_unty_mgn_rqst_f",
+        "kor": "원화통합증거금신청여부",
+        "length": "String(1)",
+        "required": "N",
+        "note": "0: 외화, 1: 원화"
+      },
+      {
+        "field": "cn_key",
+        "kor": "연속키",
+        "length": "String(50)",
+        "required": "N",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "GSA10600",
+    "category": "해외주식-시세분석",
+    "path": "/api/v1/gsa10600",
+    "desc": "해외시세분석",
+    "inputs": [
+      {
+        "field": "frex_clsf",
+        "kor": "해외거래소구분",
+        "length": "String(2)",
+        "required": "Y",
+        "note": "AA:미국전체 AB:나스닥 AC:뉴욕 AD:아멕스"
+      },
+      {
+        "field": "clsf",
+        "kor": "구분",
+        "length": "String(1)",
+        "required": "N",
+        "note": "1:전일대비 2: 시가총액 3:거래량 4:52주 신고가 5:52주 신저가 6:PER 7:EPS, 8:배당수익률, a:거래대금"
+      },
+      {
+        "field": "rnk",
+        "kor": "순위",
+        "length": "String(1)",
+        "required": "N",
+        "note": "1:상위 2:하위"
+      },
+      {
+        "field": "is_cnt",
+        "kor": "종목건수",
+        "length": "String(5)",
+        "required": "N",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "GSA10150",
+    "category": "해외주식-시세분석",
+    "path": "/api/v1/gsa10150",
+    "desc": "거래량상위",
+    "inputs": [
+      {
+        "field": "krx_cd",
+        "kor": "거래소코드",
+        "length": "String(3)",
+        "required": "Y",
+        "note": "NAS: 나스닥, NYS: 뉴욕거래소, AMX: 아멕스"
+      },
+      {
+        "field": "std_dy",
+        "kor": "기준일",
+        "length": "String(2)",
+        "required": "N",
+        "note": "01: 전일,05:5일,10:10일, 20:20일, 60:60일, 90:90일"
+      },
+      {
+        "field": "vlm",
+        "kor": "거래량",
+        "length": "String(12)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "is_cnt",
+        "kor": "종목건수",
+        "length": "String(5)",
+        "required": "N",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "GSA10170",
+    "category": "해외주식-시세분석",
+    "path": "/api/v1/gsa10170",
+    "desc": "시가총액상위",
+    "inputs": [
+      {
+        "field": "krx_cd",
+        "kor": "거래소코드 KRX_CD",
+        "length": "String(3)",
+        "required": "Y",
+        "note": "NAS: 나스닥, NYS: 뉴욕거래소, AMX: 아멕스"
+      },
+      {
+        "field": "is_cnt",
+        "kor": "종목건수 IS_CNT",
+        "length": "String(5)",
+        "required": "N",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "code": "GSS10180",
+    "category": "해외주식-시세분석",
+    "path": "/api/v1/gss10180",
+    "desc": "신고신저",
+    "inputs": [
+      {
+        "field": "krx_cd",
+        "kor": "거래소코드 KRX_CD",
+        "length": "String(3)",
+        "required": "N",
+        "note": "NAS: 나스닥, NYS: 뉴욕거래소, AMX: 아멕스"
+      },
+      {
+        "field": "clsf",
+        "kor": "구분 CLSF (1:신고 2:신저)",
+        "length": "String(1)",
+        "required": "N",
+        "note": "0: 신고 1: 신저"
+      },
+      {
+        "field": "clsf2",
+        "kor": "구분2 CLSF2 (1:일시돌파 2:돌파유지)",
+        "length": "String(1)",
+        "required": "N",
+        "note": "0: 일시돌파 1: 돌파유지"
+      },
+      {
+        "field": "std_dy",
+        "kor": "기준일 STD_DY (01:전일 05:5일 10:10일)",
+        "length": "String(2)",
+        "required": "N",
+        "note": "01: 전일,05:5일,10:10일, 20:20일, 60:60일, 90:90일"
+      },
+      {
+        "field": "vlm",
+        "kor": "거래량 VLM",
+        "length": "String(12)",
+        "required": "N",
+        "note": ""
+      },
+      {
+        "field": "is_cnt",
+        "kor": "종목건수 IS_CNT",
+        "length": "String(5)",
+        "required": "N",
+        "note": ""
+      }
+    ]
+  }
+]
