@@ -9,7 +9,13 @@ from config import Config
 
 
 def make_config() -> Config:
-    return Config(app_key="test-key", app_secret="test-secret", base_url="https://test.kbsec", timeout_seconds=5)
+    return Config(
+        app_key="test-key",
+        app_secret="test-secret",
+        base_url="https://test.kbsec",
+        timeout_seconds=5,
+        trading_enabled=False,
+    )
 
 
 def token_handler(calls, *, expires_in: int = 86400, status: int = 200):

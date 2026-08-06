@@ -51,6 +51,17 @@ class KBApiError(RuntimeError):
         self.message = message
 
 
+class TradingDisabledError(RuntimeError):
+    """실거래(주문 접수/정정/취소) 도구가 KBSEC_ENABLE_TRADING 비활성화 상태에서 호출되었을 때 발생."""
+
+    def __init__(self, path: str):
+        super().__init__(
+            f"실거래 도구 호출이 차단되었습니다 ({path}). "
+            "활성화하려면 .env에 KBSEC_ENABLE_TRADING=true를 설정하세요."
+        )
+        self.path = path
+
+
 def mask_body(body: dict) -> dict:
     """로그 출력용으로 시크릿 필드를 마스킹한 사본을 반환한다."""
     return {
@@ -84,7 +95,10 @@ class KBApiClient:
     async def aclose(self) -> None:
         await self._http.aclose()
 
-    async def call(self, path: str, body: dict) -> dict:
+    async def call(self, path: str, body: dict, *, requires_trading: bool = False) -> dict:
+        if requires_trading and not self._config.trading_enabled:
+            raise TradingDisabledError(path)
+
         url = f"{self._config.base_url}{path}"
         token = await self._tokens.get_token(self._http)
         headers = {"Content-Type": "application/json", "Authorization": f"bearer {token}"}
@@ -149,5 +163,5 @@ def get_client() -> KBApiClient:
     return _client
 
 
-async def call(path: str, body: dict) -> dict:
-    return await get_client().call(path, body)
+async def call(path: str, body: dict, *, requires_trading: bool = False) -> dict:
+    return await get_client().call(path, body, requires_trading=requires_trading)

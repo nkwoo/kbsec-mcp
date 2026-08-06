@@ -18,6 +18,8 @@ KB증권 OpenAPI 74개 엔드포인트(시세, 주문, 계좌, 투자정보 — 
 - **로컬 IP·MAC 주소가 KB증권 서버로 전송됩니다.** KB증권 API 규격상 모든 요청 바디에
   `dataHeader.ipAddr`/`dataHeader.macAddr`를 포함해야 하며, 이 서버는 `client.py`에서 로컬
   네트워크 인터페이스로부터 이 값을 자동으로 조회해 매 API 호출마다 KB증권 서버로 전송합니다.
+- **실거래 도구는 기본적으로 차단되어 있습니다.** `KBSEC_ENABLE_TRADING=true`를 명시적으로
+  설정하기 전까지는 주문 접수/정정/취소가 실행되지 않습니다 (아래 "실거래 안전장치" 참고).
 - **응답 성공/실패는 HTTP 상태 코드로만 판별합니다.** KB증권 API는 공식 에러 코드 체계를
   문서화하지 않아, HTTP 200이지만 비즈니스 로직상 실패(예: 잔고 부족으로 주문 거부)인 경우
   응답 JSON의 `msg`/`o_msg` 필드를 직접 확인해야 합니다.
@@ -48,8 +50,31 @@ cp .env.example .env
 | `KBSEC_APP_SECRET` | 필수 | KB증권 개발자센터에서 발급받은 appSecret |
 | `KBSEC_BASE_URL` | 선택 (기본값 `https://developer.kbsec.com:32484`) | API 서버 주소 |
 | `KBSEC_TIMEOUT_SECONDS` | 선택 (기본값 `10`) | HTTP 요청 타임아웃(초) |
+| `KBSEC_ENABLE_TRADING` | 선택 (기본값 `false`) | 실거래(주문 접수/정정/취소) 도구 활성화 여부. 아래 "실거래 안전장치" 참고 |
 
 `appKey`/`appSecret`/토큰은 코드나 로그에 절대 기록되지 않으며, 프로세스 메모리에만 보관됩니다.
+
+## 실거래 안전장치
+
+74개 도구 중 **실제로 주문을 접수·정정·취소하는 14개 도구**(`order_kr_place_*`,
+`order_kr_amend_order`, `order_kr_cancel_*`, `order_os_place_*`, `order_os_amend_cancel_order`,
+`order_os_cancel_*`)는 `KBSEC_ENABLE_TRADING`이 `true`(또는 `1`/`yes`/`on`, 대소문자 무관)로
+설정되지 않으면 **기본적으로 차단**됩니다. 차단된 상태에서 호출하면 KB증권 API에 실제 요청을
+보내지 않고 즉시 아래와 같은 에러를 반환합니다.
+
+```
+실거래 도구 호출이 차단되었습니다 (/api/v1/ssam1801). 활성화하려면 .env에 KBSEC_ENABLE_TRADING=true를 설정하세요.
+```
+
+매수가능금액 조회처럼 실제 주문을 넣지 않는 나머지 4개 도구(`order_kr_get_buyable_amount`,
+`order_os_get_buyable_amount`, `order_os_get_buyable_amount_status`,
+`order_os_get_fractional_buyable_amount`)는 이 안전장치와 무관하게 항상 사용할 수 있습니다.
+
+실거래를 허용하려면 `.env`에 다음 줄을 추가하세요:
+
+```
+KBSEC_ENABLE_TRADING=true
+```
 
 ## 실행 확인
 

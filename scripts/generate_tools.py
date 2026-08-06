@@ -73,12 +73,14 @@ def _name_based_description(api: dict) -> str:
     return name
 
 
-def _build_docstring(api: dict) -> str:
+def _build_docstring(api: dict, *, requires_trading: bool = False) -> str:
     desc = (
         _collapse_whitespace(api["desc"])
         or _name_based_description(api)
         or f"{api['code']} API 호출"
     )
+    if requires_trading:
+        desc = f"⚠️ 실거래 도구입니다 (KBSEC_ENABLE_TRADING=true 필요). {desc}"
     lines = [desc, "", f"KB증권 API: {api['code']} (POST {api['path']})"]
     if api["inputs"]:
         lines += ["", "Args:"]
@@ -98,16 +100,17 @@ def _build_body(inputs: list) -> str:
     return "\n".join(lines) + "\n"
 
 
-def render_function(tool_name: str, api: dict) -> str:
+def render_function(tool_name: str, api: dict, *, requires_trading: bool = False) -> str:
     signature = _build_signature(api["inputs"])
-    docstring = _build_docstring(api)
+    docstring = _build_docstring(api, requires_trading=requires_trading)
     body = _build_body(api["inputs"])
+    call_kwargs = ", requires_trading=True" if requires_trading else ""
     return (
         f"@mcp.tool()\n"
         f"async def {tool_name}({signature}) -> dict:\n"
         f'    """{docstring}\n    """\n'
         f"{body}"
-        f'    return await call("{api["path"]}", body)\n'
+        f'    return await call("{api["path"]}", body{call_kwargs})\n'
     )
 
 
@@ -116,7 +119,14 @@ def generate() -> None:
     metadata = load_metadata()
 
     for file_stem, entries in metadata.items():
-        functions = [render_function(entry["tool_name"], spec_by_code[entry["code"]]) for entry in entries]
+        functions = [
+            render_function(
+                entry["tool_name"],
+                spec_by_code[entry["code"]],
+                requires_trading=bool(entry.get("trading", False)),
+            )
+            for entry in entries
+        ]
         content = HEADER + "\n\n".join(functions) + "\n"
         (TOOLS_DIR / f"{file_stem}.py").write_text(content, encoding="utf-8")
         print(f"Wrote {len(entries)} tools to tools/{file_stem}.py")

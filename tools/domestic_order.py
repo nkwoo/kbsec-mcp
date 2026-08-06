@@ -9,7 +9,7 @@ from client import call
 
 @mcp.tool()
 async def order_kr_place_reserve_order(ordr_jb_clsf: str, is_cd: str, ordr_uprc: str, ordr_q: str, ordr_ccd: str, strt_dt: str | None = None, end_dt: str | None = None, mkt_tm_ccd: str | None = None) -> dict:
-    """국내주식 예약 주문을 현금 및 신용 통합으로 접수합니다.정규 거래 시간 외에 다음 거래일에 실행될 주식 매수·매도 예약 주문을 사전에 등록할 수 있습니다.
+    """⚠️ 실거래 도구입니다 (KBSEC_ENABLE_TRADING=true 필요). 국내주식 예약 주문을 현금 및 신용 통합으로 접수합니다.정규 거래 시간 외에 다음 거래일에 실행될 주식 매수·매도 예약 주문을 사전에 등록할 수 있습니다.
     
     KB증권 API: SSAM0831 (POST /api/v1/ssam0831)
     
@@ -35,12 +35,12 @@ async def order_kr_place_reserve_order(ordr_jb_clsf: str, is_cd: str, ordr_uprc:
     }
     body = {k: v for k, v in body.items() if v is not None}
 
-    return await call("/api/v1/ssam0831", body)
+    return await call("/api/v1/ssam0831", body, requires_trading=True)
 
 
 @mcp.tool()
 async def order_kr_place_sell_order(mkt_tm_clsf: str, is_cd: str, ordr_q: str, ordr_uprc: str, ordr_ccd: str, sor_ordr_ccd: str | None = None) -> dict:
-    """국내주식 현금 매도 주문을 접수합니다.시장가, 지정가 등 다양한 주문 유형을 지원하며, 보유 주식의 전부 또는 일부를 매도할 수 있습니다.
+    """⚠️ 실거래 도구입니다 (KBSEC_ENABLE_TRADING=true 필요). 국내주식 현금 매도 주문을 접수합니다.시장가, 지정가 등 다양한 주문 유형을 지원하며, 보유 주식의 전부 또는 일부를 매도할 수 있습니다.
     
     KB증권 API: SSAM1801 (POST /api/v1/ssam1801)
     
@@ -62,12 +62,12 @@ async def order_kr_place_sell_order(mkt_tm_clsf: str, is_cd: str, ordr_q: str, o
     }
     body = {k: v for k, v in body.items() if v is not None}
 
-    return await call("/api/v1/ssam1801", body)
+    return await call("/api/v1/ssam1801", body, requires_trading=True)
 
 
 @mcp.tool()
 async def order_kr_place_buy_order(mkt_tm_clsf: str, is_cd: str, ordr_q: str, ordr_uprc: str, ordr_ccd: str, sor_ordr_ccd: str | None = None) -> dict:
-    """국내주식 현금 매수 주문을 접수합니다.시장가, 지정가 등 다양한 주문 유형을 지원합니다. 스톱지정가 주문 시 ordr_ccd 값을 확인하세요.
+    """⚠️ 실거래 도구입니다 (KBSEC_ENABLE_TRADING=true 필요). 국내주식 현금 매수 주문을 접수합니다.시장가, 지정가 등 다양한 주문 유형을 지원합니다. 스톱지정가 주문 시 ordr_ccd 값을 확인하세요.
     
     KB증권 API: SSAM1802 (POST /api/v1/ssam1802)
     
@@ -89,12 +89,12 @@ async def order_kr_place_buy_order(mkt_tm_clsf: str, is_cd: str, ordr_q: str, or
     }
     body = {k: v for k, v in body.items() if v is not None}
 
-    return await call("/api/v1/ssam1802", body)
+    return await call("/api/v1/ssam1802", body, requires_trading=True)
 
 
 @mcp.tool()
 async def order_kr_amend_order(mkt_tm_clsf: str, is_cd: str, ordr_q: str, ordr_uprc: str, ordr_ccd: str, crct_clsf: str, orgn_ordr_no: str, sor_ordr_ccd: str | None = None) -> dict:
-    """미체결 상태의 국내주식 주문을 정정합니다.원주문번호와 정정할 수량·가격을 입력하여 미체결 주문의 내용을 변경할 수 있습니다.
+    """⚠️ 실거래 도구입니다 (KBSEC_ENABLE_TRADING=true 필요). 미체결 상태의 국내주식 주문을 정정합니다.원주문번호와 정정할 수량·가격을 입력하여 미체결 주문의 내용을 변경할 수 있습니다.
     
     KB증권 API: SSAM1805 (POST /api/v1/ssam1805)
     
@@ -120,12 +120,12 @@ async def order_kr_amend_order(mkt_tm_clsf: str, is_cd: str, ordr_q: str, ordr_u
     }
     body = {k: v for k, v in body.items() if v is not None}
 
-    return await call("/api/v1/ssam1805", body)
+    return await call("/api/v1/ssam1805", body, requires_trading=True)
 
 
 @mcp.tool()
 async def order_kr_cancel_order(is_cd: str, crct_clsf: str, orgn_ordr_no: str, ordr_q: str | None = None) -> dict:
-    """취소주문
+    """⚠️ 실거래 도구입니다 (KBSEC_ENABLE_TRADING=true 필요). 취소주문
     
     KB증권 API: SSAM1806 (POST /api/v1/ssam1806)
     
@@ -143,12 +143,12 @@ async def order_kr_cancel_order(is_cd: str, crct_clsf: str, orgn_ordr_no: str, o
     }
     body = {k: v for k, v in body.items() if v is not None}
 
-    return await call("/api/v1/ssam1806", body)
+    return await call("/api/v1/ssam1806", body, requires_trading=True)
 
 
 @mcp.tool()
 async def order_kr_place_fractional_sell_order(is_cd: str, ordr_amt: str, dcml_ordr_std_ccd: str, tv_s_est_f: str, ordr_q_p6: str | None = None) -> dict:
-    """국내주식 소수점 단위 매도 주문을 접수합니다.1주 미만의 소수점 단위로 보유한 주식을 매도할 수 있습니다.
+    """⚠️ 실거래 도구입니다 (KBSEC_ENABLE_TRADING=true 필요). 국내주식 소수점 단위 매도 주문을 접수합니다.1주 미만의 소수점 단위로 보유한 주식을 매도할 수 있습니다.
     
     KB증권 API: SSAM5762 (POST /api/v1/ssam5762)
     
@@ -168,12 +168,12 @@ async def order_kr_place_fractional_sell_order(is_cd: str, ordr_amt: str, dcml_o
     }
     body = {k: v for k, v in body.items() if v is not None}
 
-    return await call("/api/v1/ssam5762", body)
+    return await call("/api/v1/ssam5762", body, requires_trading=True)
 
 
 @mcp.tool()
 async def order_kr_place_fractional_buy_order(is_cd: str, ordr_amt: str, dcml_ordr_std_ccd: str, ordr_q_p6: str | None = None) -> dict:
-    """소수점 매수주문
+    """⚠️ 실거래 도구입니다 (KBSEC_ENABLE_TRADING=true 필요). 소수점 매수주문
     
     KB증권 API: SSAM5763 (POST /api/v1/ssam5763)
     
@@ -191,12 +191,12 @@ async def order_kr_place_fractional_buy_order(is_cd: str, ordr_amt: str, dcml_or
     }
     body = {k: v for k, v in body.items() if v is not None}
 
-    return await call("/api/v1/ssam5763", body)
+    return await call("/api/v1/ssam5763", body, requires_trading=True)
 
 
 @mcp.tool()
 async def order_kr_cancel_fractional_order(dmstc_stk_dcml_trd_jb_ccd: str, ordr_sqc: str, ordr_dt: str, bnf_is_cd: str, trd_dl_ccd: str, dmstc_stk_dcml_ordr_sq: str) -> dict:
-    """소수점 주문취소
+    """⚠️ 실거래 도구입니다 (KBSEC_ENABLE_TRADING=true 필요). 소수점 주문취소
     
     KB증권 API: SSAM5764 (POST /api/v1/ssam5764)
     
@@ -218,7 +218,7 @@ async def order_kr_cancel_fractional_order(dmstc_stk_dcml_trd_jb_ccd: str, ordr_
     }
     body = {k: v for k, v in body.items() if v is not None}
 
-    return await call("/api/v1/ssam5764", body)
+    return await call("/api/v1/ssam5764", body, requires_trading=True)
 
 
 @mcp.tool()

@@ -88,3 +88,47 @@ def test_no_generated_docstring_uses_bare_code_fallback():
         assert not bare_fallback_pattern.search(source), (
             f"{path} contains a bare '{{CODE}} API 호출' placeholder docstring"
         )
+
+
+def test_render_function_marks_trading_required_tool():
+    api = {"code": "SSAM1801", "path": "/api/v1/ssam1801", "desc": "매도 주문", "inputs": []}
+    src = render_function("order_kr_place_sell_order", api, requires_trading=True)
+    assert 'return await call("/api/v1/ssam1801", body, requires_trading=True)' in src
+    assert "⚠️" in src
+    assert "KBSEC_ENABLE_TRADING" in src
+    compile(src, "<test>", "exec")
+
+
+def test_render_function_without_trading_omits_kwarg():
+    api = {"code": "IVU10140", "path": "/api/v1/ivu10140", "desc": "현재가", "inputs": []}
+    src = render_function("quote_kr_get_price", api, requires_trading=False)
+    assert 'return await call("/api/v1/ivu10140", body)' in src
+    assert "requires_trading" not in src
+    compile(src, "<test>", "exec")
+
+
+def test_generated_trading_tools_pass_requires_trading_and_match_metadata():
+    """Regression test: exactly the 14 metadata-flagged trade-execution tools
+    must call client.call(..., requires_trading=True); no more, no fewer.
+    """
+    metadata = load_metadata()
+    expected_trading_names = {
+        entry["tool_name"] for entries in metadata.values() for entry in entries if entry.get("trading")
+    }
+    assert len(expected_trading_names) == 14
+
+    found_trading_names = set()
+    for file_stem in metadata:
+        source = (TOOLS_DIR / f"{file_stem}.py").read_text(encoding="utf-8")
+        tree = ast.parse(source)
+        for node in ast.walk(tree):
+            if not isinstance(node, ast.AsyncFunctionDef):
+                continue
+            has_flag = any(
+                isinstance(n, ast.Call) and any(kw.arg == "requires_trading" for kw in n.keywords)
+                for n in ast.walk(node)
+            )
+            if has_flag:
+                found_trading_names.add(node.name)
+
+    assert found_trading_names == expected_trading_names

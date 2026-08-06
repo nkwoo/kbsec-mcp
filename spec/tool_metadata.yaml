@@ -1,5 +1,7 @@
 # API 코드 -> MCP tool 이름/소속 파일 매핑
 # scripts/generate_tools.py가 이 파일과 spec/kbsec_api_spec.json을 합쳐 tools/<file>.py를 생성한다.
+# trading: true 인 항목은 실제 주문 접수/정정/취소를 수행하는 도구로, KBSEC_ENABLE_TRADING=true가
+# 아니면 client.py가 호출을 차단한다 (매수가능금액 조회 등은 실거래가 아니므로 제외).
 domestic_quote:
   - code: IVU10070
     tool_name: quote_kr_get_orderbook
@@ -45,20 +47,28 @@ domestic_ranking:
 domestic_order:
   - code: SSAM0831
     tool_name: order_kr_place_reserve_order
+    trading: true
   - code: SSAM1801
     tool_name: order_kr_place_sell_order
+    trading: true
   - code: SSAM1802
     tool_name: order_kr_place_buy_order
+    trading: true
   - code: SSAM1805
     tool_name: order_kr_amend_order
+    trading: true
   - code: SSAM1806
     tool_name: order_kr_cancel_order
+    trading: true
   - code: SSAM5762
     tool_name: order_kr_place_fractional_sell_order
+    trading: true
   - code: SSAM5763
     tool_name: order_kr_place_fractional_buy_order
+    trading: true
   - code: SSAM5764
     tool_name: order_kr_cancel_fractional_order
+    trading: true
   - code: SSQM1802
     tool_name: order_kr_get_buyable_amount
 
@@ -139,18 +149,24 @@ overseas_order:
     tool_name: order_os_get_buyable_amount_status
   - code: SKAM2101
     tool_name: order_os_place_order
+    trading: true
   - code: SKAM2102
     tool_name: order_os_amend_cancel_order
+    trading: true
   - code: SPQN5472
     tool_name: order_os_get_fractional_buyable_amount
   - code: SKAM2201
     tool_name: order_os_place_fractional_order
+    trading: true
   - code: SKAM2202
     tool_name: order_os_cancel_fractional_order
+    trading: true
   - code: SPAO2104
     tool_name: order_os_place_us_reserve_order
+    trading: true
   - code: SPAO2106
     tool_name: order_os_cancel_us_reserve_order
+    trading: true
 
 overseas_order_history:
   - code: SPQM2103

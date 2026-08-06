@@ -36,7 +36,7 @@ async def order_os_get_buyable_amount_status() -> dict:
 
 @mcp.tool()
 async def order_os_place_order(trd_dl_ccd: str, is_cd: str, frgn_ordr_typ_cd: str, frgn_ordr_q: str, frgn_ordr_prc_p4: str) -> dict:
-    """해외주식 매도 또는 매수 주문을 접수합니다.미국, 홍콩, 일본 등 글로벌원마켓 지원 거래소의 주식을 시장가 또는 지정가로 주문할 수 있습니다.
+    """⚠️ 실거래 도구입니다 (KBSEC_ENABLE_TRADING=true 필요). 해외주식 매도 또는 매수 주문을 접수합니다.미국, 홍콩, 일본 등 글로벌원마켓 지원 거래소의 주식을 시장가 또는 지정가로 주문할 수 있습니다.
     
     KB증권 API: SKAM2101 (POST /api/v1/skam2101)
     
@@ -56,12 +56,12 @@ async def order_os_place_order(trd_dl_ccd: str, is_cd: str, frgn_ordr_typ_cd: st
     }
     body = {k: v for k, v in body.items() if v is not None}
 
-    return await call("/api/v1/skam2101", body)
+    return await call("/api/v1/skam2101", body, requires_trading=True)
 
 
 @mcp.tool()
 async def order_os_amend_cancel_order(crct_cncl_clsf: str, is_cd: str, orgn_ordr_no: str, frgn_ordr_prc_p4: str) -> dict:
-    """접수된 해외주식 주문을 정정하거나 취소합니다.미체결 상태의 해외주식 주문에 대해 수량·가격 정정 또는 주문 취소를 요청할 수 있습니다.
+    """⚠️ 실거래 도구입니다 (KBSEC_ENABLE_TRADING=true 필요). 접수된 해외주식 주문을 정정하거나 취소합니다.미체결 상태의 해외주식 주문에 대해 수량·가격 정정 또는 주문 취소를 요청할 수 있습니다.
     
     KB증권 API: SKAM2102 (POST /api/v1/skam2102)
     
@@ -79,7 +79,7 @@ async def order_os_amend_cancel_order(crct_cncl_clsf: str, is_cd: str, orgn_ordr
     }
     body = {k: v for k, v in body.items() if v is not None}
 
-    return await call("/api/v1/skam2102", body)
+    return await call("/api/v1/skam2102", body, requires_trading=True)
 
 
 @mcp.tool()
@@ -94,7 +94,7 @@ async def order_os_get_fractional_buyable_amount() -> dict:
 
 @mcp.tool()
 async def order_os_place_fractional_order(trd_dl_ccd: str, is_cd: str, amt_q_clsf: str, frgn_ordr_typ_cd: str, ordr_amt: str, tv_s_est_f: str | None = None, crncy_ccd: str | None = None, dcml_ordr_q_p6: str | None = None, frgn_ordr_prc_p4: str | None = None) -> dict:
-    """해외주식 소수점 단위 매도 또는 매수 주문을 접수합니다.1주 미만의 소수점 단위로 해외주식을 거래할 수 있어 소액으로도 해외 우량주에 투자할 수 있습니다.
+    """⚠️ 실거래 도구입니다 (KBSEC_ENABLE_TRADING=true 필요). 해외주식 소수점 단위 매도 또는 매수 주문을 접수합니다.1주 미만의 소수점 단위로 해외주식을 거래할 수 있어 소액으로도 해외 우량주에 투자할 수 있습니다.
     
     KB증권 API: SKAM2201 (POST /api/v1/skam2201)
     
@@ -122,12 +122,12 @@ async def order_os_place_fractional_order(trd_dl_ccd: str, is_cd: str, amt_q_cls
     }
     body = {k: v for k, v in body.items() if v is not None}
 
-    return await call("/api/v1/skam2201", body)
+    return await call("/api/v1/skam2201", body, requires_trading=True)
 
 
 @mcp.tool()
 async def order_os_cancel_fractional_order(orgn_ordr_no: str) -> dict:
-    """접수된 해외주식 소수점 주문을 취소합니다.미체결 상태의 해외주식 소수점 매수·매도 주문의 수량·가격을 변경하거나 취소할 수 있습니다.
+    """⚠️ 실거래 도구입니다 (KBSEC_ENABLE_TRADING=true 필요). 접수된 해외주식 소수점 주문을 취소합니다.미체결 상태의 해외주식 소수점 매수·매도 주문의 수량·가격을 변경하거나 취소할 수 있습니다.
     
     KB증권 API: SKAM2202 (POST /api/v1/skam2202)
     
@@ -139,12 +139,12 @@ async def order_os_cancel_fractional_order(orgn_ordr_no: str) -> dict:
     }
     body = {k: v for k, v in body.items() if v is not None}
 
-    return await call("/api/v1/skam2202", body)
+    return await call("/api/v1/skam2202", body, requires_trading=True)
 
 
 @mcp.tool()
 async def order_os_place_us_reserve_order(is_cd: str, trd_dl_ccd: str, ordr_typ_cd: str, ordr_q: str, frgn_ordr_prc_p4: str, strt_tm: str | None = None, end_tm: str | None = None) -> dict:
-    """미국 주식에 대한 예약 주문을 접수합니다.정규 거래 시간 외에도 다음 거래일 시장 개장 시 자동으로 실행될 미국 주식 주문을 사전 접수합니다.
+    """⚠️ 실거래 도구입니다 (KBSEC_ENABLE_TRADING=true 필요). 미국 주식에 대한 예약 주문을 접수합니다.정규 거래 시간 외에도 다음 거래일 시장 개장 시 자동으로 실행될 미국 주식 주문을 사전 접수합니다.
     
     KB증권 API: SPAO2104 (POST /api/v1/spao2104)
     
@@ -168,12 +168,12 @@ async def order_os_place_us_reserve_order(is_cd: str, trd_dl_ccd: str, ordr_typ_
     }
     body = {k: v for k, v in body.items() if v is not None}
 
-    return await call("/api/v1/spao2104", body)
+    return await call("/api/v1/spao2104", body, requires_trading=True)
 
 
 @mcp.tool()
 async def order_os_cancel_us_reserve_order(is_cd: str, cncl_ordr_no: str, trd_clsf: str | None = None, ordr_typ: str | None = None, ordr_q: str | None = None, frgn_ordr_prc_p4: str | None = None) -> dict:
-    """접수된 미국 주식 예약 주문을 취소합니다.아직 처리되지 않은 미국 주식 예약 주문을 취소 처리합니다.
+    """⚠️ 실거래 도구입니다 (KBSEC_ENABLE_TRADING=true 필요). 접수된 미국 주식 예약 주문을 취소합니다.아직 처리되지 않은 미국 주식 예약 주문을 취소 처리합니다.
     
     KB증권 API: SPAO2106 (POST /api/v1/spao2106)
     
@@ -195,5 +195,5 @@ async def order_os_cancel_us_reserve_order(is_cd: str, cncl_ordr_no: str, trd_cl
     }
     body = {k: v for k, v in body.items() if v is not None}
 
-    return await call("/api/v1/spao2106", body)
+    return await call("/api/v1/spao2106", body, requires_trading=True)
 

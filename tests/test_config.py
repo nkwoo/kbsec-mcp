@@ -8,6 +8,7 @@ def test_load_config_reads_required_and_default_values(monkeypatch):
     monkeypatch.setenv("KBSEC_APP_SECRET", "test-secret")
     monkeypatch.delenv("KBSEC_BASE_URL", raising=False)
     monkeypatch.delenv("KBSEC_TIMEOUT_SECONDS", raising=False)
+    monkeypatch.delenv("KBSEC_ENABLE_TRADING", raising=False)
 
     config = load_config()
 
@@ -15,6 +16,29 @@ def test_load_config_reads_required_and_default_values(monkeypatch):
     assert config.app_secret == "test-secret"
     assert config.base_url == "https://developer.kbsec.com:32484"
     assert config.timeout_seconds == 10.0
+    assert config.trading_enabled is False
+
+
+@pytest.mark.parametrize("value", ["true", "True", "TRUE", "1", "yes", "on"])
+def test_load_config_parses_truthy_trading_flag(monkeypatch, value):
+    monkeypatch.setenv("KBSEC_APP_KEY", "k")
+    monkeypatch.setenv("KBSEC_APP_SECRET", "s")
+    monkeypatch.setenv("KBSEC_ENABLE_TRADING", value)
+
+    config = load_config()
+
+    assert config.trading_enabled is True
+
+
+@pytest.mark.parametrize("value", ["false", "False", "0", "no", "off", ""])
+def test_load_config_parses_falsy_trading_flag(monkeypatch, value):
+    monkeypatch.setenv("KBSEC_APP_KEY", "k")
+    monkeypatch.setenv("KBSEC_APP_SECRET", "s")
+    monkeypatch.setenv("KBSEC_ENABLE_TRADING", value)
+
+    config = load_config()
+
+    assert config.trading_enabled is False
 
 
 def test_load_config_respects_overrides(monkeypatch):

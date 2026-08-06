@@ -5,7 +5,7 @@ import re
 import httpx
 import pytest
 
-from client import KBApiClient, KBApiError, mask_body
+from client import KBApiClient, KBApiError, TradingDisabledError, mask_body
 from config import Config
 
 
@@ -13,8 +13,14 @@ async def _no_delay(_seconds: float) -> None:
     return None
 
 
-def make_config() -> Config:
-    return Config(app_key="k", app_secret="s", base_url="https://test.kbsec", timeout_seconds=5)
+def make_config(*, trading_enabled: bool = False) -> Config:
+    return Config(
+        app_key="k",
+        app_secret="s",
+        base_url="https://test.kbsec",
+        timeout_seconds=5,
+        trading_enabled=trading_enabled,
+    )
 
 
 def make_client(handler, config=None) -> KBApiClient:
@@ -179,6 +185,47 @@ async def test_call_429_with_large_retry_after_is_clamped(monkeypatch):
     assert result == {"ok": True}
     assert attempts["count"] == 2
     assert sleeps == [60]
+    await client.aclose()
+
+
+async def test_call_blocks_trading_when_disabled():
+    calls = {"count": 0}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        calls["count"] += 1
+        if request.url.path == "/oauth2/token":
+            return token_response()
+        return httpx.Response(200, json={"ordr_no": "12345"})
+
+    client = make_client(handler, config=make_config(trading_enabled=False))
+    with pytest.raises(TradingDisabledError):
+        await client.call("/api/v1/ssam1801", {}, requires_trading=True)
+    # No HTTP call (not even token issuance) should happen for a blocked trade call.
+    assert calls["count"] == 0
+    await client.aclose()
+
+
+async def test_call_allows_trading_when_enabled():
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path == "/oauth2/token":
+            return token_response()
+        return httpx.Response(200, json={"ordr_no": "12345"})
+
+    client = make_client(handler, config=make_config(trading_enabled=True))
+    result = await client.call("/api/v1/ssam1801", {}, requires_trading=True)
+    assert result == {"ordr_no": "12345"}
+    await client.aclose()
+
+
+async def test_call_without_requires_trading_ignores_trading_flag():
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path == "/oauth2/token":
+            return token_response()
+        return httpx.Response(200, json={"ok": True})
+
+    client = make_client(handler, config=make_config(trading_enabled=False))
+    result = await client.call("/api/v1/ivu10140", {})
+    assert result == {"ok": True}
     await client.aclose()
 
 

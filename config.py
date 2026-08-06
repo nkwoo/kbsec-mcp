@@ -8,6 +8,7 @@ load_dotenv(dotenv_path=Path(__file__).resolve().parent / ".env")
 
 DEFAULT_BASE_URL = "https://developer.kbsec.com:32484"
 DEFAULT_TIMEOUT_SECONDS = 10.0
+_TRUTHY_VALUES = {"1", "true", "yes", "on"}
 
 
 class ConfigError(RuntimeError):
@@ -20,6 +21,7 @@ class Config:
     app_secret: str
     base_url: str
     timeout_seconds: float
+    trading_enabled: bool
 
 
 def load_config() -> Config:
@@ -31,4 +33,11 @@ def load_config() -> Config:
         raise ConfigError("Missing required environment variable: KBSEC_APP_SECRET")
     base_url = os.environ.get("KBSEC_BASE_URL", DEFAULT_BASE_URL)
     timeout_seconds = float(os.environ.get("KBSEC_TIMEOUT_SECONDS", DEFAULT_TIMEOUT_SECONDS))
-    return Config(app_key=app_key, app_secret=app_secret, base_url=base_url, timeout_seconds=timeout_seconds)
+    trading_enabled = os.environ.get("KBSEC_ENABLE_TRADING", "false").strip().lower() in _TRUTHY_VALUES
+    return Config(
+        app_key=app_key,
+        app_secret=app_secret,
+        base_url=base_url,
+        timeout_seconds=timeout_seconds,
+        trading_enabled=trading_enabled,
+    )
