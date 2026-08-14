@@ -154,6 +154,7 @@ Claude Desktop / Claude Code 외에도 stdio 기반 MCP 서버 등록을 지원�
 74개의 시세/주문/계좌/투자정보 도구는 KB증권 OpenAPI 명세
 (`spec/source/kbsec-openapi.postman_collection.json`)와 동일한 국내주식/해외주식 카테고리
 구조로 정리되어 있습니다. 여기에 인증 관련 도구 1개(`auth_revoke_token`)가 더해져 총 75개입니다.
+각 도구가 받는 파라미터 상세는 `spec/kbsec_api_spec.json`을 참고하세요.
 
 ### 인증
 
@@ -163,142 +164,142 @@ KB증권 API는 access token 값과 함께 발급 당시의 IP/MAC 주소를 검
 다음 호출에서 현재 IP/MAC 기준으로 새 토큰이 재발급됩니다 (토큰 발급 자체는 모든 도구 호출 시
 자동으로 처리되므로 별도 도구가 없습니다).
 
-| 설명 | Tool 이름 | KB증권 API | 파라미터 |
-|---|---|---|---|
-| 캐시된 access token 폐기 (다음 호출에서 재발급 강제) | `auth_revoke_token` | oauth2/revoke | 없음 |
+| 설명 | Tool 이름 | KB증권 API |
+|---|---|---|
+| 캐시된 access token 폐기 (다음 호출에서 재발급 강제) | `auth_revoke_token` | oauth2/revoke |
 
 ### 국내 주식
 
 #### 기본시세
 
-| 설명 | Tool 이름 | KB증권 API | 파라미터 |
-|---|---|---|---|
-| 종목 호가 정보 조회 | `quote_kr_get_orderbook` | IVU10070 | `is_cd`: 종목코드 [필수]<br>`ovtm_mkt_clsf`: 시간외장구분 [선택] (0:정규장, 1:시간외) |
-| 시간대별 체결(틱) 조회 | `quote_kr_get_time_trades` | IVU10080 | `excg_clsf`: 거래소구분 [선택] (0:통합, 1:KRX, 2:NXT)<br>`is_cd`: 종목코드 [필수]<br>`ovtm_mkt_clsf`: 시간외장구분 [선택] (0:정규장, 1:시간외)<br>`inq_cnt`: 조회건수 [선택] |
-| 현재가 조회 (재무/투자지표 포함) | `quote_kr_get_price` | IVU10140 | `excg_clsf`: 거래소구분 [필수] (0:통합, 1:KRX, 2:NXT)<br>`shrt_cd`: 단축코드 [필수] |
-| 당일 주요 외국계 거래원 조회 | `quote_kr_get_broker_trend` | IVU10420 | `excg_clsf`: 거래소구분 [선택] (0:통합, 1:KRX, 2:NXT)<br>`is_cd`: 종목코드 [필수] |
-| 투자자별(기관/외국인/개인) 매매동향 조회 | `quote_kr_get_investor_trend` | IVU10430 | `excg_clsf`: 거래소구분 [선택] (0:통합, 1:KRX, 2:NXT)<br>`is_cd`: 종목코드 [선택]<br>`strt_dt`: 시작일자 [선택]<br>`end_dt`: 종료일자 [선택]<br>`amt_q_clsf`: 금액수량구분 [선택] (1:금액, 2:수량)<br>`trd_clsf`: 매매구분 [선택] (1:순매수, 2:매수, 3:매도)<br>`acml_clsf`: 누적구분 [선택] (0:누적안함, 1:누적) |
-| 프로그램매매 동향 조회 | `quote_kr_get_program_trading` | IVU10450 | `excg_clsf`: 거래소구분 [선택] (0:통합, 1:KRX, 2:NXT)<br>`is_cd`: 종목코드 [선택]<br>`amt_q_clsf`: 금액수량구분 [선택] (금액수량구분 : 1:금액, 2:수량)<br>`prd_clsf`: 기간구분 [선택] (기간구분 : 1:시간별, 2:일별)<br>`inq_cnt`: 조회건수 [선택] |
-| 종목 기본정보 단건 조회 | `quote_kr_get_stock_info` | SIQM4900 | `stnd_is_cd`: 표준종목코드 [필수] |
-| 장운영상태 조회 | `quote_kr_get_market_status` | SZQM0771 | 없음 |
-| 기업개요 조회 | `quote_kr_get_company_overview` | IVM10050 | `is_cd`: 종목코드 [필수] |
-| 통합차트(일/분봉 등) 조회 | `quote_kr_get_chart` | IVS11560 | `info_ccd`: 정보구분코드 [필수] (1:원주가 2:수정주가(KOSPI, KOSDAQ 종목만))<br>`mkt_clsf`: 시장구분 [필수] (0:KOSPI 1:KOSDAQ)<br>`chrt_clsf`: 차트구분 [필수] (D:일별 W:주별 M:월별 Y:년별(주식) B:분봉 T:틱)<br>`minute_tck_indx`: MINUTE틱지수 [선택] (분, 틱, 일 선택시 조회 주기 표시)<br>`is_cd`: 종목코드 [필수]<br>`inq_clsf`: 조회구분 [필수] (1:날짜로 조회 2:데이터수로 조회)<br>`strt_dy`: 시작일 [선택]<br>`inq_cnt`: 조회건수 [선택] |
+| 설명 | Tool 이름 | KB증권 API |
+|---|---|---|
+| 종목 호가 정보 조회 | `quote_kr_get_orderbook` | IVU10070 |
+| 시간대별 체결(틱) 조회 | `quote_kr_get_time_trades` | IVU10080 |
+| 현재가 조회 (재무/투자지표 포함) | `quote_kr_get_price` | IVU10140 |
+| 당일 주요 외국계 거래원 조회 | `quote_kr_get_broker_trend` | IVU10420 |
+| 투자자별(기관/외국인/개인) 매매동향 조회 | `quote_kr_get_investor_trend` | IVU10430 |
+| 프로그램매매 동향 조회 | `quote_kr_get_program_trading` | IVU10450 |
+| 종목 기본정보 단건 조회 | `quote_kr_get_stock_info` | SIQM4900 |
+| 장운영상태 조회 | `quote_kr_get_market_status` | SZQM0771 |
+| 기업개요 조회 | `quote_kr_get_company_overview` | IVM10050 |
+| 통합차트(일/분봉 등) 조회 | `quote_kr_get_chart` | IVS11560 |
 
 #### 시세분석
 
-| 설명 | Tool 이름 | KB증권 API | 파라미터 |
-|---|---|---|---|
-| ATS통합 거래대금 상위 | `ranking_kr_get_top_trading_value` | IVU10210 | `excg_clsf`: 거래소구분 [선택] (0:통합, 1:KRX, 2:NXT)<br>`mkt_clsf`: 시장구분 [선택] (1:전체, 2:KOSPI, 3:KOSDAQ)<br>`thdy_bdy_clsf`: 당일전일구분 [선택] (1:당일, 2:전일)<br>`inq_cnt`: 조회건수 [선택]<br>`srt_clsf`: 정렬구분 [선택] (1:상위, 2:하위) |
-| 전일대비 등락률 상위 | `ranking_kr_get_top_change_rate` | IVU10240 | `excg_clsf`: 거래소구분 [선택] (0:통합, 1:KRX, 2:NXT)<br>`mkt_clsf`: 시장구분 [선택] (1:전체, 2:KOSPI, 3:KOSDAQ, 4:KOSPI200, 5:KOSDAQ150)<br>`inq_cnt`: 조회건수 [선택]<br>`srt_clsf`: 정렬구분 [선택] (1:상승율, 2:하락율, 3:상승폭, 4:하락폭) |
-| 가격 급등/급락 종목 | `ranking_kr_get_top_price_surge_drop` | IVU10270 | `excg_clsf`: 거래소구분 [선택] (0:통합, 1:KRX, 2:NXT)<br>`mkt_clsf`: 시장구분 [선택] (1:전체, 2:KOSPI, 3:KOSDAQ)<br>`inq_cnt`: 조회건수 [선택]<br>`up_dwn_ccd`: 등락구분코드 [선택] (1:급등, 2:급락)<br>`minute_dy_ccd`: MINUTE일구분코드 [선택] (1:분전, 2:일전)<br>`minute_dy_unt`: MINUTE일단위 [선택] |
-| 당일 거래량 상위 | `ranking_kr_get_top_volume` | IVU10280 | `excg_clsf`: 거래소구분 [선택] (0:통합, 1:KRX, 2:NXT)<br>`mkt_clsf`: 시장구분 [선택] (시장구분 : 1:전체, 2:KOSPI, 3:KOSDAQ) |
-| 신고가/신저가 | `ranking_kr_get_new_high_low` | IVU10550 | `excg_clsf`: 거래소구분 [선택] (0:통합, 1:KRX, 2:NXT)<br>`mkt_clsf`: 시장구분 [선택] (1:전체, 2:KOSPI, 3:KOSDAQ)<br>`inq_cnt`: 조회건수 [선택]<br>`nw_stk_lw_ccd`: 신고저구분코드 [선택] (: 1:신고가, 2:신저가)<br>`std_clsf`: 기준구분 [선택] (1:고저기준, 2:종가기준)<br>`prd_clsf`: 기간구분 [선택] (1:전일 2:5일 3:10일 4:20일 5:60일 6:250일 7:120일)<br>`excd_clsf`: 돌파구분 [선택] (1:일시돌파, 2:돌파유지) |
-| 시가대비 등락률 상위 | `ranking_kr_get_top_open_price_change` | IVS10910 | `mkt_clsf`: 시장구분 [선택] (1:전체, 2:KOSPI, 3:KOSDAQ, 4:KOSPI200, 5:KOSDAQ150)<br>`inq_cnt`: 조회건수 [선택]<br>`srt_clsf`: 정렬구분 [선택] (1:상승, 2:하락) |
-| 시가총액 상위 | `ranking_kr_get_top_market_cap` | IVS10920 | `inq_cnt`: 조회건수 [선택] |
-| 시간외단일가 등락률 순위 | `ranking_kr_get_top_after_hours_change` | IVS11190 | `mkt_clsf`: 시장구분 [선택] (1:전체, 2:거래소, 3:코스닥)<br>`srt_clsf`: 정렬구분 [선택] (1:상승율, 2:하락율)<br>`thdy_bdy_clsf`: 당일전일구분 [선택] (1:당일, 2:전일)<br>`inq_cnt`: 조회건수 [선택] |
-| 외국인/기관 매매 상위 | `ranking_kr_get_top_foreign_institution_trading` | IVU10020 | `excg_clsf`: 거래소구분 [선택] (0:통합, 1:KRX, 2:NXT)<br>`mkt_clsf`: 시장구분 [선택] (0:거래소, 1:코스닥, 2:전체)<br>`invstr_ccd`: 투자자구분코드 [선택] (0:외국인 1:기관 2:외국인+기관 3:증권 4:보험 5:투신 6:사모펀드 7:은행 8:종금 9:기금 A:기타 B:국가지자체 C:개인 D:기타외국인)<br>`prd_clsf`: 기간구분 [선택] (0:전일 1:1주 2:1달 3:3달 4:6달 5:1년 6:연초)<br>`rnk_clsf`: 순위구분 [선택] (0:순매수 1:순매도 2:지분증가 3:지분감소 4:연속순매수 5:연속순매도) |
+| 설명 | Tool 이름 | KB증권 API |
+|---|---|---|
+| ATS통합 거래대금 상위 | `ranking_kr_get_top_trading_value` | IVU10210 |
+| 전일대비 등락률 상위 | `ranking_kr_get_top_change_rate` | IVU10240 |
+| 가격 급등/급락 종목 | `ranking_kr_get_top_price_surge_drop` | IVU10270 |
+| 당일 거래량 상위 | `ranking_kr_get_top_volume` | IVU10280 |
+| 신고가/신저가 | `ranking_kr_get_new_high_low` | IVU10550 |
+| 시가대비 등락률 상위 | `ranking_kr_get_top_open_price_change` | IVS10910 |
+| 시가총액 상위 | `ranking_kr_get_top_market_cap` | IVS10920 |
+| 시간외단일가 등락률 순위 | `ranking_kr_get_top_after_hours_change` | IVS11190 |
+| 외국인/기관 매매 상위 | `ranking_kr_get_top_foreign_institution_trading` | IVU10020 |
 
 #### 주식주문
 
-| 설명 | Tool 이름 | KB증권 API | 파라미터 |
-|---|---|---|---|
-| 예약주문 접수(현금/신용 통합) | `order_kr_place_reserve_order` | SSAM0831 | `ordr_jb_clsf`: 주문업무구분 [필수] (1:매도,2:매수)<br>`is_cd`: 종목코드 [필수]<br>`ordr_uprc`: 주문단가 [필수]<br>`ordr_q`: 주문수량 [필수]<br>`ordr_ccd`: 주문구분코드 [필수] (00:지정가,03:시장가,12:최유리지정가,13:최우선지정가)<br>`strt_dt`: 시작일자 [선택]<br>`end_dt`: 종료일자 [선택]<br>`mkt_tm_ccd`: 시장시간구분코드 [선택] |
-| 현금 매도 주문 접수 | `order_kr_place_sell_order` | SSAM1801 | `mkt_tm_clsf`: 시장시간구분 [필수] (1:정규장,2:장개시전시간외종가,3:장종료후시간외종가,4:장종료후시간외단일가)<br>`is_cd`: 종목코드 [필수]<br>`ordr_q`: 주문수량 [필수]<br>`ordr_uprc`: 주문단가 [필수]<br>`ordr_ccd`: 주문구분코드 [필수] (00:지정가,03:시장가,12:최유리지정가,13:최우선지정가,M3:중간가)<br>`sor_ordr_ccd`: SOR주문구분코드 [선택] (K:KRX,N:NXT,S:SOR) |
-| 현금 매수 주문 접수 | `order_kr_place_buy_order` | SSAM1802 | `mkt_tm_clsf`: 시장시간구분 [필수] (1:정규장,2:장개시전시간외종가,3:장종료후시간외종가,4:장종료후시간외단일가)<br>`is_cd`: 종목코드 [필수]<br>`ordr_q`: 주문수량 [필수]<br>`ordr_uprc`: 주문단가 [필수]<br>`ordr_ccd`: 주문구분코드 [필수] (00:지정가,03:시장가,12:최유리지정가,13:최우선지정가, M3:중간가)<br>`sor_ordr_ccd`: SOR주문구분코드 [선택] (K:KRX,N:NXT,S:SOR) |
-| 미체결 주문 정정 | `order_kr_amend_order` | SSAM1805 | `mkt_tm_clsf`: 시장시간구분 [필수] (1:정규장,2:장개시전시간외종가,3:장종료후시간외종가,4:장종료후시간외단일가)<br>`is_cd`: 종목코드 [필수]<br>`ordr_q`: 주문수량 [필수] (*일부정정시 입력)<br>`ordr_uprc`: 주문단가 [필수]<br>`ordr_ccd`: 주문구분코드 [필수] (00:지정가,03:시장가,05:조건부지정가,12:최유리지정가,13:최우선지정가)<br>`crct_clsf`: 정정구분 [필수] (1:일부정정,2:전부정정)<br>`orgn_ordr_no`: 원주문번호 [필수]<br>`sor_ordr_ccd`: SOR주문구분코드 [선택] (K:KRX,N:NXT,S:SOR) |
-| 미체결 주문 취소 | `order_kr_cancel_order` | SSAM1806 | `is_cd`: 종목코드 [필수]<br>`ordr_q`: 주문수량 [선택]<br>`crct_clsf`: 정정구분 [필수] (1:일부정정,2:전부정정)<br>`orgn_ordr_no`: 원주문번호 [필수] |
-| 소수점 매도 주문 접수 | `order_kr_place_fractional_sell_order` | SSAM5762 | `is_cd`: 종목코드 [필수]<br>`ordr_q_p6`: 주문수량P6 [선택]<br>`ordr_amt`: 주문금액 [필수]<br>`dcml_ordr_std_ccd`: 소수점주문기준구분코드 [필수] (1:금액, 2:수량 (전량일때 2번으로))<br>`tv_s_est_f`: 전량매도설정여부 [필수] (0:일부매도, 1:전량매도) |
-| 소수점 매수 주문 접수 | `order_kr_place_fractional_buy_order` | SSAM5763 | `is_cd`: 종목코드 [필수]<br>`ordr_q_p6`: 주문수량P6 [선택]<br>`ordr_amt`: 주문금액 [필수]<br>`dcml_ordr_std_ccd`: 소수점주문기준구분코드 [필수] (1:금액,2:수량) |
-| 소수점 주문 취소 | `order_kr_cancel_fractional_order` | SSAM5764 | `dmstc_stk_dcml_trd_jb_ccd`: 국내주식소수점매매업무구분코드 [필수] (01:일반,02:자기,03:정기매수,04:비상장분할 일괄청산,05:정리매매 일괄청산)<br>`ordr_sqc`: 주문회차 [필수]<br>`ordr_dt`: 주문일자 [필수]<br>`bnf_is_cd`: 수익증권종목코드 [필수]<br>`trd_dl_ccd`: 매매거래구분코드 [필수] (01:매도, 02:매수)<br>`dmstc_stk_dcml_ordr_sq`: 국내주식소수점주문일련번호 [필수] (SSQM5765 api 의 acpt_no 값 ) |
-| 매수 가능 금액/수량 조회 | `order_kr_get_buyable_amount` | SSQM1802 | `is_no`: 종목번호 [선택] |
+| 설명 | Tool 이름 | KB증권 API |
+|---|---|---|
+| 예약주문 접수(현금/신용 통합) | `order_kr_place_reserve_order` | SSAM0831 |
+| 현금 매도 주문 접수 | `order_kr_place_sell_order` | SSAM1801 |
+| 현금 매수 주문 접수 | `order_kr_place_buy_order` | SSAM1802 |
+| 미체결 주문 정정 | `order_kr_amend_order` | SSAM1805 |
+| 미체결 주문 취소 | `order_kr_cancel_order` | SSAM1806 |
+| 소수점 매도 주문 접수 | `order_kr_place_fractional_sell_order` | SSAM5762 |
+| 소수점 매수 주문 접수 | `order_kr_place_fractional_buy_order` | SSAM5763 |
+| 소수점 주문 취소 | `order_kr_cancel_fractional_order` | SSAM5764 |
+| 매수 가능 금액/수량 조회 | `order_kr_get_buyable_amount` | SSQM1802 |
 
 #### 계좌잔고
 
-| 설명 | Tool 이름 | KB증권 API | 파라미터 |
-|---|---|---|---|
-| 예수금 내역 조회 | `account_kr_get_deposit_details` | SSQM0004 | `is_no`: 종목번호 [선택] |
-| 보유주식 목록/상세 조회 | `account_kr_get_holdings` | SSQM1801 | `inq_clsf`: 조회구분 [필수] (0:현금주식매도,1:현금주식예약,2:현금주식일괄매도,3:ELW+현금,4:장외단주매도,5:ELW 전용,6:현금주식매도+코넥스+ETN,7:코넥스전용,8:ETN 전용,9:ELW+현금+ETN)<br>`is_no`: 종목번호 [선택]<br>`mkt_tm_ccd`: 시장시간구분코드 [필수] (1:정규시장,2:장개시전시간외,3:장종료후시간외,4:시간외단일가)<br>`nxt_key`: 다음키 [선택] |
-| 매매정산현황 조회 | `account_kr_get_settlement_status` | SSQM2121 | `trd_dt`: 매매일자 [필수]<br>`clsf`: 구분 [필수] (1: 단가별, 2: 종목별)<br>`stmt_dt`: 결제일자 [선택]<br>`nxt_key`: 다음키 [선택] |
-| 기간별 매매손익현황 조회 | `account_kr_get_trading_profit_loss` | SSQM2392 | `is_no`: 종목번호 [선택]<br>`ordr_dt_from`: 주문일자FROM [필수]<br>`ordr_dt_to`: 주문일자TO [필수]<br>`nxt_key`: 다음키 [선택] |
-| 일자별 실현손익 조회 | `account_kr_get_realized_profit_loss` | SSQM2442 | `is_cd`: 종목코드 [선택]<br>`inq_strt_dt`: 조회시작일자 [필수]<br>`inq_end_dt`: 조회종료일자 [필수]<br>`nxt_key`: 다음키 [선택] |
-| 잔고현황(결제기준) 조회 | `account_kr_get_balance_settlement_basis` | SSQM2932 | `inq_clsf`: 조회구분 [선택] (1:계좌별, 2:상품유형별 (자문/일임))<br>`excg_mktpr_ccd`: 거래소시세구분코드 [선택] (A:통합시세,K:KRX시세,N:NXT시세) |
-| 잔고현황(체결기준)/총자산평가 조회 | `account_kr_get_balance_trade_basis` | SSQM2952 | `excg_mktpr_ccd`: 거래소시세구분코드 [선택] (A:통합시세, K:KRX시세, N:NXT시세) |
-| 계좌 거래내역(입출금/매매/배당) 조회 | `account_kr_get_transaction_history` | SWQA2301 | `strt_dt`: 시작일자 [필수]<br>`end_dt`: 종료일자 [필수]<br>`is_no`: 종목번호 [선택]<br>`nxt_key`: 다음키 [선택]<br>`srt_clsf`: 정렬구분 [선택] (1: 과거거래내역순, 2: 최근거래내역순) |
-| 거래내역 상세 조회 | `account_kr_get_transaction_history_detail` | SWQM2412 | `inq_dt`: 조회일자 [필수]<br>`dl_sq`: 거래일련번호 [선택]<br>`nxt_key`: 다음키 [선택] |
-| D+1/D+2 출금가능금액 조회 | `account_kr_get_withdrawable_amount` | SWQN2302 | `ccd`: 구분코드 [선택] (1:익일예수금/익익일예수금 포함) |
+| 설명 | Tool 이름 | KB증권 API |
+|---|---|---|
+| 예수금 내역 조회 | `account_kr_get_deposit_details` | SSQM0004 |
+| 보유주식 목록/상세 조회 | `account_kr_get_holdings` | SSQM1801 |
+| 매매정산현황 조회 | `account_kr_get_settlement_status` | SSQM2121 |
+| 기간별 매매손익현황 조회 | `account_kr_get_trading_profit_loss` | SSQM2392 |
+| 일자별 실현손익 조회 | `account_kr_get_realized_profit_loss` | SSQM2442 |
+| 잔고현황(결제기준) 조회 | `account_kr_get_balance_settlement_basis` | SSQM2932 |
+| 잔고현황(체결기준)/총자산평가 조회 | `account_kr_get_balance_trade_basis` | SSQM2952 |
+| 계좌 거래내역(입출금/매매/배당) 조회 | `account_kr_get_transaction_history` | SWQA2301 |
+| 거래내역 상세 조회 | `account_kr_get_transaction_history_detail` | SWQM2412 |
+| D+1/D+2 출금가능금액 조회 | `account_kr_get_withdrawable_amount` | SWQN2302 |
 
 #### 주문내역
 
-| 설명 | Tool 이름 | KB증권 API | 파라미터 |
-|---|---|---|---|
-| 예약주문 처리결과 조회 | `orderhist_kr_get_reserve_order_result` | SSQM0831 | `ordr_dt`: 주문일자 [필수]<br>`nxt_key`: 다음키 [선택]<br>`trd_clsf`: 매매구분 [필수] (0:전체,1:매도,2:매수)<br>`hndl_clsf`: 처리구분 [필수] (0:전체,S:완료,R:접수,E:거부)<br>`tv_rv_ccd`: 전량잔량구분코드 [필수] (0:전체,N:일반,T:기간)<br>`end_dt`: 종료일자 [선택]<br>`is_cd`: 종목코드 [선택] |
-| 예약주문 접수내역 조회 | `orderhist_kr_get_reserve_order_list` | SSQM0834 | `nxt_key`: 다음키 [선택]<br>`strt_dt`: 시작일자 [선택]<br>`end_dt`: 종료일자 [선택]<br>`is_cd`: 종목코드 [선택] |
-| 주문 체결/미체결 내역 조회 | `orderhist_kr_get_order_execution_status` | SSQM2341 | `ccls_clsf`: 체결구분 [필수] (0:전체, 1:체결, 2:미체결)<br>`ordr_dt`: 주문일자 [필수]<br>`nxt_key`: 다음키 [선택] |
-| 소수점 매매 전체 내역 조회 | `orderhist_kr_get_fractional_trade_history` | SSQM5765 | `trd_clsf`: 매매구분 [필수] (0: 전체, 1:매도, 2:매수)<br>`trd_strt_dt`: 매매시작일자 [필수]<br>`trd_end_dt`: 매매종료일자 [선택] (* 당일자 조회시에는 빈값)<br>`is_cd`: 종목코드 [선택]<br>`nxt_key`: 다음키 [선택] |
+| 설명 | Tool 이름 | KB증권 API |
+|---|---|---|
+| 예약주문 처리결과 조회 | `orderhist_kr_get_reserve_order_result` | SSQM0831 |
+| 예약주문 접수내역 조회 | `orderhist_kr_get_reserve_order_list` | SSQM0834 |
+| 주문 체결/미체결 내역 조회 | `orderhist_kr_get_order_execution_status` | SSQM2341 |
+| 소수점 매매 전체 내역 조회 | `orderhist_kr_get_fractional_trade_history` | SSQM5765 |
 
 #### 투자정보
 
-| 설명 | Tool 이름 | KB증권 API | 파라미터 |
-|---|---|---|---|
-| 증시주변자금동향 조회 | `market_kr_get_market_liquidity_trend` | IVA10370 | 없음 |
-| 세계지수 조회 | `market_kr_get_world_indices` | IVA60140 | `lnd_clsf`: 대륙구분 [필수] (S: 아시아, C: 아메라키, E: 유럽) |
-| 환율종합 조회 | `market_kr_get_exchange_rates` | IVA60190 | 없음 |
-| 업종랭킹(MTS) 조회 | `market_kr_get_sector_ranking` | IVM30010 | `mkt_clsf`: 시장구분 [선택] (1:코스피 2:코스닥) |
-| 시장종합 조회 | `market_kr_get_market_summary` | IVSA0070 | 없음 |
+| 설명 | Tool 이름 | KB증권 API |
+|---|---|---|
+| 증시주변자금동향 조회 | `market_kr_get_market_liquidity_trend` | IVA10370 |
+| 세계지수 조회 | `market_kr_get_world_indices` | IVA60140 |
+| 환율종합 조회 | `market_kr_get_exchange_rates` | IVA60190 |
+| 업종랭킹(MTS) 조회 | `market_kr_get_sector_ranking` | IVM30010 |
+| 시장종합 조회 | `market_kr_get_market_summary` | IVSA0070 |
 
 ### 해외 주식
 
 #### 기본시세
 
-| 설명 | Tool 이름 | KB증권 API | 파라미터 |
-|---|---|---|---|
-| 해외주식 종목정보 조회 | `quote_os_get_stock_info` | SIAM4983 | `Record1`: Record1 [선택] |
-| 현재가 조회 | `quote_os_get_price` | GSS10030 | `krx_cd`: 거래소코드 [필수] (NAS: 나스닥, NYS: 뉴욕거래소, AMX: 아멕스)<br>`is_cd`: 종목코드 [필수] |
-| 호가 조회 | `quote_os_get_orderbook` | GSS10040 | `krx_cd`: 거래소코드 [필수] (NAS: 나스닥, NYS: 뉴욕거래소, AMX: 아멕스)<br>`is_cd`: 종목코드 [필수] |
-| 시간대별 체결 조회 | `quote_os_get_time_trades` | GSA10020 | `krx_cd`: 거래소코드 KRX_CD [필수] (NAS: 나스닥, NYS: 뉴욕거래소, AMX: 아멕스)<br>`is_cd`: 종목코드 IS_CD [필수]<br>`rcrd_c`: 레코드수 RCRD_C [선택] |
-| 통합차트 조회 | `quote_os_get_chart` | GSC10060 | `krx_cd`: 거래소코드 KRX_CD [필수]<br>`is_cd`: 종목코드 IS_CD [필수]<br>`chrt_clsf`: 차트구분 CHRT_CLSF [필수] (1:틱 2:분 3:일 4:주 5:월 6:년)<br>`bndl`: 묶음 BNDL [선택] (묶음틱 개수)<br>`mdfy_stk_prc_use_f`: 수정주가사용여부 MDFY_STK_PRC_USE_F [선택] (0:수정주가 미사용 1:수정주가사용)<br>`rcrd_c`: 레코드수 RCRD_C [선택] (최대요청개수:5000)<br>`srch_strt_dy`: 검색시작일 SRCH_STRT_DY [선택] (과거일자 검색용)<br>`clsf`: 구분 CLSF [선택] |
+| 설명 | Tool 이름 | KB증권 API |
+|---|---|---|
+| 해외주식 종목정보 조회 | `quote_os_get_stock_info` | SIAM4983 |
+| 현재가 조회 | `quote_os_get_price` | GSS10030 |
+| 호가 조회 | `quote_os_get_orderbook` | GSS10040 |
+| 시간대별 체결 조회 | `quote_os_get_time_trades` | GSA10020 |
+| 통합차트 조회 | `quote_os_get_chart` | GSC10060 |
 
 #### 계좌잔고
 
-| 설명 | Tool 이름 | KB증권 API | 파라미터 |
-|---|---|---|---|
-| 매매정산 현황 조회 | `account_os_get_settlement_status` | SPQM2205 | `strt_ordr_dt`: 시작주문일자 [필수]<br>`end_ordr_dt`: 종료주문일자 [필수]<br>`trd_clsf`: 매매구분 [필수] (99:전체, 01:매도, 02:매수)<br>`stnd_is_cd`: 표준종목코드 [선택]<br>`krw_unty_mgn_rqst_f`: 원화통합증거금신청여부 [선택] (0: 외화기준, 1: 원화기준)<br>`dl_clsf`: 거래구분 [선택] (0:전체, 1:일반거래, 2:소수점거래)<br>`nxt_key`: 다음키 [선택] |
-| 당일 매매손익 조회 | `account_os_get_daily_profit_loss` | SPQM2206 | `ordr_dt`: 주문일자 [필수]<br>`stnd_is_cd`: 표준종목코드 [선택]<br>`std_crncy_f`: 기준통화여부 [선택] (1:외화기준,2:원화기준)<br>`exch_r_aplc_f`: 환율적용여부 [선택] (1:환전시매도환율, 2:매매기준율)<br>`frgn_stk_mgn_ccd`: 해외주식증거금구분코드 [선택] (1:원화, 2:외화)<br>`dl_clsf`: 거래구분 [선택] (0:전체,1:일반거래,2:소수점거래)<br>`nxt_key`: 다음키 [선택] |
-| 기간별 매매손익 조회 | `account_os_get_period_profit_loss` | SPQM2207 | `strt_ordr_dt`: 시작주문일자 [필수]<br>`end_ordr_dt`: 종료주문일자 [필수]<br>`stnd_is_cd`: 표준종목코드 [선택]<br>`std_crncy_f`: 기준통화여부 [선택] (1:외화기준,2:원화기준)<br>`exch_r_aplc_f`: 환율적용여부 [선택] (1:환전시매도환율, 2:매매기준율)<br>`frgn_stk_mgn_ccd`: 해외주식증거금구분코드 [선택] (1:원화, 2:외화)<br>`dl_clsf`: 거래구분 [선택]<br>`nxt_key`: 다음키 [선택] |
-| 글로벌원마켓 통합증거금 사용현황 조회 | `account_os_get_margin` | SPQM3390 | 없음 |
-| 해외주식 계좌 잔고평가 조회 | `account_os_get_balance` | SPQM2226 | `std_crncy_f`: 기준통화여부 [필수] (1: 외화기준, 2: 원화기준)<br>`exch_r_aplc_f`: 환율적용여부 [선택] (1:환전시매도환율, 2: 매매기준환율(원화))<br>`fee_clsf`: 수수료구분 [선택] (0: 포함, 1: 미포함)<br>`cn_f`: 연속여부 [선택]<br>`nxt_key`: 다음키 [선택]<br>`mktpr_aplc_clsf`: 시세적용구분 [선택] |
-| 배당/무상증자 등 권리발생내역 조회 | `account_os_get_corporate_actions` | SRQM3051 | `strt_dt`: 시작일자 [선택]<br>`rgt_clsf`: 권리구분 [필수] (0:전체, 1:배당, 2:유상증자/BW권리행사, 3:무상증자, 4:매수청구, 5:감자, 6:액면분할/액면병합, 7:피흡수합병)<br>`is_cd`: 종목코드 [선택]<br>`nxt_key`: 다음키 [선택] |
+| 설명 | Tool 이름 | KB증권 API |
+|---|---|---|
+| 매매정산 현황 조회 | `account_os_get_settlement_status` | SPQM2205 |
+| 당일 매매손익 조회 | `account_os_get_daily_profit_loss` | SPQM2206 |
+| 기간별 매매손익 조회 | `account_os_get_period_profit_loss` | SPQM2207 |
+| 글로벌원마켓 통합증거금 사용현황 조회 | `account_os_get_margin` | SPQM3390 |
+| 해외주식 계좌 잔고평가 조회 | `account_os_get_balance` | SPQM2226 |
+| 배당/무상증자 등 권리발생내역 조회 | `account_os_get_corporate_actions` | SRQM3051 |
 
 #### 주식주문
 
-| 설명 | Tool 이름 | KB증권 API | 파라미터 |
-|---|---|---|---|
-| 통화별 주문가능금액 조회 | `order_os_get_buyable_amount` | SKQM2106 | `stnd_is_cd`: 표준종목코드 [필수] |
-| 통화별 주문가능 예수금 현황 조회 | `order_os_get_buyable_amount_status` | SKQM3350 | 없음 |
-| 매도/매수 주문 접수 | `order_os_place_order` | SKAM2101 | `trd_dl_ccd`: 매매거래구분코드 [필수] (01:매도, 02:매수)<br>`is_cd`: 종목코드 [필수] (ex)TSLA)<br>`frgn_ordr_typ_cd`: 해외주문유형코드 [필수] (1:시장가, 2:지정가, 3:VWAP시장가, 4:TWAP시장가)<br>`frgn_ordr_q`: 해외주문수량 [필수]<br>`frgn_ordr_prc_p4`: 해외주문가격P4 [필수] |
-| 주문 정정/취소 | `order_os_amend_cancel_order` | SKAM2102 | `crct_cncl_clsf`: 정정취소구분 [필수] (1:정정, 2:취소)<br>`is_cd`: 종목코드 [필수]<br>`orgn_ordr_no`: 원주문번호 [필수]<br>`frgn_ordr_prc_p4`: 해외주문가격P4 [필수] |
-| 소수점 매매 주문가능금액 조회 | `order_os_get_fractional_buyable_amount` | SPQN5472 | 없음 |
-| 소수점 매도/매수 주문 접수 | `order_os_place_fractional_order` | SKAM2201 | `trd_dl_ccd`: 매매거래구분코드 [필수] (01-매도, 02-매수)<br>`is_cd`: 종목코드 [필수]<br>`amt_q_clsf`: 금액수량구분 [필수] (0-금액, 1-수량)<br>`tv_s_est_f`: 전량매도설정여부 [선택] (0-일부매도, 1-전량매도)<br>`frgn_ordr_typ_cd`: 해외주문유형코드 [필수] (2-지정가, E-유사시장가)<br>`crncy_ccd`: 통화구분코드 [선택] (0-원화, 1-외화(USD))<br>`ordr_amt`: 주문금액 [필수]<br>`dcml_ordr_q_p6`: 소수점주문수량P6 [선택]<br>`frgn_ordr_prc_p4`: 해외주문가격P4 [선택] |
-| 소수점 주문 취소 | `order_os_cancel_fractional_order` | SKAM2202 | `orgn_ordr_no`: 원주문번호 [필수] |
-| 미국주식 예약주문 접수 | `order_os_place_us_reserve_order` | SPAO2104 | `is_cd`: 종목코드 [필수]<br>`trd_dl_ccd`: 매매거래구분코드 [필수] (01:매도,02:매수)<br>`ordr_typ_cd`: 주문유형코드 [필수] (1:시장가, 2:지정가, 3:VWAP시장가, 4:TWAP시장가)<br>`ordr_q`: 주문수량 [필수]<br>`frgn_ordr_prc_p4`: 해외주문가격P4 [필수]<br>`strt_tm`: 시작시간 [선택]<br>`end_tm`: 종료시간 [선택] |
-| 미국주식 예약주문 취소 | `order_os_cancel_us_reserve_order` | SPAO2106 | `is_cd`: 종목코드 [필수]<br>`trd_clsf`: 매매구분 [선택]<br>`ordr_typ`: 주문유형 [선택]<br>`ordr_q`: 주문수량 [선택]<br>`frgn_ordr_prc_p4`: 해외주문가격P4 [선택]<br>`cncl_ordr_no`: 취소주문번호 [필수] |
+| 설명 | Tool 이름 | KB증권 API |
+|---|---|---|
+| 통화별 주문가능금액 조회 | `order_os_get_buyable_amount` | SKQM2106 |
+| 통화별 주문가능 예수금 현황 조회 | `order_os_get_buyable_amount_status` | SKQM3350 |
+| 매도/매수 주문 접수 | `order_os_place_order` | SKAM2101 |
+| 주문 정정/취소 | `order_os_amend_cancel_order` | SKAM2102 |
+| 소수점 매매 주문가능금액 조회 | `order_os_get_fractional_buyable_amount` | SPQN5472 |
+| 소수점 매도/매수 주문 접수 | `order_os_place_fractional_order` | SKAM2201 |
+| 소수점 주문 취소 | `order_os_cancel_fractional_order` | SKAM2202 |
+| 미국주식 예약주문 접수 | `order_os_place_us_reserve_order` | SPAO2104 |
+| 미국주식 예약주문 취소 | `order_os_cancel_us_reserve_order` | SPAO2106 |
 
 #### 주문내역
 
-| 설명 | Tool 이름 | KB증권 API | 파라미터 |
-|---|---|---|---|
-| 주문 체결내역 조회 | `orderhist_os_get_execution_history` | SPQM2103 | `ccls_clsf`: 체결구분 [필수] (1:전체,2:체결,3:미체결)<br>`ordr_dt`: 주문일자 [선택]<br>`dl_clsf`: 거래구분 [선택] (0.전체 1.일반 2.소수점)<br>`nxt_key`: 다음키 [선택] |
-| 당일 체결/미체결 현황 조회 | `orderhist_os_get_execution_status` | SPQM2204 | `strt_ordr_dt`: 시작주문일자 [필수]<br>`end_ordr_dt`: 종료주문일자 [필수]<br>`ccls_clsf`: 체결구분 [필수] (0: 전체, 1: 체결, 2: 미체결)<br>`trd_clsf`: 매매구분 [필수] (99: 전체, 01: 매도, 02: 매수)<br>`stnd_is_cd`: 표준종목코드 [선택]<br>`dl_clsf`: 거래구분 [선택] (0:전체 ,1:일반거래,2:소수점거래)<br>`nxt_key`: 다음키 [선택] |
-| 예약주문 조회 | `orderhist_os_get_reserve_order_list` | SPQO2105 | `rsrv_dt`: 예약일자 [선택]<br>`stnd_is_cd`: 표준종목코드 [선택]<br>`trd_clsf`: 매매구분 [선택] (1:시장가,3:지정가)<br>`krw_unty_mgn_rqst_f`: 원화통합증거금신청여부 [선택] (0: 외화, 1: 원화)<br>`cn_key`: 연속키 [선택] |
+| 설명 | Tool 이름 | KB증권 API |
+|---|---|---|
+| 주문 체결내역 조회 | `orderhist_os_get_execution_history` | SPQM2103 |
+| 당일 체결/미체결 현황 조회 | `orderhist_os_get_execution_status` | SPQM2204 |
+| 예약주문 조회 | `orderhist_os_get_reserve_order_list` | SPQO2105 |
 
 #### 시세분석
 
-| 설명 | Tool 이름 | KB증권 API | 파라미터 |
-|---|---|---|---|
-| 해외시세분석 | `ranking_os_get_market_analysis` | GSA10600 | `frex_clsf`: 해외거래소구분 [필수] (AA:미국전체 AB:나스닥 AC:뉴욕 AD:아멕스)<br>`clsf`: 구분 [선택] (1:전일대비 2: 시가총액 3:거래량 4:52주 신고가 5:52주 신저가 6:PER 7:EPS, 8:배당수익률, a:거래대금)<br>`rnk`: 순위 [선택] (1:상위 2:하위)<br>`is_cnt`: 종목건수 [선택] |
-| 거래량 상위 | `ranking_os_get_top_volume` | GSA10150 | `krx_cd`: 거래소코드 [필수] (NAS: 나스닥, NYS: 뉴욕거래소, AMX: 아멕스)<br>`std_dy`: 기준일 [선택] (01: 전일,05:5일,10:10일, 20:20일, 60:60일, 90:90일)<br>`vlm`: 거래량 [선택]<br>`is_cnt`: 종목건수 [선택] |
-| 시가총액 상위 | `ranking_os_get_top_market_cap` | GSA10170 | `krx_cd`: 거래소코드 KRX_CD [필수] (NAS: 나스닥, NYS: 뉴욕거래소, AMX: 아멕스)<br>`is_cnt`: 종목건수 IS_CNT [선택] |
-| 신고/신저 조회 | `ranking_os_get_new_high_low` | GSS10180 | `krx_cd`: 거래소코드 KRX_CD [선택] (NAS: 나스닥, NYS: 뉴욕거래소, AMX: 아멕스)<br>`clsf`: 구분 CLSF (1:신고 2:신저) [선택] (0: 신고 1: 신저)<br>`clsf2`: 구분2 CLSF2 (1:일시돌파 2:돌파유지) [선택] (0: 일시돌파 1: 돌파유지)<br>`std_dy`: 기준일 STD_DY (01:전일 05:5일 10:10일) [선택] (01: 전일,05:5일,10:10일, 20:20일, 60:60일, 90:90일)<br>`vlm`: 거래량 VLM [선택]<br>`is_cnt`: 종목건수 IS_CNT [선택] |
+| 설명 | Tool 이름 | KB증권 API |
+|---|---|---|
+| 해외시세분석 | `ranking_os_get_market_analysis` | GSA10600 |
+| 거래량 상위 | `ranking_os_get_top_volume` | GSA10150 |
+| 시가총액 상위 | `ranking_os_get_top_market_cap` | GSA10170 |
+| 신고/신저 조회 | `ranking_os_get_new_high_low` | GSS10180 |
 
 각 도구의 응답(OUTPUT) 필드는 KB증권 API가 반환한 JSON을 그대로 전달합니다 (필드가 많게는
 100개 이상이라 도구 설명에는 포함하지 않았습니다). 필드별 의미는 KB증권 오픈API 공식 문서를
