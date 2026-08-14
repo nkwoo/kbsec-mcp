@@ -1,8 +1,8 @@
 # KB증권 OpenAPI MCP 서버
 
-KB증권 OpenAPI 74개 엔드포인트(시세, 주문, 계좌, 투자정보 — 국내·해외주식)를 감싸는 Python MCP
-서버입니다. Claude Desktop, Claude Code 등 MCP 클라이언트에서 이 서버를 등록하면 자연어로 시세
-조회, 주문, 계좌 조회 등을 수행할 수 있습니다.
+KB증권 OpenAPI 74개 엔드포인트(시세, 주문, 계좌, 투자정보 — 국내·해외주식)에 토큰 폐기 도구
+1개를 더해 총 75개 도구로 감싸는 Python MCP 서버입니다. Claude Desktop, Claude Code 등 MCP
+클라이언트에서 이 서버를 등록하면 자연어로 시세 조회, 주문, 계좌 조회 등을 수행할 수 있습니다.
 
 ## ⚠️ 사용 전 필수 확인사항
 
@@ -151,8 +151,21 @@ Claude Desktop / Claude Code 외에도 stdio 기반 MCP 서버 등록을 지원�
 
 ## 전체 도구(Tool) 목록
 
-74개 도구는 KB증권 OpenAPI 명세(`spec/source/kbsec-openapi.postman_collection.json`)와 동일한
-국내주식/해외주식 카테고리 구조로 정리되어 있습니다.
+74개의 시세/주문/계좌/투자정보 도구는 KB증권 OpenAPI 명세
+(`spec/source/kbsec-openapi.postman_collection.json`)와 동일한 국내주식/해외주식 카테고리
+구조로 정리되어 있습니다. 여기에 인증 관련 도구 1개(`auth_revoke_token`)가 더해져 총 75개입니다.
+
+### 인증
+
+KB증권 API는 access token 값과 함께 발급 당시의 IP/MAC 주소를 검증합니다. 네트워크 환경이
+바뀌어(VPN 연결, Wi-Fi 전환 등) 캐시된 토큰의 IP/MAC이 더 이상 일치하지 않으면, 만료 전이라도
+모든 API 호출이 검증 실패로 거부될 수 있습니다. 이때 아래 도구로 캐시된 토큰을 강제로 폐기하면
+다음 호출에서 현재 IP/MAC 기준으로 새 토큰이 재발급됩니다 (토큰 발급 자체는 모든 도구 호출 시
+자동으로 처리되므로 별도 도구가 없습니다).
+
+| 설명 | Tool 이름 | KB증권 API | 파라미터 |
+|---|---|---|---|
+| 캐시된 access token 폐기 (다음 호출에서 재발급 강제) | `auth_revoke_token` | oauth2/revoke | 없음 |
 
 ### 국내 주식
 

@@ -91,7 +91,7 @@ class KBApiClient:
         self._http = httpx.AsyncClient(timeout=self._config.timeout_seconds, transport=transport)
         self._ip_addr = _detect_local_ip()
         self._mac_addr = _detect_mac_address()
-        self._tokens = TokenManager(self._config, self._issue_token_request)
+        self._tokens = TokenManager(self._config, self._issue_token_request, self._revoke_token_request)
 
     async def aclose(self) -> None:
         await self._http.aclose()
@@ -130,6 +130,20 @@ class KBApiClient:
             raise AuthError(f"Token issuance failed with HTTP {response.status_code}")
         return response.json()["dataBody"]
 
+    async def revoke_token(self) -> bool:
+        """캐시된 access token을 폐기하고 다음 호출에서 재발급을 강제한다.
+
+        캐시된 토큰이 없으면 KB증권에 요청을 보내지 않고 False를 반환한다.
+        """
+        return await self._tokens.revoke()
+
+    async def _revoke_token_request(self, body: dict) -> dict:
+        """토큰 폐기 요청을 access_token 없이 보낸다 (KB증권 스펙상 auth: noauth)."""
+        response = await self._post_with_retries("/oauth2/revoke", body, {"Content-Type": "application/json"})
+        if response.status_code != 200:
+            raise AuthError(f"Token revoke failed with HTTP {response.status_code}")
+        return response.json()["dataBody"]
+
     async def _post_with_retries(self, path: str, body: dict, headers: dict) -> httpx.Response:
         """dataHeader/dataBody envelope으로 감싸 POST하고 네트워크 오류/429/5xx는 재시도한다.
 
@@ -146,7 +160,10 @@ class KBApiClient:
         attempt = 0
         while True:
             attempt += 1
-            logger.info("KB증권 API call: POST %s (attempt %s)", path, attempt)
+            logger.info(
+                "KB증권 API call: POST %s (attempt %s, ipAddr=%s, macAddr=%s)",
+                path, attempt, self._ip_addr, self._mac_addr,
+            )
             try:
                 response = await self._http.post(url, json=envelope, headers=headers)
             except httpx.TransportError as exc:
@@ -190,3 +207,7 @@ def get_client() -> KBApiClient:
 
 async def call(path: str, body: dict, *, requires_trading: bool = False) -> dict:
     return await get_client().call(path, body, requires_trading=requires_trading)
+
+
+async def revoke_token() -> bool:
+    return await get_client().revoke_token()

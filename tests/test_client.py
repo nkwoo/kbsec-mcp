@@ -104,6 +104,62 @@ async def test_issue_token_request_has_no_authorization_header():
     await client.aclose()
 
 
+async def test_revoke_token_without_cached_token_is_noop():
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path == "/oauth2/revoke":
+            raise AssertionError("should not call /oauth2/revoke without a cached token")
+        return api_response({"ok": True})
+
+    client = make_client(handler)
+    revoked = await client.revoke_token()
+    assert revoked is False
+    await client.aclose()
+
+
+async def test_revoke_token_sends_token_and_credentials_without_auth_header():
+    sent = {}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path == "/oauth2/token":
+            return token_response()
+        if request.url.path == "/oauth2/revoke":
+            assert "authorization" not in request.headers
+            sent.update(json.loads(request.content))
+            return api_response({"tokenRevoke": "Y"})
+        return api_response({"ok": True})
+
+    client = make_client(handler)
+    await client.call("/api/v1/ivu10140", {})  # 캐시된 토큰 확보
+    revoked = await client.revoke_token()
+
+    assert revoked is True
+    assert sent["dataBody"] == {"token": "tok-1", "appKey": "k", "appSecret": "s"}
+    await client.aclose()
+
+
+async def test_revoke_token_forces_reissue_on_next_call():
+    state = {"token_calls": 0}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path == "/oauth2/token":
+            state["token_calls"] += 1
+            return api_response(
+                {"access_token": f"tok-{state['token_calls']}", "token_type": "Bearer", "expires_in": 86400}
+            )
+        if request.url.path == "/oauth2/revoke":
+            return api_response({"tokenRevoke": "Y"})
+        assert request.headers["authorization"] == f"bearer tok-{state['token_calls']}"
+        return api_response({"ok": True})
+
+    client = make_client(handler)
+    await client.call("/api/v1/ivu10140", {})
+    await client.revoke_token()
+    await client.call("/api/v1/ivu10140", {})
+
+    assert state["token_calls"] == 2
+    await client.aclose()
+
+
 async def test_issue_token_logs_masked_request_body(caplog):
     def handler(request: httpx.Request) -> httpx.Response:
         if request.url.path == "/oauth2/token":
@@ -128,6 +184,24 @@ async def test_issue_token_logs_masked_request_body(caplog):
     assert "dataHeader" in message and "dataBody" in message
     assert "my-app-key-1234" not in message
     assert "my-app-secret-5678" not in message
+
+
+async def test_call_logs_ip_and_mac_address_on_each_request(caplog):
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path == "/oauth2/token":
+            return token_response()
+        return api_response({"ok": True})
+
+    client = make_client(handler)
+    with caplog.at_level("INFO", logger="client"):
+        await client.call("/api/v1/ivu10140", {})
+    await client.aclose()
+
+    call_logs = [r.getMessage() for r in caplog.records if "KB증권 API call" in r.getMessage()]
+    assert call_logs, "expected an API call to be logged"
+    for message in call_logs:
+        assert re.search(r"ipAddr=\S+", message)
+        assert re.search(r"macAddr=([0-9A-F]{2}-){5}[0-9A-F]{2}", message)
 
 
 async def test_call_wraps_body_in_data_header_and_data_body_envelope():

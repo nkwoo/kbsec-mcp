@@ -1,6 +1,7 @@
 """KB증권 OpenAPI MCP 서버 엔트리포인트 (stdio transport)."""
 from app import mcp
 from tools import (
+    auth,
     domestic_quote,
     domestic_ranking,
     domestic_order,

@@ -1,11 +1,11 @@
 import server
 
 
-async def test_all_74_tools_registered_with_unique_names():
+async def test_all_75_tools_registered_with_unique_names():
     tools = await server.mcp.list_tools()
     names = [t.name for t in tools]
-    assert len(names) == 74
-    assert len(set(names)) == 74
+    assert len(names) == 75
+    assert len(set(names)) == 75
 
 
 async def test_tool_names_use_expected_category_prefixes():
@@ -21,6 +21,7 @@ async def test_tool_names_use_expected_category_prefixes():
         "order_os_",
         "orderhist_os_",
         "ranking_os_",
+        "auth_",
     )
     tools = await server.mcp.list_tools()
     for tool in tools:

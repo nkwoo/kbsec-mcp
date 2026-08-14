@@ -34,9 +34,10 @@ def mask_secret(value: str | None) -> str:
 class TokenManager:
     """KB증권 access token을 메모리에 캐싱하고 만료 전 자동으로 재발급한다."""
 
-    def __init__(self, config: Config, request_fn: RequestFn):
+    def __init__(self, config: Config, request_fn: RequestFn, revoke_fn: RequestFn):
         self._config = config
         self._request_fn = request_fn
+        self._revoke_fn = revoke_fn
         self._token: str | None = None
         self._expires_at: float = 0.0
         self._lock = asyncio.Lock()
@@ -55,6 +56,31 @@ class TokenManager:
         async with self._lock:
             self._token = None
             self._expires_at = 0.0
+
+    async def revoke(self) -> bool:
+        """캐시된 토큰을 KB증권에 폐기 요청하고 로컬 캐시를 비운다.
+
+        KB증권은 토큰 값과 함께 발급 당시의 IP/MAC을 검증하므로, 네트워크 환경이
+        바뀌면 만료 전이라도 캐시된 토큰이 전부 검증 실패로 거부될 수 있다. 그런
+        경우 원격 폐기 성공 여부와 무관하게 로컬 캐시부터 비워 다음 get_token()
+        호출이 현재 IP/MAC 기준으로 즉시 재발급되도록 한다.
+
+        캐시된 토큰이 없으면 원격 호출 없이 False를 반환한다.
+        """
+        async with self._lock:
+            if self._token is None:
+                return False
+            token = self._token
+            self._token = None
+            self._expires_at = 0.0
+        result = await self._revoke_fn(
+            {
+                "token": token,
+                "appKey": self._config.app_key,
+                "appSecret": self._config.app_secret,
+            }
+        )
+        return str(result.get("tokenRevoke", "")).upper() == "Y"
 
     async def _issue_token(self) -> None:
         # access_token 없이 요청을 보낸다 (get_token -> call -> get_token 무한루프 방지).
