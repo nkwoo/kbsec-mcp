@@ -237,3 +237,7 @@ Claude Desktop / Claude Code 외에도 stdio 기반 MCP 서버 등록을 지원�
 각 도구의 응답(OUTPUT) 필드는 KB증권 API가 반환한 JSON을 그대로 전달합니다 (필드가 많게는
 100개 이상이라 도구 설명에는 포함하지 않았습니다). 필드별 의미는 KB증권 오픈API 공식 문서를
 참고하세요.
+
+## 라이선스
+
+[MIT](LICENSE)
