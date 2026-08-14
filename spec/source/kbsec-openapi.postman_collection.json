@@ -21,15 +21,15 @@
                   "script": {
                     "exec": [
                       "const res = pm.response.json();",
-                      "if (res.access_token) {",
-                      "    pm.environment.set('accessToken', res.access_token);",
-                      "    const ttl = Number(res.expires_in || 86400);",
+                      "if (res.dataBody) {",
+                      "    pm.environment.set('accessToken', res.dataBody.access_token);",
+                      "    const ttl = Number(res.dataBody.expires_in || 86400);",
                       "    pm.environment.set('tokenExpiresAt', String(Date.now() + (ttl - 300) * 1000));",
                       "    console.log('accessToken 갱신 완료. 만료(초):', ttl);",
                       "}",
                       "pm.test('토큰 발급 성공', function () {",
                       "    pm.response.to.have.status(200);",
-                      "    pm.expect(res).to.have.property('access_token');",
+                      "    pm.expect(res.dataBody).to.have.property('access_token');",
                       "});"
                     ],
                     "type": "text/javascript",
@@ -51,7 +51,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"dataHeader\": {\n        \"ipAddr\": \"127.0.0.1\",\n        \"macAddr\": \"a2:94:c5:87:28:2d\"\n    },\n    \"dataBody\": {\n        \"grantType\": \"client_credentials\",\n        \"appKey\": \"{{appKey}}\",\n        \"appSecret\": \"{{appSecret}}\"\n    }\n}",
+                  "raw": "{\n    \"dataHeader\": {\n        \"ipAddr\": \"{{ipAddress}}\",\n        \"macAddr\": \"{{macAddress}}\"\n    },\n    \"dataBody\": {\n        \"grantType\": \"client_credentials\",\n        \"appKey\": \"{{appKey}}\",\n        \"appSecret\": \"{{appSecret}}\"\n    }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -87,7 +87,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"dataHeader\": {\n        \"ipAddr\": \"127.0.0.1\",\n        \"macAddr\": \"a2:94:c5:87:28:2d\"\n    },\n    \"dataBody\": {\n        \"token\": \"{{accessToken}}\",\n        \"appKey\": \"{{appKey}}\",\n        \"appSecret\": \"{{appSecret}}\"\n    }\n}",
+                  "raw": "{\n    \"dataHeader\": {\n        \"ipAddr\": \"{{ipAddress}}\",\n        \"macAddr\": \"{{macAddress}}\"\n    },\n    \"dataBody\": {\n        \"token\": \"{{accessToken}}\",\n        \"appKey\": \"{{appKey}}\",\n        \"appSecret\": \"{{appSecret}}\"\n    }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -134,7 +134,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"is_cd\": \"{{isCd}}\",\n    \"ovtm_mkt_clsf\": \"0\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"is_cd\": \"{{isCd}}\",\n    \"ovtm_mkt_clsf\": \"0\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -172,7 +172,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"excg_clsf\": \"0\",\n    \"is_cd\": \"{{isCd}}\",\n    \"ovtm_mkt_clsf\": \"0\",\n    \"inq_cnt\": \"20\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"excg_clsf\": \"0\",\n    \"is_cd\": \"{{isCd}}\",\n    \"ovtm_mkt_clsf\": \"0\",\n    \"inq_cnt\": \"20\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -210,7 +210,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"excg_clsf\": \"0\",\n    \"shrt_cd\": \"\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"excg_clsf\": \"0\",\n    \"shrt_cd\": \"\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -248,7 +248,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"excg_clsf\": \"0\",\n    \"is_cd\": \"{{isCd}}\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"excg_clsf\": \"0\",\n    \"is_cd\": \"{{isCd}}\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -286,7 +286,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"excg_clsf\": \"0\",\n    \"is_cd\": \"{{isCd}}\",\n    \"strt_dt\": \"{{startDate}}\",\n    \"end_dt\": \"{{endDate}}\",\n    \"amt_q_clsf\": \"1\",\n    \"trd_clsf\": \"1\",\n    \"acml_clsf\": \"0\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"excg_clsf\": \"0\",\n    \"is_cd\": \"{{isCd}}\",\n    \"strt_dt\": \"{{startDate}}\",\n    \"end_dt\": \"{{endDate}}\",\n    \"amt_q_clsf\": \"1\",\n    \"trd_clsf\": \"1\",\n    \"acml_clsf\": \"0\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -324,7 +324,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"excg_clsf\": \"0\",\n    \"is_cd\": \"{{isCd}}\",\n    \"amt_q_clsf\": \"\",\n    \"prd_clsf\": \"\",\n    \"inq_cnt\": \"20\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"excg_clsf\": \"0\",\n    \"is_cd\": \"{{isCd}}\",\n    \"amt_q_clsf\": \"\",\n    \"prd_clsf\": \"\",\n    \"inq_cnt\": \"20\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -362,7 +362,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"stnd_is_cd\": \"{{stndIsCd}}\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"stnd_is_cd\": \"{{stndIsCd}}\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -400,7 +400,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {}\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {}\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -438,7 +438,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"is_cd\": \"{{isCd}}\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"is_cd\": \"{{isCd}}\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -476,7 +476,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"info_ccd\": \"1\",\n    \"mkt_clsf\": \"0\",\n    \"chrt_clsf\": \"D\",\n    \"minute_tck_indx\": \"\",\n    \"is_cd\": \"{{isCd}}\",\n    \"inq_clsf\": \"1\",\n    \"strt_dy\": \"\",\n    \"inq_cnt\": \"20\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"info_ccd\": \"1\",\n    \"mkt_clsf\": \"0\",\n    \"chrt_clsf\": \"D\",\n    \"minute_tck_indx\": \"\",\n    \"is_cd\": \"{{isCd}}\",\n    \"inq_clsf\": \"1\",\n    \"strt_dy\": \"\",\n    \"inq_cnt\": \"20\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -519,7 +519,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"excg_clsf\": \"0\",\n    \"mkt_clsf\": \"1\",\n    \"thdy_bdy_clsf\": \"1\",\n    \"inq_cnt\": \"20\",\n    \"srt_clsf\": \"1\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"excg_clsf\": \"0\",\n    \"mkt_clsf\": \"1\",\n    \"thdy_bdy_clsf\": \"1\",\n    \"inq_cnt\": \"20\",\n    \"srt_clsf\": \"1\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -557,7 +557,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"excg_clsf\": \"0\",\n    \"mkt_clsf\": \"1\",\n    \"inq_cnt\": \"20\",\n    \"srt_clsf\": \"1\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"excg_clsf\": \"0\",\n    \"mkt_clsf\": \"1\",\n    \"inq_cnt\": \"20\",\n    \"srt_clsf\": \"1\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -595,7 +595,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"excg_clsf\": \"0\",\n    \"mkt_clsf\": \"1\",\n    \"inq_cnt\": \"20\",\n    \"up_dwn_ccd\": \"1\",\n    \"minute_dy_ccd\": \"1\",\n    \"minute_dy_unt\": \"\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"excg_clsf\": \"0\",\n    \"mkt_clsf\": \"1\",\n    \"inq_cnt\": \"20\",\n    \"up_dwn_ccd\": \"1\",\n    \"minute_dy_ccd\": \"1\",\n    \"minute_dy_unt\": \"\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -633,7 +633,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"excg_clsf\": \"0\",\n    \"mkt_clsf\": \"\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"excg_clsf\": \"0\",\n    \"mkt_clsf\": \"\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -671,7 +671,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"excg_clsf\": \"0\",\n    \"mkt_clsf\": \"1\",\n    \"inq_cnt\": \"20\",\n    \"nw_stk_lw_ccd\": \"\",\n    \"std_clsf\": \"1\",\n    \"prd_clsf\": \"1\",\n    \"excd_clsf\": \"1\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"excg_clsf\": \"0\",\n    \"mkt_clsf\": \"1\",\n    \"inq_cnt\": \"20\",\n    \"nw_stk_lw_ccd\": \"\",\n    \"std_clsf\": \"1\",\n    \"prd_clsf\": \"1\",\n    \"excd_clsf\": \"1\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -709,7 +709,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"mkt_clsf\": \"1\",\n    \"inq_cnt\": \"20\",\n    \"srt_clsf\": \"1\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"mkt_clsf\": \"1\",\n    \"inq_cnt\": \"20\",\n    \"srt_clsf\": \"1\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -747,7 +747,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"inq_cnt\": \"20\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"inq_cnt\": \"20\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -785,7 +785,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"mkt_clsf\": \"1\",\n    \"srt_clsf\": \"1\",\n    \"thdy_bdy_clsf\": \"1\",\n    \"inq_cnt\": \"20\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"mkt_clsf\": \"1\",\n    \"srt_clsf\": \"1\",\n    \"thdy_bdy_clsf\": \"1\",\n    \"inq_cnt\": \"20\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -823,7 +823,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"excg_clsf\": \"0\",\n    \"mkt_clsf\": \"0\",\n    \"invstr_ccd\": \"0\",\n    \"prd_clsf\": \"0\",\n    \"rnk_clsf\": \"0\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"excg_clsf\": \"0\",\n    \"mkt_clsf\": \"0\",\n    \"invstr_ccd\": \"0\",\n    \"prd_clsf\": \"0\",\n    \"rnk_clsf\": \"0\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -866,7 +866,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"ordr_jb_clsf\": \"1\",\n    \"is_cd\": \"{{isCd}}\",\n    \"ordr_uprc\": \"\",\n    \"ordr_q\": \"\",\n    \"ordr_ccd\": \"00\",\n    \"strt_dt\": \"{{startDate}}\",\n    \"end_dt\": \"{{endDate}}\",\n    \"mkt_tm_ccd\": \"\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"ordr_jb_clsf\": \"1\",\n    \"is_cd\": \"{{isCd}}\",\n    \"ordr_uprc\": \"\",\n    \"ordr_q\": \"\",\n    \"ordr_ccd\": \"00\",\n    \"strt_dt\": \"{{startDate}}\",\n    \"end_dt\": \"{{endDate}}\",\n    \"mkt_tm_ccd\": \"\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -904,7 +904,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"mkt_tm_clsf\": \"1\",\n    \"is_cd\": \"{{isCd}}\",\n    \"ordr_q\": \"\",\n    \"ordr_uprc\": \"\",\n    \"ordr_ccd\": \"00\",\n    \"sor_ordr_ccd\": \"K\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"mkt_tm_clsf\": \"1\",\n    \"is_cd\": \"{{isCd}}\",\n    \"ordr_q\": \"\",\n    \"ordr_uprc\": \"\",\n    \"ordr_ccd\": \"00\",\n    \"sor_ordr_ccd\": \"K\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -942,7 +942,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"mkt_tm_clsf\": \"1\",\n    \"is_cd\": \"{{isCd}}\",\n    \"ordr_q\": \"\",\n    \"ordr_uprc\": \"\",\n    \"ordr_ccd\": \"00\",\n    \"sor_ordr_ccd\": \"K\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"mkt_tm_clsf\": \"1\",\n    \"is_cd\": \"{{isCd}}\",\n    \"ordr_q\": \"\",\n    \"ordr_uprc\": \"\",\n    \"ordr_ccd\": \"00\",\n    \"sor_ordr_ccd\": \"K\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -980,7 +980,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"mkt_tm_clsf\": \"1\",\n    \"is_cd\": \"{{isCd}}\",\n    \"ordr_q\": \"\",\n    \"ordr_uprc\": \"\",\n    \"ordr_ccd\": \"00\",\n    \"crct_clsf\": \"1\",\n    \"orgn_ordr_no\": \"{{ordrNo}}\",\n    \"sor_ordr_ccd\": \"K\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"mkt_tm_clsf\": \"1\",\n    \"is_cd\": \"{{isCd}}\",\n    \"ordr_q\": \"\",\n    \"ordr_uprc\": \"\",\n    \"ordr_ccd\": \"00\",\n    \"crct_clsf\": \"1\",\n    \"orgn_ordr_no\": \"{{ordrNo}}\",\n    \"sor_ordr_ccd\": \"K\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1018,7 +1018,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"is_cd\": \"{{isCd}}\",\n    \"ordr_q\": \"\",\n    \"crct_clsf\": \"1\",\n    \"orgn_ordr_no\": \"{{ordrNo}}\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"is_cd\": \"{{isCd}}\",\n    \"ordr_q\": \"\",\n    \"crct_clsf\": \"1\",\n    \"orgn_ordr_no\": \"{{ordrNo}}\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1056,7 +1056,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"is_cd\": \"{{isCd}}\",\n    \"ordr_q_p6\": \"\",\n    \"ordr_amt\": \"\",\n    \"dcml_ordr_std_ccd\": \"1\",\n    \"tv_s_est_f\": \"0\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"is_cd\": \"{{isCd}}\",\n    \"ordr_q_p6\": \"\",\n    \"ordr_amt\": \"\",\n    \"dcml_ordr_std_ccd\": \"1\",\n    \"tv_s_est_f\": \"0\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1094,7 +1094,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"is_cd\": \"{{isCd}}\",\n    \"ordr_q_p6\": \"\",\n    \"ordr_amt\": \"\",\n    \"dcml_ordr_std_ccd\": \"1\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"is_cd\": \"{{isCd}}\",\n    \"ordr_q_p6\": \"\",\n    \"ordr_amt\": \"\",\n    \"dcml_ordr_std_ccd\": \"1\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1132,7 +1132,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"dmstc_stk_dcml_trd_jb_ccd\": \"01\",\n    \"ordr_sqc\": \"\",\n    \"ordr_dt\": \"{{endDate}}\",\n    \"bnf_is_cd\": \"\",\n    \"trd_dl_ccd\": \"01\",\n    \"dmstc_stk_dcml_ordr_sq\": \"\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"dmstc_stk_dcml_trd_jb_ccd\": \"01\",\n    \"ordr_sqc\": \"\",\n    \"ordr_dt\": \"{{endDate}}\",\n    \"bnf_is_cd\": \"\",\n    \"trd_dl_ccd\": \"01\",\n    \"dmstc_stk_dcml_ordr_sq\": \"\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1170,7 +1170,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"is_no\": \"{{isCd}}\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"is_no\": \"{{isCd}}\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1213,7 +1213,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"is_no\": \"{{isCd}}\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"is_no\": \"{{isCd}}\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1251,7 +1251,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"inq_clsf\": \"0\",\n    \"is_no\": \"{{isCd}}\",\n    \"mkt_tm_ccd\": \"1\",\n    \"nxt_key\": \"\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"inq_clsf\": \"0\",\n    \"is_no\": \"{{isCd}}\",\n    \"mkt_tm_ccd\": \"1\",\n    \"nxt_key\": \"\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1289,7 +1289,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"trd_dt\": \"\",\n    \"clsf\": \"1\",\n    \"stmt_dt\": \"\",\n    \"nxt_key\": \"\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"trd_dt\": \"\",\n    \"clsf\": \"1\",\n    \"stmt_dt\": \"\",\n    \"nxt_key\": \"\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1327,7 +1327,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"is_no\": \"{{isCd}}\",\n    \"ordr_dt_from\": \"\",\n    \"ordr_dt_to\": \"\",\n    \"nxt_key\": \"\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"is_no\": \"{{isCd}}\",\n    \"ordr_dt_from\": \"\",\n    \"ordr_dt_to\": \"\",\n    \"nxt_key\": \"\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1365,7 +1365,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"is_cd\": \"{{isCd}}\",\n    \"inq_strt_dt\": \"{{startDate}}\",\n    \"inq_end_dt\": \"{{endDate}}\",\n    \"nxt_key\": \"\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"is_cd\": \"{{isCd}}\",\n    \"inq_strt_dt\": \"{{startDate}}\",\n    \"inq_end_dt\": \"{{endDate}}\",\n    \"nxt_key\": \"\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1403,7 +1403,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"inq_clsf\": \"1\",\n    \"excg_mktpr_ccd\": \"A\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"inq_clsf\": \"1\",\n    \"excg_mktpr_ccd\": \"A\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1441,7 +1441,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"excg_mktpr_ccd\": \"A\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"excg_mktpr_ccd\": \"A\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1479,7 +1479,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"strt_dt\": \"{{startDate}}\",\n    \"end_dt\": \"{{endDate}}\",\n    \"is_no\": \"{{isCd}}\",\n    \"nxt_key\": \"\",\n    \"srt_clsf\": \"1\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"strt_dt\": \"{{startDate}}\",\n    \"end_dt\": \"{{endDate}}\",\n    \"is_no\": \"{{isCd}}\",\n    \"nxt_key\": \"\",\n    \"srt_clsf\": \"1\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1517,7 +1517,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"inq_dt\": \"\",\n    \"dl_sq\": \"\",\n    \"nxt_key\": \"\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"inq_dt\": \"\",\n    \"dl_sq\": \"\",\n    \"nxt_key\": \"\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1555,7 +1555,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"ccd\": \"1\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"ccd\": \"1\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1598,7 +1598,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"ordr_dt\": \"{{endDate}}\",\n    \"nxt_key\": \"\",\n    \"trd_clsf\": \"0\",\n    \"hndl_clsf\": \"0\",\n    \"tv_rv_ccd\": \"0\",\n    \"end_dt\": \"{{endDate}}\",\n    \"is_cd\": \"{{isCd}}\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"ordr_dt\": \"{{endDate}}\",\n    \"nxt_key\": \"\",\n    \"trd_clsf\": \"0\",\n    \"hndl_clsf\": \"0\",\n    \"tv_rv_ccd\": \"0\",\n    \"end_dt\": \"{{endDate}}\",\n    \"is_cd\": \"{{isCd}}\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1636,7 +1636,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"nxt_key\": \"\",\n    \"strt_dt\": \"{{startDate}}\",\n    \"end_dt\": \"{{endDate}}\",\n    \"is_cd\": \"{{isCd}}\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"nxt_key\": \"\",\n    \"strt_dt\": \"{{startDate}}\",\n    \"end_dt\": \"{{endDate}}\",\n    \"is_cd\": \"{{isCd}}\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1674,7 +1674,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"ccls_clsf\": \"0\",\n    \"ordr_dt\": \"{{endDate}}\",\n    \"nxt_key\": \"\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"ccls_clsf\": \"0\",\n    \"ordr_dt\": \"{{endDate}}\",\n    \"nxt_key\": \"\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1712,7 +1712,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"trd_clsf\": \"0\",\n    \"trd_strt_dt\": \"\",\n    \"trd_end_dt\": \"\",\n    \"is_cd\": \"{{isCd}}\",\n    \"nxt_key\": \"\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"trd_clsf\": \"0\",\n    \"trd_strt_dt\": \"\",\n    \"trd_end_dt\": \"\",\n    \"is_cd\": \"{{isCd}}\",\n    \"nxt_key\": \"\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1755,7 +1755,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {}\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {}\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1793,7 +1793,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"lnd_clsf\": \"S\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"lnd_clsf\": \"S\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1831,7 +1831,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {}\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {}\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1869,7 +1869,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"mkt_clsf\": \"1\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"mkt_clsf\": \"1\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1907,7 +1907,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {}\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {}\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1955,7 +1955,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"Record1\": \"\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"Record1\": \"\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1993,7 +1993,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"krx_cd\": \"{{krxCd}}\",\n    \"is_cd\": \"{{ovrsIsCd}}\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"krx_cd\": \"{{krxCd}}\",\n    \"is_cd\": \"{{ovrsIsCd}}\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2031,7 +2031,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"krx_cd\": \"{{krxCd}}\",\n    \"is_cd\": \"{{ovrsIsCd}}\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"krx_cd\": \"{{krxCd}}\",\n    \"is_cd\": \"{{ovrsIsCd}}\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2069,7 +2069,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"krx_cd\": \"{{krxCd}}\",\n    \"is_cd\": \"{{ovrsIsCd}}\",\n    \"rcrd_c\": \"\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"krx_cd\": \"{{krxCd}}\",\n    \"is_cd\": \"{{ovrsIsCd}}\",\n    \"rcrd_c\": \"\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2107,7 +2107,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"krx_cd\": \"{{krxCd}}\",\n    \"is_cd\": \"{{ovrsIsCd}}\",\n    \"chrt_clsf\": \"1\",\n    \"bndl\": \"\",\n    \"mdfy_stk_prc_use_f\": \"0\",\n    \"rcrd_c\": \"\",\n    \"srch_strt_dy\": \"\",\n    \"clsf\": \"\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"krx_cd\": \"{{krxCd}}\",\n    \"is_cd\": \"{{ovrsIsCd}}\",\n    \"chrt_clsf\": \"1\",\n    \"bndl\": \"\",\n    \"mdfy_stk_prc_use_f\": \"0\",\n    \"rcrd_c\": \"\",\n    \"srch_strt_dy\": \"\",\n    \"clsf\": \"\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2150,7 +2150,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"strt_ordr_dt\": \"{{startDate}}\",\n    \"end_ordr_dt\": \"{{endDate}}\",\n    \"trd_clsf\": \"99\",\n    \"stnd_is_cd\": \"{{stndIsCd}}\",\n    \"krw_unty_mgn_rqst_f\": \"0\",\n    \"dl_clsf\": \"0\",\n    \"nxt_key\": \"\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"strt_ordr_dt\": \"{{startDate}}\",\n    \"end_ordr_dt\": \"{{endDate}}\",\n    \"trd_clsf\": \"99\",\n    \"stnd_is_cd\": \"{{stndIsCd}}\",\n    \"krw_unty_mgn_rqst_f\": \"0\",\n    \"dl_clsf\": \"0\",\n    \"nxt_key\": \"\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2188,7 +2188,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"ordr_dt\": \"{{endDate}}\",\n    \"stnd_is_cd\": \"{{stndIsCd}}\",\n    \"std_crncy_f\": \"1\",\n    \"exch_r_aplc_f\": \"1\",\n    \"frgn_stk_mgn_ccd\": \"1\",\n    \"dl_clsf\": \"0\",\n    \"nxt_key\": \"\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"ordr_dt\": \"{{endDate}}\",\n    \"stnd_is_cd\": \"{{stndIsCd}}\",\n    \"std_crncy_f\": \"1\",\n    \"exch_r_aplc_f\": \"1\",\n    \"frgn_stk_mgn_ccd\": \"1\",\n    \"dl_clsf\": \"0\",\n    \"nxt_key\": \"\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2226,7 +2226,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"strt_ordr_dt\": \"{{startDate}}\",\n    \"end_ordr_dt\": \"{{endDate}}\",\n    \"stnd_is_cd\": \"{{stndIsCd}}\",\n    \"std_crncy_f\": \"1\",\n    \"exch_r_aplc_f\": \"1\",\n    \"frgn_stk_mgn_ccd\": \"1\",\n    \"dl_clsf\": \"\",\n    \"nxt_key\": \"\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"strt_ordr_dt\": \"{{startDate}}\",\n    \"end_ordr_dt\": \"{{endDate}}\",\n    \"stnd_is_cd\": \"{{stndIsCd}}\",\n    \"std_crncy_f\": \"1\",\n    \"exch_r_aplc_f\": \"1\",\n    \"frgn_stk_mgn_ccd\": \"1\",\n    \"dl_clsf\": \"\",\n    \"nxt_key\": \"\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2264,7 +2264,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {}\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {}\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2302,7 +2302,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"std_crncy_f\": \"1\",\n    \"exch_r_aplc_f\": \"1\",\n    \"fee_clsf\": \"0\",\n    \"cn_f\": \"\",\n    \"nxt_key\": \"\",\n    \"mktpr_aplc_clsf\": \"\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"std_crncy_f\": \"1\",\n    \"exch_r_aplc_f\": \"1\",\n    \"fee_clsf\": \"0\",\n    \"cn_f\": \"\",\n    \"nxt_key\": \"\",\n    \"mktpr_aplc_clsf\": \"\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2340,7 +2340,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"strt_dt\": \"{{startDate}}\",\n    \"rgt_clsf\": \"0\",\n    \"is_cd\": \"{{ovrsIsCd}}\",\n    \"nxt_key\": \"\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"strt_dt\": \"{{startDate}}\",\n    \"rgt_clsf\": \"0\",\n    \"is_cd\": \"{{ovrsIsCd}}\",\n    \"nxt_key\": \"\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2383,7 +2383,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"stnd_is_cd\": \"{{stndIsCd}}\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"stnd_is_cd\": \"{{stndIsCd}}\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2421,7 +2421,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {}\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {}\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2459,7 +2459,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"trd_dl_ccd\": \"01\",\n    \"is_cd\": \"{{ovrsIsCd}}\",\n    \"frgn_ordr_typ_cd\": \"1\",\n    \"frgn_ordr_q\": \"\",\n    \"frgn_ordr_prc_p4\": \"\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"trd_dl_ccd\": \"01\",\n    \"is_cd\": \"{{ovrsIsCd}}\",\n    \"frgn_ordr_typ_cd\": \"1\",\n    \"frgn_ordr_q\": \"\",\n    \"frgn_ordr_prc_p4\": \"\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2497,7 +2497,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"crct_cncl_clsf\": \"1\",\n    \"is_cd\": \"{{ovrsIsCd}}\",\n    \"orgn_ordr_no\": \"{{ordrNo}}\",\n    \"frgn_ordr_prc_p4\": \"\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"crct_cncl_clsf\": \"1\",\n    \"is_cd\": \"{{ovrsIsCd}}\",\n    \"orgn_ordr_no\": \"{{ordrNo}}\",\n    \"frgn_ordr_prc_p4\": \"\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2535,7 +2535,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {}\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {}\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2573,7 +2573,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"trd_dl_ccd\": \"01\",\n    \"is_cd\": \"{{ovrsIsCd}}\",\n    \"amt_q_clsf\": \"0\",\n    \"tv_s_est_f\": \"0\",\n    \"frgn_ordr_typ_cd\": \"2\",\n    \"crncy_ccd\": \"0\",\n    \"ordr_amt\": \"\",\n    \"dcml_ordr_q_p6\": \"\",\n    \"frgn_ordr_prc_p4\": \"\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"trd_dl_ccd\": \"01\",\n    \"is_cd\": \"{{ovrsIsCd}}\",\n    \"amt_q_clsf\": \"0\",\n    \"tv_s_est_f\": \"0\",\n    \"frgn_ordr_typ_cd\": \"2\",\n    \"crncy_ccd\": \"0\",\n    \"ordr_amt\": \"\",\n    \"dcml_ordr_q_p6\": \"\",\n    \"frgn_ordr_prc_p4\": \"\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2611,7 +2611,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"orgn_ordr_no\": \"{{ordrNo}}\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"orgn_ordr_no\": \"{{ordrNo}}\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2649,7 +2649,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"is_cd\": \"{{ovrsIsCd}}\",\n    \"trd_dl_ccd\": \"01\",\n    \"ordr_typ_cd\": \"1\",\n    \"ordr_q\": \"\",\n    \"frgn_ordr_prc_p4\": \"\",\n    \"strt_tm\": \"\",\n    \"end_tm\": \"\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"is_cd\": \"{{ovrsIsCd}}\",\n    \"trd_dl_ccd\": \"01\",\n    \"ordr_typ_cd\": \"1\",\n    \"ordr_q\": \"\",\n    \"frgn_ordr_prc_p4\": \"\",\n    \"strt_tm\": \"\",\n    \"end_tm\": \"\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2687,7 +2687,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"is_cd\": \"{{ovrsIsCd}}\",\n    \"trd_clsf\": \"\",\n    \"ordr_typ\": \"\",\n    \"ordr_q\": \"\",\n    \"frgn_ordr_prc_p4\": \"\",\n    \"cncl_ordr_no\": \"\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"is_cd\": \"{{ovrsIsCd}}\",\n    \"trd_clsf\": \"\",\n    \"ordr_typ\": \"\",\n    \"ordr_q\": \"\",\n    \"frgn_ordr_prc_p4\": \"\",\n    \"cncl_ordr_no\": \"\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2730,7 +2730,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"ccls_clsf\": \"1\",\n    \"ordr_dt\": \"{{endDate}}\",\n    \"dl_clsf\": \"\",\n    \"nxt_key\": \"\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"ccls_clsf\": \"1\",\n    \"ordr_dt\": \"{{endDate}}\",\n    \"dl_clsf\": \"\",\n    \"nxt_key\": \"\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2768,7 +2768,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"strt_ordr_dt\": \"{{startDate}}\",\n    \"end_ordr_dt\": \"{{endDate}}\",\n    \"ccls_clsf\": \"0\",\n    \"trd_clsf\": \"99\",\n    \"stnd_is_cd\": \"{{stndIsCd}}\",\n    \"dl_clsf\": \"0\",\n    \"nxt_key\": \"\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"strt_ordr_dt\": \"{{startDate}}\",\n    \"end_ordr_dt\": \"{{endDate}}\",\n    \"ccls_clsf\": \"0\",\n    \"trd_clsf\": \"99\",\n    \"stnd_is_cd\": \"{{stndIsCd}}\",\n    \"dl_clsf\": \"0\",\n    \"nxt_key\": \"\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2806,7 +2806,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"rsrv_dt\": \"\",\n    \"stnd_is_cd\": \"{{stndIsCd}}\",\n    \"trd_clsf\": \"1\",\n    \"krw_unty_mgn_rqst_f\": \"0\",\n    \"cn_key\": \"\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"rsrv_dt\": \"\",\n    \"stnd_is_cd\": \"{{stndIsCd}}\",\n    \"trd_clsf\": \"1\",\n    \"krw_unty_mgn_rqst_f\": \"0\",\n    \"cn_key\": \"\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2849,7 +2849,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"frex_clsf\": \"AA\",\n    \"clsf\": \"1\",\n    \"rnk\": \"1\",\n    \"is_cnt\": \"\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"frex_clsf\": \"AA\",\n    \"clsf\": \"1\",\n    \"rnk\": \"1\",\n    \"is_cnt\": \"\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2887,7 +2887,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"krx_cd\": \"{{krxCd}}\",\n    \"std_dy\": \"01\",\n    \"vlm\": \"\",\n    \"is_cnt\": \"\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"krx_cd\": \"{{krxCd}}\",\n    \"std_dy\": \"01\",\n    \"vlm\": \"\",\n    \"is_cnt\": \"\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2925,7 +2925,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"krx_cd\": \"{{krxCd}}\",\n    \"is_cnt\": \"\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"krx_cd\": \"{{krxCd}}\",\n    \"is_cnt\": \"\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2963,7 +2963,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"127.0.0.1\",\n    \"macAddr\": \"a2:94:c5:87:28:2d\"\n  },\n  \"dataBody\": {\n    \"krx_cd\": \"{{krxCd}}\",\n    \"clsf\": \"0\",\n    \"clsf2\": \"0\",\n    \"std_dy\": \"01\",\n    \"vlm\": \"\",\n    \"is_cnt\": \"\"\n  }\n}",
+                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"krx_cd\": \"{{krxCd}}\",\n    \"clsf\": \"0\",\n    \"clsf2\": \"0\",\n    \"std_dy\": \"01\",\n    \"vlm\": \"\",\n    \"is_cnt\": \"\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
