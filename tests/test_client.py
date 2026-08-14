@@ -28,21 +28,106 @@ def make_client(handler, config=None) -> KBApiClient:
     return KBApiClient(config=config or make_config(), transport=transport)
 
 
+def api_response(data_body: dict, *, status: int = 200, headers: dict | None = None) -> httpx.Response:
+    return httpx.Response(
+        status,
+        json={"dataHeader": {"rspCd": "00000", "rspMsg": "정상처리"}, "dataBody": data_body},
+        headers=headers,
+    )
+
+
 def token_response() -> httpx.Response:
-    return httpx.Response(200, json={"access_token": "tok-1", "token_type": "Bearer", "expires_in": 86400})
+    return api_response({"access_token": "tok-1", "token_type": "Bearer", "expires_in": 86400})
 
 
-async def test_call_success_returns_json():
+async def test_call_success_returns_data_body():
     def handler(request: httpx.Request) -> httpx.Response:
         if request.url.path == "/oauth2/token":
             return token_response()
         assert request.headers["authorization"] == "bearer tok-1"
-        return httpx.Response(200, json={"is_nm": "삼성전자"})
+        return api_response({"is_nm": "삼성전자"})
 
     client = make_client(handler)
     result = await client.call("/api/v1/ivu10140", {"shrt_cd": "005930"})
     assert result == {"is_nm": "삼성전자"}
     await client.aclose()
+
+
+async def test_issue_token_wraps_body_in_data_header_and_data_body_envelope():
+    sent = {}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path == "/oauth2/token":
+            sent.update(json.loads(request.content))
+            return token_response()
+        return api_response({"ok": True})
+
+    client = make_client(handler)
+    await client.call("/api/v1/ivu10140", {})
+    assert sent["dataBody"] == {
+        "grantType": "client_credentials",
+        "appKey": "k",
+        "appSecret": "s",
+    }
+    header = sent["dataHeader"]
+    assert set(header) == {"ipAddr", "macAddr"}
+    assert header["ipAddr"]
+    assert re.fullmatch(r"([0-9A-F]{2}-){5}[0-9A-F]{2}", header["macAddr"])
+    await client.aclose()
+
+
+async def test_issue_token_unwraps_data_body_envelope_from_response():
+    """KB증권 서버는 다른 모든 API와 동일하게 /oauth2/token 응답도 dataHeader/dataBody로
+    감싸서 내려준다. access_token은 dataBody 안에 있으므로 이를 벗겨내야 한다."""
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path == "/oauth2/token":
+            return api_response({"access_token": "tok-1", "token_type": "Bearer", "expires_in": 86400})
+        assert request.headers["authorization"] == "bearer tok-1"
+        return api_response({"ok": True})
+
+    client = make_client(handler)
+    result = await client.call("/api/v1/ivu10140", {})
+    assert result == {"ok": True}
+    await client.aclose()
+
+
+async def test_issue_token_request_has_no_authorization_header():
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path == "/oauth2/token":
+            assert "authorization" not in request.headers
+            return token_response()
+        return api_response({"ok": True})
+
+    client = make_client(handler)
+    await client.call("/api/v1/ivu10140", {})
+    await client.aclose()
+
+
+async def test_issue_token_logs_masked_request_body(caplog):
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path == "/oauth2/token":
+            return token_response()
+        return api_response({"ok": True})
+
+    config = make_config()
+    client = make_client(handler, config=Config(
+        app_key="my-app-key-1234",
+        app_secret="my-app-secret-5678",
+        base_url=config.base_url,
+        timeout_seconds=config.timeout_seconds,
+        trading_enabled=config.trading_enabled,
+    ))
+    with caplog.at_level("DEBUG", logger="client"):
+        await client.call("/api/v1/ivu10140", {})
+    await client.aclose()
+
+    token_logged = [r.getMessage() for r in caplog.records if "grantType" in r.getMessage()]
+    assert token_logged, "expected token issuance request to be logged"
+    message = token_logged[0]
+    assert "dataHeader" in message and "dataBody" in message
+    assert "my-app-key-1234" not in message
+    assert "my-app-secret-5678" not in message
 
 
 async def test_call_wraps_body_in_data_header_and_data_body_envelope():
@@ -52,7 +137,7 @@ async def test_call_wraps_body_in_data_header_and_data_body_envelope():
         if request.url.path == "/oauth2/token":
             return token_response()
         sent.update(json.loads(request.content))
-        return httpx.Response(200, json={"ok": True})
+        return api_response({"ok": True})
 
     client = make_client(handler)
     await client.call("/api/v1/ivu10210", {"excg_clsf": "0", "mkt_clsf": "1"})
@@ -70,15 +155,14 @@ async def test_call_retries_with_new_token_on_401():
     def handler(request: httpx.Request) -> httpx.Response:
         if request.url.path == "/oauth2/token":
             state["token_calls"] += 1
-            return httpx.Response(
-                200,
-                json={"access_token": f"tok-{state['token_calls']}", "token_type": "Bearer", "expires_in": 86400},
+            return api_response(
+                {"access_token": f"tok-{state['token_calls']}", "token_type": "Bearer", "expires_in": 86400}
             )
         state["api_calls"] += 1
         if state["api_calls"] == 1:
             return httpx.Response(401, json={"msg": "expired"})
         assert request.headers["authorization"] == "bearer tok-2"
-        return httpx.Response(200, json={"ok": True})
+        return api_response({"ok": True})
 
     client = make_client(handler)
     result = await client.call("/api/v1/ssqm1801", {})
@@ -128,7 +212,7 @@ async def test_call_retries_429_then_succeeds(monkeypatch):
         attempts["count"] += 1
         if attempts["count"] < 2:
             return httpx.Response(429, headers={"Retry-After": "0"})
-        return httpx.Response(200, json={"ok": True})
+        return api_response({"ok": True})
 
     client = make_client(handler)
     result = await client.call("/api/v1/ivu10140", {})
@@ -152,7 +236,7 @@ async def test_call_429_with_non_numeric_retry_after_falls_back_to_backoff(monke
         attempts["count"] += 1
         if attempts["count"] < 2:
             return httpx.Response(429, headers={"Retry-After": "Wed, 21 Oct 2015 07:28:00 GMT"})
-        return httpx.Response(200, json={"ok": True})
+        return api_response({"ok": True})
 
     client = make_client(handler)
     result = await client.call("/api/v1/ivu10140", {})
@@ -178,7 +262,7 @@ async def test_call_429_with_large_retry_after_is_clamped(monkeypatch):
         attempts["count"] += 1
         if attempts["count"] < 2:
             return httpx.Response(429, headers={"Retry-After": "3600"})
-        return httpx.Response(200, json={"ok": True})
+        return api_response({"ok": True})
 
     client = make_client(handler)
     result = await client.call("/api/v1/ivu10140", {})
@@ -195,7 +279,7 @@ async def test_call_blocks_trading_when_disabled():
         calls["count"] += 1
         if request.url.path == "/oauth2/token":
             return token_response()
-        return httpx.Response(200, json={"ordr_no": "12345"})
+        return api_response({"ordr_no": "12345"})
 
     client = make_client(handler, config=make_config(trading_enabled=False))
     with pytest.raises(TradingDisabledError):
@@ -209,7 +293,7 @@ async def test_call_allows_trading_when_enabled():
     def handler(request: httpx.Request) -> httpx.Response:
         if request.url.path == "/oauth2/token":
             return token_response()
-        return httpx.Response(200, json={"ordr_no": "12345"})
+        return api_response({"ordr_no": "12345"})
 
     client = make_client(handler, config=make_config(trading_enabled=True))
     result = await client.call("/api/v1/ssam1801", {}, requires_trading=True)
@@ -221,7 +305,7 @@ async def test_call_without_requires_trading_ignores_trading_flag():
     def handler(request: httpx.Request) -> httpx.Response:
         if request.url.path == "/oauth2/token":
             return token_response()
-        return httpx.Response(200, json={"ok": True})
+        return api_response({"ok": True})
 
     client = make_client(handler, config=make_config(trading_enabled=False))
     result = await client.call("/api/v1/ivu10140", {})

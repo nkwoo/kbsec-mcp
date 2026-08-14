@@ -4,13 +4,14 @@
 한 곳에서 처리해 tools/*.py는 얇게 유지한다.
 """
 import asyncio
+import json
 import logging
 import socket
 import uuid
 
 import httpx
 
-from auth import TokenManager, mask_secret
+from auth import AuthError, TokenManager, mask_secret
 from config import Config, load_config
 
 logger = logging.getLogger(__name__)
@@ -88,9 +89,9 @@ class KBApiClient:
     def __init__(self, config: Config | None = None, transport: httpx.AsyncBaseTransport | None = None):
         self._config = config or load_config()
         self._http = httpx.AsyncClient(timeout=self._config.timeout_seconds, transport=transport)
-        self._tokens = TokenManager(self._config)
         self._ip_addr = _detect_local_ip()
         self._mac_addr = _detect_mac_address()
+        self._tokens = TokenManager(self._config, self._issue_token_request)
 
     async def aclose(self) -> None:
         await self._http.aclose()
@@ -99,14 +100,48 @@ class KBApiClient:
         if requires_trading and not self._config.trading_enabled:
             raise TradingDisabledError(path)
 
-        url = f"{self._config.base_url}{path}"
-        token = await self._tokens.get_token(self._http)
+        token = await self._tokens.get_token()
         headers = {"Content-Type": "application/json", "Authorization": f"bearer {token}"}
+        allow_auth_retry = True
+
+        while True:
+            response = await self._post_with_retries(path, body, headers)
+
+            if response.status_code == 401 and allow_auth_retry:
+                allow_auth_retry = False
+                await self._tokens.invalidate()
+                token = await self._tokens.get_token()
+                headers["Authorization"] = f"bearer {token}"
+                continue
+
+            if response.status_code >= 400:
+                raise KBApiError(response.status_code, _extract_error_message(response))
+
+            return response.json()["dataBody"]
+
+    async def _issue_token_request(self, body: dict) -> dict:
+        """토큰 발급 요청을 access_token 없이 보낸다.
+
+        TokenManager.get_token()이 이 콜백을 통해서만 KB증권에 요청을 보내므로,
+        call()이 토큰을 얻으려고 다시 get_token()을 부르는 무한루프가 생기지 않는다.
+        """
+        response = await self._post_with_retries("/oauth2/token", body, {"Content-Type": "application/json"})
+        if response.status_code != 200:
+            raise AuthError(f"Token issuance failed with HTTP {response.status_code}")
+        return response.json()["dataBody"]
+
+    async def _post_with_retries(self, path: str, body: dict, headers: dict) -> httpx.Response:
+        """dataHeader/dataBody envelope으로 감싸 POST하고 네트워크 오류/429/5xx는 재시도한다.
+
+        401을 포함한 4xx 응답은 그대로 반환하므로, 인증 재시도 여부는 호출자가 결정한다.
+        """
+        url = f"{self._config.base_url}{path}"
         envelope = {
             "dataHeader": {"ipAddr": self._ip_addr, "macAddr": self._mac_addr},
             "dataBody": body,
         }
-        allow_auth_retry = True
+        logged_envelope = {**envelope, "dataBody": mask_body(body)}
+        logger.debug("KB증권 API request: POST %s %s", path, json.dumps(logged_envelope, ensure_ascii=False))
 
         attempt = 0
         while True:
@@ -118,13 +153,6 @@ class KBApiClient:
                 if attempt >= _MAX_RETRIES:
                     raise KBApiError(0, f"Network error after {attempt} attempts: {exc}") from exc
                 await asyncio.sleep(2 ** (attempt - 1))
-                continue
-
-            if response.status_code == 401 and allow_auth_retry:
-                allow_auth_retry = False
-                await self._tokens.invalidate()
-                new_token = await self._tokens.get_token(self._http)
-                headers["Authorization"] = f"bearer {new_token}"
                 continue
 
             if response.status_code == 429:
@@ -147,10 +175,7 @@ class KBApiClient:
                 await asyncio.sleep(2 ** (attempt - 1))
                 continue
 
-            if response.status_code >= 400:
-                raise KBApiError(response.status_code, _extract_error_message(response))
-
-            return response.json()
+            return response
 
 
 _client: KBApiClient | None = None
