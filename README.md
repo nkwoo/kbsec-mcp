@@ -84,10 +84,20 @@ python server.py
 
 정상 기동하면 stdio로 MCP 클라이언트의 연결을 기다립니다 (Ctrl+C로 종료).
 
-## Claude Desktop / Claude Code 등록
+## MCP 클라이언트 등록
 
-`claude_desktop_config.json`(Claude Desktop) 또는 프로젝트의 MCP 설정 파일에 아래 스니펫을
+이 서버는 표준 MCP(stdio) 프로토콜을 그대로 구현하므로 Claude 외에도 MCP를 지원하는 어떤
+클라이언트에서도 동일하게 사용할 수 있습니다. 아래에서 사용 중인 클라이언트에 맞는 설정을 골라
 추가하세요. `command`/`args`의 경로는 실제 설치 경로에 맞게 절대경로로 바꿔주세요.
+
+`.env`는 `server.py`와 같은 디렉터리에서 자동으로 로드되므로 클라이언트 설정에 별도로 키를
+넣을 필요는 없습니다 (다만 넣고 싶다면 클라이언트별 `env` 필드에 `KBSEC_APP_KEY`/
+`KBSEC_APP_SECRET` 등을 추가해도 동작합니다 — `.env` 값보다 우선 적용됩니다).
+
+### Claude Desktop / Claude Code
+
+`claude_desktop_config.json`(Claude Desktop) 또는 프로젝트의 `.mcp.json`(Claude Code)에 아래
+스니펫을 추가하세요.
 
 ```json
 {
@@ -100,9 +110,44 @@ python server.py
 }
 ```
 
-`.env`는 `server.py`와 같은 디렉터리에서 자동으로 로드되므로 `env` 필드에 별도로 키를 넣을
-필요는 없습니다 (다만 넣고 싶다면 `"env": {"KBSEC_APP_KEY": "...", "KBSEC_APP_SECRET": "..."}` 형태로
-추가해도 동작합니다 — `.env` 값보다 우선 적용됩니다).
+`.env` 파일 대신 설정 JSON에서 직접 환경변수를 넘기고 싶다면 `env` 필드를 추가하세요. 이 값은
+`.env` 값보다 우선 적용됩니다.
+
+```json
+{
+  "mcpServers": {
+    "kbsec": {
+      "command": "/absolute/path/to/KBSec_MCP_Server/.venv/bin/python",
+      "args": ["/absolute/path/to/KBSec_MCP_Server/server.py"],
+      "env": {
+        "KBSEC_APP_KEY": "your_app_key",
+        "KBSEC_APP_SECRET": "your_app_secret"
+      }
+    }
+  }
+}
+```
+
+Claude Code는 `claude mcp add` 명령으로도 등록할 수 있고, `-e`(`--env`) 플래그로 `KBSEC_APP_KEY`
+같은 환경변수를 함께 넘길 수 있습니다 (플래그는 반복 지정 가능하며, `--` 뒤에 실행할 명령을
+씁니다).
+
+```bash
+claude mcp add kbsec \
+  -e KBSEC_APP_KEY=your_app_key \
+  -e KBSEC_APP_SECRET=your_app_secret \
+  -- /absolute/path/to/KBSec_MCP_Server/.venv/bin/python /absolute/path/to/KBSec_MCP_Server/server.py
+```
+
+기본 스코프는 `local`(현재 프로젝트에만 적용)입니다. 여러 프로젝트에서 공용으로 쓰려면
+`-s user`(사용자 전역), 프로젝트 팀원과 설정을 공유하려면 `-s project`를 추가하세요. 이 방식으로
+넘긴 값은 `.env` 값보다 우선 적용됩니다.
+
+### 그 외 MCP 클라이언트
+
+Claude Desktop / Claude Code 외에도 stdio 기반 MCP 서버 등록을 지원하는 클라이언트라면 대부분
+`command`(파이썬 실행 파일 경로)와 `args`(`server.py` 절대경로) 두 값만 지정하면 됩니다. 정확한
+설정 파일 위치와 스키마는 사용 중인 클라이언트의 공식 문서를 확인하세요.
 
 ## 전체 도구(Tool) 목록
 
