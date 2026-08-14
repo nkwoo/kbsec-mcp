@@ -103,8 +103,8 @@ python server.py
 {
   "mcpServers": {
     "kbsec": {
-      "command": "/absolute/path/to/KBSec_MCP_Server/.venv/bin/python",
-      "args": ["/absolute/path/to/KBSec_MCP_Server/server.py"]
+      "command": "/absolute/path/to/kbsec-mcp/.venv/bin/python",
+      "args": ["/absolute/path/to/kbsec-mcp/server.py"]
     }
   }
 }
@@ -117,8 +117,8 @@ python server.py
 {
   "mcpServers": {
     "kbsec": {
-      "command": "/absolute/path/to/KBSec_MCP_Server/.venv/bin/python",
-      "args": ["/absolute/path/to/KBSec_MCP_Server/server.py"],
+      "command": "/absolute/path/to/kbsec-mcp/.venv/bin/python",
+      "args": ["/absolute/path/to/kbsec-mcp/server.py"],
       "env": {
         "KBSEC_APP_KEY": "your_app_key",
         "KBSEC_APP_SECRET": "your_app_secret"
@@ -136,7 +136,7 @@ Claude Code는 `claude mcp add` 명령으로도 등록할 수 있고, `-e`(`--en
 claude mcp add kbsec \
   -e KBSEC_APP_KEY=your_app_key \
   -e KBSEC_APP_SECRET=your_app_secret \
-  -- /absolute/path/to/KBSec_MCP_Server/.venv/bin/python /absolute/path/to/KBSec_MCP_Server/server.py
+  -- /absolute/path/to/kbsec-mcp/.venv/bin/python /absolute/path/to/kbsec-mcp/server.py
 ```
 
 기본 스코프는 `local`(현재 프로젝트에만 적용)입니다. 여러 프로젝트에서 공용으로 쓰려면
