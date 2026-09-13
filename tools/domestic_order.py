@@ -45,7 +45,7 @@ async def order_kr_place_sell_order(mkt_tm_clsf: str, is_cd: str, ordr_q: str, o
     KB증권 API: SSAM1801 (POST /api/v1/ssam1801)
     
     Args:
-        mkt_tm_clsf: 시장시간구분 (필수). 1:정규장,2:장개시전시간외종가,3:장종료후시간외종가,4:장종료후시간외단일가
+        mkt_tm_clsf: 시장시간구분 (필수). 1:정규장,2:장개시전시간외종가,3:장종료후시간외종가
         is_cd: 종목코드 (필수).
         ordr_q: 주문수량 (필수).
         ordr_uprc: 주문단가 (필수).
@@ -72,7 +72,7 @@ async def order_kr_place_buy_order(mkt_tm_clsf: str, is_cd: str, ordr_q: str, or
     KB증권 API: SSAM1802 (POST /api/v1/ssam1802)
     
     Args:
-        mkt_tm_clsf: 시장시간구분 (필수). 1:정규장,2:장개시전시간외종가,3:장종료후시간외종가,4:장종료후시간외단일가
+        mkt_tm_clsf: 시장시간구분 (필수). 1:정규장,2:장개시전시간외종가,3:장종료후시간외종가
         is_cd: 종목코드 (필수).
         ordr_q: 주문수량 (필수).
         ordr_uprc: 주문단가 (필수).
@@ -99,7 +99,7 @@ async def order_kr_amend_order(mkt_tm_clsf: str, is_cd: str, ordr_q: str, ordr_u
     KB증권 API: SSAM1805 (POST /api/v1/ssam1805)
     
     Args:
-        mkt_tm_clsf: 시장시간구분 (필수). 1:정규장,2:장개시전시간외종가,3:장종료후시간외종가,4:장종료후시간외단일가
+        mkt_tm_clsf: 시장시간구분 (필수). 1:정규장,2:장개시전시간외종가,3:장종료후시간외종가
         is_cd: 종목코드 (필수).
         ordr_q: 주문수량 (필수). *일부정정시 입력
         ordr_uprc: 주문단가 (필수).
