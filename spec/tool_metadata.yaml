@@ -39,8 +39,6 @@ domestic_ranking:
     tool_name: ranking_kr_get_top_open_price_change
   - code: IVS10920
     tool_name: ranking_kr_get_top_market_cap
-  - code: IVS11190
-    tool_name: ranking_kr_get_top_after_hours_change
   - code: IVU10020
     tool_name: ranking_kr_get_top_foreign_institution_trading
 

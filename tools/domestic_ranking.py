@@ -169,29 +169,6 @@ async def ranking_kr_get_top_market_cap(inq_cnt: str | None = None) -> dict:
 
 
 @mcp.tool()
-async def ranking_kr_get_top_after_hours_change(mkt_clsf: str | None = None, srt_clsf: str | None = None, thdy_bdy_clsf: str | None = None, inq_cnt: str | None = None) -> dict:
-    """시간외단일가등락율순위(IVS11190)
-    
-    KB증권 API: IVS11190 (POST /api/v1/ivs11190)
-    
-    Args:
-        mkt_clsf: 시장구분 (선택). 1:전체, 2:거래소, 3:코스닥
-        srt_clsf: 정렬구분 (선택). 1:상승율, 2:하락율
-        thdy_bdy_clsf: 당일전일구분 (선택). 1:당일, 2:전일
-        inq_cnt: 조회건수 (선택).
-    """
-    body = {
-        "mkt_clsf": mkt_clsf,
-        "srt_clsf": srt_clsf,
-        "thdy_bdy_clsf": thdy_bdy_clsf,
-        "inq_cnt": inq_cnt,
-    }
-    body = {k: v for k, v in body.items() if v is not None}
-
-    return await call("/api/v1/ivs11190", body)
-
-
-@mcp.tool()
 async def ranking_kr_get_top_foreign_institution_trading(excg_clsf: str | None = None, mkt_clsf: str | None = None, invstr_ccd: str | None = None, prd_clsf: str | None = None, rnk_clsf: str | None = None) -> dict:
     """외국인기관매매상위
     

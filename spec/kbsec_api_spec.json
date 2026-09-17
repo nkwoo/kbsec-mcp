@@ -1434,43 +1434,6 @@
     ]
   },
   {
-    "code": "IVS11190",
-    "name": "IVS11190_기간외등락률 순위",
-    "category": "국내주식-시세분석",
-    "path": "/api/v1/ivs11190",
-    "desc": "시간외단일가등락율순위(IVS11190)",
-    "inputs": [
-      {
-        "field": "mkt_clsf",
-        "kor": "시장구분",
-        "length": "String(1)",
-        "required": "N",
-        "note": "1:전체, 2:거래소, 3:코스닥"
-      },
-      {
-        "field": "srt_clsf",
-        "kor": "정렬구분",
-        "length": "String(1)",
-        "required": "N",
-        "note": "1:상승율, 2:하락율"
-      },
-      {
-        "field": "thdy_bdy_clsf",
-        "kor": "당일전일구분",
-        "length": "String(1)",
-        "required": "N",
-        "note": "1:당일, 2:전일"
-      },
-      {
-        "field": "inq_cnt",
-        "kor": "조회건수",
-        "length": "String(4)",
-        "required": "N",
-        "note": ""
-      }
-    ]
-  },
-  {
     "code": "IVS11560",
     "name": "IVS11560_통합차트",
     "category": "국내주식-기본시세",

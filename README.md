@@ -1,7 +1,7 @@
 # KB증권 OpenAPI MCP 서버
 
-KB증권 OpenAPI 74개 엔드포인트(시세, 주문, 계좌, 투자정보 — 국내·해외주식)에 토큰 폐기 도구
-1개를 더해 총 75개 도구로 감싸는 Python MCP 서버입니다. Claude Desktop, Claude Code 등 MCP
+KB증권 OpenAPI 73개 엔드포인트(시세, 주문, 계좌, 투자정보 — 국내·해외주식)에 토큰 폐기 도구
+1개를 더해 총 74개 도구로 감싸는 Python MCP 서버입니다. Claude Desktop, Claude Code 등 MCP
 클라이언트에서 이 서버를 등록하면 자연어로 시세 조회, 주문, 계좌 조회 등을 수행할 수 있습니다.
 
 ## ⚠️ 사용 전 필수 확인사항
@@ -56,7 +56,7 @@ cp .env.example .env
 
 ## 실거래 안전장치
 
-74개 도구 중 **실제로 주문을 접수·정정·취소하는 14개 도구**(`order_kr_place_*`,
+73개 도구 중 **실제로 주문을 접수·정정·취소하는 14개 도구**(`order_kr_place_*`,
 `order_kr_amend_order`, `order_kr_cancel_*`, `order_os_place_*`, `order_os_amend_cancel_order`,
 `order_os_cancel_*`)는 `KBSEC_ENABLE_TRADING`이 `true`(또는 `1`/`yes`/`on`, 대소문자 무관)로
 설정되지 않으면 **기본적으로 차단**됩니다. 차단된 상태에서 호출하면 KB증권 API에 실제 요청을
@@ -151,9 +151,9 @@ Claude Desktop / Claude Code 외에도 stdio 기반 MCP 서버 등록을 지원�
 
 ## 전체 도구(Tool) 목록
 
-74개의 시세/주문/계좌/투자정보 도구는 KB증권 OpenAPI 명세
+73개의 시세/주문/계좌/투자정보 도구는 KB증권 OpenAPI 명세
 (`spec/source/kbsec-openapi.postman_collection.json`)와 동일한 국내주식/해외주식 카테고리
-구조로 정리되어 있습니다. 여기에 인증 관련 도구 1개(`auth_revoke_token`)가 더해져 총 75개입니다.
+구조로 정리되어 있습니다. 여기에 인증 관련 도구 1개(`auth_revoke_token`)가 더해져 총 74개입니다.
 각 도구가 받는 파라미터 상세는 `spec/kbsec_api_spec.json`을 참고하세요.
 
 ### 인증
@@ -196,8 +196,11 @@ KB증권 API는 access token 값과 함께 발급 당시의 IP/MAC 주소를 검
 | 신고가/신저가 | `ranking_kr_get_new_high_low` | IVU10550 |
 | 시가대비 등락률 상위 | `ranking_kr_get_top_open_price_change` | IVS10910 |
 | 시가총액 상위 | `ranking_kr_get_top_market_cap` | IVS10920 |
-| 시간외단일가 등락률 순위 | `ranking_kr_get_top_after_hours_change` | IVS11190 |
 | 외국인/기관 매매 상위 | `ranking_kr_get_top_foreign_institution_trading` | IVU10020 |
+
+KB증권 측에서 `IVS11190`(기간외등락률 순위) API 제공을 중지함에 따라, 해당 도구
+(`ranking_kr_get_top_after_hours_change`)는 2026-09-16부터 제외되었습니다.
+KB증권이 API 제공을 재개하면 다시 추가할 예정입니다.
 
 #### 주식주문
 

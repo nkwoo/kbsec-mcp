@@ -12,7 +12,7 @@ def _load_metadata() -> dict:
     return yaml.safe_load(METADATA_PATH.read_text(encoding="utf-8"))
 
 
-def test_metadata_covers_all_74_parsed_apis():
+def test_metadata_covers_all_73_parsed_apis():
     apis = json.loads(SPEC_PATH.read_text(encoding="utf-8"))
     parsed_codes = {a["code"] for a in apis}
     metadata = _load_metadata()
@@ -23,8 +23,8 @@ def test_metadata_covers_all_74_parsed_apis():
 def test_metadata_tool_names_are_unique():
     metadata = _load_metadata()
     names = [entry["tool_name"] for entries in metadata.values() for entry in entries]
-    assert len(names) == 74
-    assert len(set(names)) == 74
+    assert len(names) == 73
+    assert len(set(names)) == 73
 
 
 def test_metadata_tool_names_match_file_prefix():
