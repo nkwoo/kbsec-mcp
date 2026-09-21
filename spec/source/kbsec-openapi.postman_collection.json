@@ -113,7 +113,7 @@
       ]
     },
     {
-      "name": "국내주식 (47)",
+      "name": "국내주식 (46)",
       "item": [
         {
           "name": "기본시세 (10)",
@@ -501,7 +501,7 @@
           ]
         },
         {
-          "name": "시세분석 (9)",
+          "name": "시세분석 (8)",
           "item": [
             {
               "name": "IVU10210_거래대금 상위",
@@ -766,44 +766,6 @@
                   ]
                 },
                 "description": "**IVS10920_시가총액상위**\n\n시가총액상위\n\n- API 코드: `IVS10920`\n- URL: `https://developer.kbsec.com:32484/api/v1/ivs10920`\n- 인터페이스: REST (POST) / JSON\n- 인증: 서비스 Key/토큰 (SSL)\n- 버전: v1.0\n\n### INPUT\n\n| 항목영문명 | 항목한글명 | 데이터길이 | 필수 | 설명 |\n| --- | --- | --- | --- | --- |\n| inq_cnt | 조회건수 | String(4) | N |  |\n\n### OUTPUT\n\n| 항목영문명 | 항목한글명 | 데이터길이 | 설명 |\n| --- | --- | --- | --- |\n| lngth | 길이 | String(5) |  |\n| clsfP | 구분자 | String(2) |  |\n| msg | 메시지 | String(80) |  |\n| out_RecordSize | out_레코드길이 | String(8) |  |\n| out | out | Object array(0) |  |\n| &nbsp;&nbsp;&nbsp;&nbsp;rnk | 순위 | String(4) |  |\n| &nbsp;&nbsp;&nbsp;&nbsp;is_cd | 종목코드 | String(6) |  |\n| &nbsp;&nbsp;&nbsp;&nbsp;is_nm | 종목명 | String(40) |  |\n| &nbsp;&nbsp;&nbsp;&nbsp;now_prc | 현재가 | String(11) |  |\n| &nbsp;&nbsp;&nbsp;&nbsp;bdy_cmpr_ccd | 전일대비구분코드 | String(1) |  |\n| &nbsp;&nbsp;&nbsp;&nbsp;bdy_cmpr | 전일대비 | String(11) |  |\n| &nbsp;&nbsp;&nbsp;&nbsp;up_dwn_r_p2 | 등락율P2 | String(7) |  |\n| &nbsp;&nbsp;&nbsp;&nbsp;vlm | 거래량 | String(12) |  |\n| &nbsp;&nbsp;&nbsp;&nbsp;dl_sgrvt_p2 | 거래비중P2 | String(7) |  |\n| &nbsp;&nbsp;&nbsp;&nbsp;opn_prc_tl_amt | 시가총액 | String(22) |  |\n| &nbsp;&nbsp;&nbsp;&nbsp;opn_prc_tl_amt_sgrvt_p2 | 시가총액비중P2 | String(7) |  |\n| &nbsp;&nbsp;&nbsp;&nbsp;fgnr_sgrvt_p2 | 외국인비중P2 | String(7) |  |\n| &nbsp;&nbsp;&nbsp;&nbsp;lstng_stk_c | 상장주식수 | String(16) |  |\n| &nbsp;&nbsp;&nbsp;&nbsp;dl_tw_amt | 거래대금 | String(22) |  |"
-              },
-              "response": []
-            },
-            {
-              "name": "IVS11190_기간외등락률 순위",
-              "request": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Authorization",
-                    "value": "bearer {{accessToken}}"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"dataHeader\": {\n    \"ipAddr\": \"{{ipAddress}}\",\n    \"macAddr\": \"{{macAddress}}\"\n  },\n  \"dataBody\": {\n    \"mkt_clsf\": \"1\",\n    \"srt_clsf\": \"1\",\n    \"thdy_bdy_clsf\": \"1\",\n    \"inq_cnt\": \"20\"\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/ivs11190",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "ivs11190"
-                  ]
-                },
-                "description": "**IVS11190_기간외등락률순위**\n\n시간외단일가등락율순위(IVS11190)\n\n- API 코드: `IVS11190`\n- URL: `https://developer.kbsec.com:32484/api/v1/ivs11190`\n- 인터페이스: REST (POST) / JSON\n- 인증: 서비스 Key/토큰 (SSL)\n- 버전: v1.0\n\n### INPUT\n\n| 항목영문명 | 항목한글명 | 데이터길이 | 필수 | 설명 |\n| --- | --- | --- | --- | --- |\n| mkt_clsf | 시장구분 | String(1) | N | 1:전체, 2:거래소, 3:코스닥 |\n| srt_clsf | 정렬구분 | String(1) | N | 1:상승율, 2:하락율 |\n| thdy_bdy_clsf | 당일전일구분 | String(1) | N | 1:당일, 2:전일 |\n| inq_cnt | 조회건수 | String(4) | N |  |\n\n### OUTPUT\n\n| 항목영문명 | 항목한글명 | 데이터길이 | 설명 |\n| --- | --- | --- | --- |\n| lngth | 길이 | String(5) |  |\n| clsfP | 구분자 | String(2) |  |\n| msg | 메시지 | String(80) |  |\n| RecordSize | 레코드길이 | String(8) |  |\n| is_c | 종목수 | String(4) |  |\n| out2_RecordSize | out2_레코드길이 | String(8) |  |\n| out2 | out2 | Object array(0) |  |\n| &nbsp;&nbsp;&nbsp;&nbsp;is_cd | 종목코드 | String(6) |  |\n| &nbsp;&nbsp;&nbsp;&nbsp;is_nm | 종목명 | String(40) |  |\n| &nbsp;&nbsp;&nbsp;&nbsp;now_prc | 현재가 | String(11) |  |\n| &nbsp;&nbsp;&nbsp;&nbsp;bdy_cmpr_ccd | 전일대비구분코드 | String(1) |  |\n| &nbsp;&nbsp;&nbsp;&nbsp;bdy_cmpr | 전일대비 | String(11) |  |\n| &nbsp;&nbsp;&nbsp;&nbsp;up_dwn_r_p2 | 등락율P2 | String(7) |  |\n| &nbsp;&nbsp;&nbsp;&nbsp;vlm | 거래량 | String(12) |  |\n| &nbsp;&nbsp;&nbsp;&nbsp;s_rv | 매도잔량 | String(12) |  |\n| &nbsp;&nbsp;&nbsp;&nbsp;b_rv | 매수잔량 | String(12) |  |\n| &nbsp;&nbsp;&nbsp;&nbsp;s_askprc | 매도호가 | String(11) |  |\n| &nbsp;&nbsp;&nbsp;&nbsp;b_askprc | 매수호가 | String(11) |  |\n| &nbsp;&nbsp;&nbsp;&nbsp;rgr_mkt_cls_prc | 정규장종가 | String(11) |  |\n| &nbsp;&nbsp;&nbsp;&nbsp;rgr_mkt_vlm | 정규장거래량 | String(12) |  |\n| &nbsp;&nbsp;&nbsp;&nbsp;dl_tw_amt | 거래대금 | String(22) |  |\n| &nbsp;&nbsp;&nbsp;&nbsp;rgr_mkt_up_dwn_r_p2 | 정규장등락율P2 | String(7) |  |\n| &nbsp;&nbsp;&nbsp;&nbsp;expct_ccls_prc | 예상체결가 | String(11) |  |\n| &nbsp;&nbsp;&nbsp;&nbsp;expct_bdy_cmpr_ccd | 예상전일대비구분코드 | String(1) |  |\n| &nbsp;&nbsp;&nbsp;&nbsp;expct_bdy_cmpr | 예상전일대비 | String(11) |  |\n| &nbsp;&nbsp;&nbsp;&nbsp;expct_up_dwn_r_p2 | 예상등락율P2 | String(7) |  |"
               },
               "response": []
             },
